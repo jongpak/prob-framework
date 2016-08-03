@@ -1,0 +1,20 @@
+{
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+
+  "require": {
+    "twig/twig": "*",
+    "prob/router": "dev-master",
+    "prob/rewrite-helper": "dev-master"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\Controller\\": "app/",
+      "App\\": "app/",
+      "Core\\": "core/"
+    }
+  }
+}
