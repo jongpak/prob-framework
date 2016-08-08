@@ -32,11 +32,18 @@ class ViewResolver
         $engineName = '\\App\\ViewEngine\\';
 
         switch (gettype($this->viewData)) {
-            case 'NULL':
-                $engineName .= 'DummyView';
-                break;
             case 'string':
                 $engineName .= $settings['engine'];
+                break;
+
+            case 'array':
+            case 'object':
+                $engineName .= 'Json';
+                break;
+
+            case 'NULL':
+            default:
+                $engineName .= 'DummyView';
                 break;
         }
 
