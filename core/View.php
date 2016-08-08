@@ -8,10 +8,10 @@ interface View
      * Initial view engine.
      * $engine are used to initialize view.
      *
-     * @param array $engine
+     * @param array $setting
      * @return mixed
      */
-    public function engine($engine = []);
+    public function engine($setting = []);
 
     /**
      * put variable used by rendering
@@ -23,10 +23,17 @@ interface View
     public function set($k, $v);
 
     /**
-     * render view
+     * set rendering file
      *
-     * @param string $fileName
+     * @param $fileName
      * @return mixed
      */
-    public function render($fileName);
+    public function file($fileName);
+
+    /**
+     * render view
+     *
+     * @return mixed
+     */
+    public function render();
 }

@@ -50,14 +50,8 @@ class Framework
         $dispatcher = new Dispatcher($this->map);
         $result = $dispatcher->dispatch(new Request());
 
-        if(gettype($result) === 'string') {
-            $engineName = '\\App\\ViewEngine\\' . $this->siteConfig['viewEngine'];
-            $engineConfig = $this->viewEngineConfig[$this->siteConfig['viewEngine']];
-
-            $viewEngine = new $engineName;
-            $viewEngine->engine($engineConfig);
-
-            $viewEngine->render($result . $engineConfig['postfix']);
-        }
+        $viewResolver = new ViewResolver($result);
+        $view = $viewResolver->resolve($this->viewEngineConfig[$this->siteConfig['viewEngine']]);
+        $view->render();
     }
 }

@@ -14,15 +14,29 @@ class Twig implements View
     private $twig;
 
     /**
+     * Twig template file
+     *
+     * @var string
+     */
+    private $templateFile = '';
+
+    /**
+     * @var array engine setting
+     */
+    private $settings = [];
+
+    /**
      * rendering template variables
      * @var array
      */
     private $var = [];
 
-    public function engine($engine = [])
+    public function engine($settings = [])
     {
-        $loader = new Twig_Loader_Filesystem($engine['path']);
-        $this->twig = new Twig_Environment($loader, $engine['settings']);
+        $loader = new Twig_Loader_Filesystem($settings['path']);
+        $this->twig = new Twig_Environment($loader, $settings['settings']);
+
+        $this->settings = $settings;
     }
 
     public function set($k, $v)
@@ -30,9 +44,14 @@ class Twig implements View
         $this->var[$k] = $v;
     }
 
-    public function render($fileName)
+    public function file($fileName)
     {
-        echo $this->twig->render($fileName, $this->var);
+        $this->templateFile = $fileName . $this->settings['postfix'];
+    }
+
+    public function render()
+    {
+        echo $this->twig->render($this->templateFile, $this->var);
     }
 
 }
