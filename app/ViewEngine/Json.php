@@ -10,12 +10,12 @@ class Json implements View
 
     public function engine($setting = [])
     {
-        // JSON
+        // dummy
     }
 
     public function set($k, $v)
     {
-        // JSON
+        // dummy
     }
 
     public function file($data)

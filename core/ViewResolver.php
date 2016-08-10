@@ -29,25 +29,25 @@ class ViewResolver
      */
     public function resolve($settings)
     {
-        $engineName = '\\App\\ViewEngine\\';
+        $engineClassName = '\\App\\ViewEngine\\';
 
         switch (gettype($this->viewData)) {
             case 'string':
-                $engineName .= $settings['engine'];
+                $engineClassName .= $settings['engine'];
                 break;
 
             case 'array':
             case 'object':
-                $engineName .= 'Json';
+                $engineClassName .= 'Json';
                 break;
 
             case 'NULL':
             default:
-                $engineName .= 'DummyView';
+                $engineClassName .= 'DummyView';
                 break;
         }
 
-        $view = new $engineName;
+        $view = new $engineClassName;
         $view->engine($settings);
         $view->file($this->viewData);
 

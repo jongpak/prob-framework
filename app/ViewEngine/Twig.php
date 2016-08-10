@@ -18,7 +18,7 @@ class Twig implements View
      *
      * @var string
      */
-    private $templateFile = '';
+    private $templateFilename = '';
 
     /**
      * @var array engine setting
@@ -46,12 +46,12 @@ class Twig implements View
 
     public function file($fileName)
     {
-        $this->templateFile = $fileName . $this->settings['postfix'];
+        $this->templateFilename = $fileName . $this->settings['postfix'];
     }
 
     public function render()
     {
-        echo $this->twig->render($this->templateFile, $this->var);
+        echo $this->twig->render($this->templateFilename, $this->var);
     }
 
 }

@@ -13,7 +13,7 @@ class Framework
 
     public function boot()
     {
-        $this->setShowError();
+        $this->setOptionDisplayError();
 
         $this->loadSiteConfig();
         $this->loadViewEngineConfig();
@@ -22,7 +22,7 @@ class Framework
         $this->dispatcher();
     }
 
-    public function setShowError()
+    public function setOptionDisplayError()
     {
         error_reporting(E_ALL);
         ini_set('display_errors', 'on');
@@ -45,12 +45,12 @@ class Framework
 
     public function dispatcher()
     {
-        $result = null;
+        $returnValueOfController = null;
 
         $dispatcher = new Dispatcher($this->map);
-        $result = $dispatcher->dispatch(new Request());
+        $returnValueOfController = $dispatcher->dispatch(new Request());
 
-        $viewResolver = new ViewResolver($result);
+        $viewResolver = new ViewResolver($returnValueOfController);
         $view = $viewResolver->resolve($this->viewEngineConfig[$this->siteConfig['viewEngine']]);
         $view->render();
     }
