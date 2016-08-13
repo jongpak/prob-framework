@@ -53,6 +53,11 @@ class Framework
         $viewModel = new ViewModel();
 
         $parameterMap = new ParameterMap();
+
+        foreach($matchUrl['urlNameMatching'] as $name => $value) {
+            $parameterMap->bindByName($name, $value);
+        }
+
         $parameterMap->bindByNameWithType('array', 'url', $matchUrl['urlNameMatching']);
         $parameterMap->bindByType(ViewModel::class, $viewModel);
 
