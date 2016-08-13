@@ -16,11 +16,11 @@ interface View
     /**
      * put variable used by rendering
      *
-     * @param string $k
-     * @param mixed $v
+     * @param string $key
+     * @param mixed $value
      * @return mixed
      */
-    public function set($k, $v);
+    public function set($key, $value);
 
     /**
      * set rendering file

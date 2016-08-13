@@ -11,7 +11,7 @@ class DummyView implements View
         // dummy
     }
 
-    public function set($k, $v)
+    public function set($key, $value)
     {
         // dummy
     }

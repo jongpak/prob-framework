@@ -39,9 +39,9 @@ class Twig implements View
         $this->settings = $settings;
     }
 
-    public function set($k, $v)
+    public function set($key, $value)
     {
-        $this->var[$k] = $v;
+        $this->var[$key] = $value;
     }
 
     public function file($fileName)
