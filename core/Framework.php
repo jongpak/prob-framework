@@ -2,8 +2,10 @@
 
 namespace Core;
 
+use Prob\Handler\ParameterMap;
 use Prob\Router\Dispatcher;
 use Prob\Rewrite\Request;
+use Prob\Router\Matcher;
 
 class Framework
 {
@@ -45,13 +47,27 @@ class Framework
 
     public function dispatcher()
     {
-        $returnValueOfController = null;
+        $matcher = new Matcher($this->map);
+        $matchUrl = $matcher->match(new Request());
+
+        $viewModel = new ViewModel();
+
+        $parameterMap = new ParameterMap();
+        $parameterMap->bindByNameWithType('array', 'url', $matchUrl['urlNameMatching']);
+        $parameterMap->bindByType(ViewModel::class, $viewModel);
 
         $dispatcher = new Dispatcher($this->map);
-        $returnValueOfController = $dispatcher->dispatch(new Request());
+        $returnValueOfController = $dispatcher->dispatch(new Request(), $parameterMap);
 
         $viewResolver = new ViewResolver($returnValueOfController);
+
+        /** @var View $view */
         $view = $viewResolver->resolve($this->viewEngineConfig[$this->siteConfig['viewEngine']]);
+
+        foreach($viewModel->getVariables() as $key => $value) {
+            $view->set($key, $value);
+        }
+
         $view->render();
     }
 }
