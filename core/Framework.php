@@ -48,31 +48,36 @@ class Framework
     public function dispatcher()
     {
         $matcher = new Matcher($this->map);
-        $matchUrl = $matcher->match(new Request());
+        $matchingUrl = $matcher->match(new Request());
 
         $viewModel = new ViewModel();
-
         $parameterMap = new ParameterMap();
-
-        foreach ($matchUrl['urlNameMatching'] as $name => $value) {
-            $parameterMap->bindByName($name, $value);
-        }
-
-        $parameterMap->bindByNameWithType('array', 'url', $matchUrl['urlNameMatching']);
-        $parameterMap->bindByType(ViewModel::class, $viewModel);
+        $this->bindControllerParameters($parameterMap, $matchingUrl['urlNameMatching'], $viewModel);
 
         $dispatcher = new Dispatcher($this->map);
         $returnOfController = $dispatcher->dispatch(new Request(), $parameterMap);
-
         $viewResolver = new ViewResolver($returnOfController);
 
         /** @var View $view */
         $view = $viewResolver->resolve($this->viewEngineConfig[$this->siteConfig['viewEngine']]);
+        $this->setViewVariables($view, $viewModel->getVariables());
+        $view->render();
+    }
 
-        foreach ($viewModel->getVariables() as $key => $value) {
-            $view->set($key, $value);
+    private function bindControllerParameters(ParameterMap $map, array $url, ViewModel $viewModel)
+    {
+        foreach ($url as $name => $value) {
+            $map->bindByName($name, $value);
         }
 
-        $view->render();
+        $map->bindByNameWithType('array', 'url', $url);
+        $map->bindByType(ViewModel::class, $viewModel);
+    }
+
+    private function setViewVariables(View $view, array $var)
+    {
+        foreach ($var as $key => $value) {
+            $view->set($key, $value);
+        }
     }
 }
