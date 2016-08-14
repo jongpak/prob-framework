@@ -54,7 +54,7 @@ class Framework
 
         $parameterMap = new ParameterMap();
 
-        foreach($matchUrl['urlNameMatching'] as $name => $value) {
+        foreach ($matchUrl['urlNameMatching'] as $name => $value) {
             $parameterMap->bindByName($name, $value);
         }
 
@@ -62,14 +62,14 @@ class Framework
         $parameterMap->bindByType(ViewModel::class, $viewModel);
 
         $dispatcher = new Dispatcher($this->map);
-        $returnValueOfController = $dispatcher->dispatch(new Request(), $parameterMap);
+        $returnOfController = $dispatcher->dispatch(new Request(), $parameterMap);
 
-        $viewResolver = new ViewResolver($returnValueOfController);
+        $viewResolver = new ViewResolver($returnOfController);
 
         /** @var View $view */
         $view = $viewResolver->resolve($this->viewEngineConfig[$this->siteConfig['viewEngine']]);
 
-        foreach($viewModel->getVariables() as $key => $value) {
+        foreach ($viewModel->getVariables() as $key => $value) {
             $view->set($key, $value);
         }
 

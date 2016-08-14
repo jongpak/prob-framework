@@ -27,5 +27,4 @@ class Json implements View
     {
         echo json_encode($this->data);
     }
-
 }

@@ -53,5 +53,4 @@ class Twig implements View
     {
         echo $this->twig->render($this->templateFilename, $this->var);
     }
-
 }
