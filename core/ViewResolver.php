@@ -5,11 +5,18 @@ namespace Core;
 class ViewResolver
 {
     /**
-     * raw view data
+     * raw view data (return value of controller)
      *
      * @var mixed
      */
     private $viewData;
+
+    private $resolveViewType = [
+        'string' => null,
+        'array'  => 'Json',
+        'object' => 'Json',
+        'NULL'   => 'DummyView'
+    ];
 
     /**
      * ViewResolver constructor.
@@ -29,25 +36,12 @@ class ViewResolver
      */
     public function resolve($settings)
     {
-        $engineClassName = '\\App\\ViewEngine\\';
+        $this->resolveViewType['string'] = $settings['engine'];
 
-        switch (gettype($this->viewData)) {
-            case 'string':
-                $engineClassName .= $settings['engine'];
-                break;
+        $engineClassName = $this->resolveViewType[gettype($this->viewData)];
+        $engineClassFullName = '\\App\\ViewEngine\\' . $engineClassName;
 
-            case 'array':
-            case 'object':
-                $engineClassName .= 'Json';
-                break;
-
-            case 'NULL':
-            default:
-                $engineClassName .= 'DummyView';
-                break;
-        }
-
-        $view = new $engineClassName;
+        $view = new $engineClassFullName;
         $view->engine($settings);
         $view->file($this->viewData);
 
