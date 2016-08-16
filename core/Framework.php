@@ -5,6 +5,7 @@ namespace Core;
 use Prob\Handler\ParameterMap;
 use Prob\Router\Dispatcher;
 use Prob\Rewrite\Request;
+use Prob\Router\Map;
 use Prob\Router\Matcher;
 
 class Framework
@@ -17,9 +18,9 @@ class Framework
     {
         $this->setDisplayError();
 
-        $this->loadSiteConfig();
-        $this->loadViewEngineConfig();
-        $this->loadRouterMap();
+        $this->setSiteConfig(require '../config/site.php');
+        $this->setViewEngineConfig(require '../config/viewEngine.php');
+        $this->setRouterMap(require '../config/router.php');
 
         $this->dispatcher(new Request());
     }
@@ -30,19 +31,19 @@ class Framework
         ini_set('display_errors', $isDisplay);
     }
 
-    public function loadRouterMap()
+    public function setRouterMap(Map $routeMap)
     {
-        $this->map = require '../config/router.php';
+        $this->map = $routeMap;
     }
 
-    public function loadSiteConfig()
+    public function setSiteConfig(array $siteConfig)
     {
-        $this->siteConfig = require '../config/site.php';
+        $this->siteConfig = $siteConfig;
     }
 
-    public function loadViewEngineConfig()
+    public function setViewEngineConfig(array $viewEngineConfig)
     {
-        $this->viewEngineConfig = require '../config/viewEngine.php';
+        $this->viewEngineConfig = $viewEngineConfig;
     }
 
     public function dispatcher(Request $request)
