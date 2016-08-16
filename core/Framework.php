@@ -64,7 +64,7 @@ class Framework
     private function resolveUrl(Request $request)
     {
         $matcher = new Matcher($this->map);
-        return $matcher->match($request)['urlNameMatching'];
+        return $matcher->match($request)['urlNameMatching'] ?: [];
     }
 
     private function executeController(Request $request, ParameterMap $parameterMap)
