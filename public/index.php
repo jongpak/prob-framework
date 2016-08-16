@@ -1,6 +1,6 @@
 <?php
 
-$loader = require '../vendor/autoload.php';
+require '../vendor/autoload.php';
 
 use Core\Framework;
 
