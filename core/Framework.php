@@ -21,7 +21,7 @@ class Framework
         $this->loadViewEngineConfig();
         $this->loadRouterMap();
 
-        $this->dispatcher();
+        $this->dispatcher(new Request());
     }
 
     public function setOptionDisplayError()
@@ -45,32 +45,55 @@ class Framework
         $this->viewEngineConfig = require '../config/viewEngine.php';
     }
 
-    public function dispatcher()
+    public function dispatcher(Request $request)
     {
-        $matcher = new Matcher($this->map);
-        $matchingUrl = $matcher->match(new Request());
-
+        $url = $this->resolveUrl($request);
         $viewModel = new ViewModel();
+
         $parameterMap = new ParameterMap();
-        $this->bindControllerParameters($parameterMap, $matchingUrl['urlNameMatching'], $viewModel);
+        $this->bindUrlParameter($parameterMap, $url);
+        $this->bindViewModelParameter($parameterMap, $viewModel);
 
-        $dispatcher = new Dispatcher($this->map);
-        $returnOfController = $dispatcher->dispatch(new Request(), $parameterMap);
-        $viewResolver = new ViewResolver($returnOfController);
+        $returnOfController = $this->executeController($request, $parameterMap);
 
-        /** @var View $view */
-        $view = $viewResolver->resolve($this->viewEngineConfig[$this->siteConfig['viewEngine']]);
+        $view = $this->resolveView($returnOfController);
         $this->setViewVariables($view, $viewModel->getVariables());
         $view->render();
     }
 
-    private function bindControllerParameters(ParameterMap $map, array $url, ViewModel $viewModel)
+    private function resolveUrl(Request $request)
     {
+        $matcher = new Matcher($this->map);
+        return $matcher->match($request)['urlNameMatching'];
+    }
+
+    private function executeController(Request $request, ParameterMap $parameterMap)
+    {
+        $dispatcher = new Dispatcher($this->map);
+        return $dispatcher->dispatch($request, $parameterMap);
+    }
+
+    /**
+     * @param  mixed $returnOfController
+     * @return View
+     */
+    private function resolveView($returnOfController)
+    {
+        $viewResolver = new ViewResolver($returnOfController);
+        return $viewResolver->resolve($this->viewEngineConfig[$this->siteConfig['viewEngine']]);
+    }
+
+    private function bindUrlParameter(ParameterMap $map, array $url)
+    {
+        $map->bindByNameWithType('array', 'url', $url);
+
         foreach ($url as $name => $value) {
             $map->bindByName($name, $value);
         }
+    }
 
-        $map->bindByNameWithType('array', 'url', $url);
+    private function bindViewModelParameter(ParameterMap $map, ViewModel $viewModel)
+    {
         $map->bindByType(ViewModel::class, $viewModel);
     }
 
