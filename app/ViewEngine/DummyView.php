@@ -6,7 +6,7 @@ use Core\View;
 
 class DummyView implements View
 {
-    public function engine($setting = [])
+    public function init($setting = [])
     {
         // dummy
     }

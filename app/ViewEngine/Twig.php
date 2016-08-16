@@ -31,7 +31,7 @@ class Twig implements View
      */
     private $var = [];
 
-    public function engine($settings = [])
+    public function init($settings = [])
     {
         $loader = new Twig_Loader_Filesystem($settings['path']);
         $this->twig = new Twig_Environment($loader, $settings['settings']);

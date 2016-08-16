@@ -8,7 +8,7 @@ class Json implements View
 {
     private $data = null;
 
-    public function engine($setting = [])
+    public function init($setting = [])
     {
         // dummy
     }

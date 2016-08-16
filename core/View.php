@@ -11,7 +11,7 @@ interface View
      * @param array $setting
      * @return mixed
      */
-    public function engine($setting = []);
+    public function init($setting = []);
 
     /**
      * put variable used by rendering

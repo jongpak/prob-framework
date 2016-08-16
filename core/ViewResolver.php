@@ -29,7 +29,7 @@ class ViewResolver
     }
 
     /**
-     * Resolve View
+     * Return resolved View instance
      *
      * @param array $settings View engine settings
      * @return View
@@ -42,7 +42,7 @@ class ViewResolver
         $engineClassFullName = '\\App\\ViewEngine\\' . $engineClassName;
 
         $view = new $engineClassFullName;
-        $view->engine($settings);
+        $view->init($settings);
         $view->file($this->viewData);
 
         return $view;
