@@ -4,6 +4,8 @@ namespace Core;
 
 class ViewResolver
 {
+    private $namespaceOfViewEngine = '\\App\\ViewEngine\\';
+
     /**
      * raw view data (return value of controller)
      *
@@ -34,17 +36,22 @@ class ViewResolver
      * @param array $settings View engine settings
      * @return View
      */
-    public function resolve($settings)
+    public function resolve(array $settings)
     {
         $this->resolveViewType['string'] = $settings['engine'];
 
-        $engineClassName = $this->resolveViewType[gettype($this->viewData)];
-        $engineClassFullName = '\\App\\ViewEngine\\' . $engineClassName;
+        $viewClassName = $this->getResolvedViewClassName();
 
-        $view = new $engineClassFullName;
+        $view = new $viewClassName;
         $view->init($settings);
         $view->file($this->viewData);
 
         return $view;
+    }
+
+    private function getResolvedViewClassName()
+    {
+        $engineClassName = $this->resolveViewType[gettype($this->viewData)];
+        return $this->namespaceOfViewEngine . $engineClassName;
     }
 }
