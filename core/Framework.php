@@ -15,7 +15,7 @@ class Framework
 
     public function boot()
     {
-        $this->setOptionDisplayError();
+        $this->setDisplayError();
 
         $this->loadSiteConfig();
         $this->loadViewEngineConfig();
@@ -24,10 +24,10 @@ class Framework
         $this->dispatcher(new Request());
     }
 
-    public function setOptionDisplayError()
+    public function setDisplayError($isDisplay = true)
     {
         error_reporting(E_ALL);
-        ini_set('display_errors', 'on');
+        ini_set('display_errors', $isDisplay);
     }
 
     public function loadRouterMap()
