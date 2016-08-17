@@ -16,7 +16,7 @@ class FrameworkTest extends TestCase
 
     public function setUp()
     {
-        $framework = new Framework();
+        $framework = Framework::getInstance();
         $framework->setSiteConfig($this->getSiteConfig());
         $framework->setViewEngineConfig($this->getViewEngineConfig());
         $framework->setRouterMap($this->getRouteMap());

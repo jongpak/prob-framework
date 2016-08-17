@@ -14,6 +14,24 @@ class Framework
     private $siteConfig = [];
     private $viewEngineConfig = [];
 
+    private function __construct()
+    {
+    }
+
+    /**
+     * @return Framework
+     */
+    public static function getInstance()
+    {
+        static $instance = null;
+
+        if ($instance === null) {
+            $instance = new self();
+        }
+
+        return $instance;
+    }
+
     public function boot()
     {
         $this->setDisplayError();
