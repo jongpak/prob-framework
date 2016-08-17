@@ -9,7 +9,6 @@ use App\ViewEngine\DummyView;
 
 class ViewResolverTest extends TestCase
 {
-
     public function testStringResolve()
     {
         $viewResolver = new ViewResolver('default/test');

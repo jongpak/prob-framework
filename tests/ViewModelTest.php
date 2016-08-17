@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 
 class ViewModelTest extends TestCase
 {
-
     public function testSetVariable()
     {
         $viewModel = new ViewModel();
