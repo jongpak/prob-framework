@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'url' => 'http://127.0.0.254/',
+    'url' => 'http://mysite.com/',
     'viewEngine' => 'Twig',
     'database' => 'mysql'
 ];
