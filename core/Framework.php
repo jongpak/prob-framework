@@ -7,12 +7,15 @@ use Prob\Router\Dispatcher;
 use Prob\Rewrite\Request;
 use Prob\Router\Map;
 use Prob\Router\Matcher;
+use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManager;
 
 class Framework
 {
     private $map;
     private $siteConfig = [];
     private $viewEngineConfig = [];
+    private $dbConfig = [];
 
     private function __construct()
     {
@@ -37,6 +40,7 @@ class Framework
         $this->setDisplayError();
 
         $this->setSiteConfig(require '../config/site.php');
+        $this->setDbConfig(require '../config/db.php');
         $this->setViewEngineConfig(require '../config/viewEngine.php');
         $this->setRouterMap(require '../config/router.php');
 
@@ -59,9 +63,23 @@ class Framework
         $this->siteConfig = $siteConfig;
     }
 
+    public function setDbConfig(array $dbConfig)
+    {
+        $this->dbConfig = $dbConfig;
+    }
+
     public function setViewEngineConfig(array $viewEngineConfig)
     {
         $this->viewEngineConfig = $viewEngineConfig;
+    }
+
+    public function getEntityManager()
+    {
+        $config = Setup::createAnnotationMetadataConfiguration(
+                    $this->dbConfig['entityPath'],
+                    $this->dbConfig['devMode']
+                    );
+        return EntityManager::create($this->dbConfig[$this->siteConfig['database']], $config);
     }
 
     public function dispatcher(Request $request)

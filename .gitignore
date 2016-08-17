@@ -2,6 +2,7 @@
 /.vscode
 /vendor
 /data
+/config/db.php
 phpunit.xml
 composer.phar
 composer.lock

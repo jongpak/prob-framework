@@ -4,6 +4,7 @@
 
   "require": {
     "twig/twig": "*",
+    "doctrine/orm": "*",
     "prob/router": "dev-master",
     "prob/rewrite-helper": "dev-master"
   },
