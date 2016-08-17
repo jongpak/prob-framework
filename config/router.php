@@ -6,7 +6,8 @@ $map = new Map();
 $map->setNamespace('App\\Controller');
 
 $map->get('/', 'Home.index');
-$map->get('/test', 'Test.hello');
-$map->get('/{board:string}', 'Test.showPostList');
+$map->get('/test', 'Test.echoTest');
+$map->get('/test/json', 'Test.jsonTest');
+$map->get('/test/{name}', 'Test.paramTest');
 
 return $map;
