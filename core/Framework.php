@@ -73,6 +73,9 @@ class Framework
         $this->viewEngineConfig = $viewEngineConfig;
     }
 
+    /**
+     * @return EntityManager
+     */
     public function getEntityManager()
     {
         $config = Setup::createAnnotationMetadataConfiguration(
