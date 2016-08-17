@@ -1,6 +1,6 @@
 <?php
 
-namespace app\ViewEngine;
+namespace App\ViewEngine;
 
 use Core\View;
 
