@@ -25,6 +25,7 @@ class Json implements View
 
     public function render()
     {
+        header('Content-Type: application/json');
         echo json_encode($this->data);
     }
 }

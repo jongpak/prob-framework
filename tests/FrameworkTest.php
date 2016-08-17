@@ -106,6 +106,9 @@ class FrameworkTest extends TestCase
         $this->framework->dispatcher(new Request());
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testGetJsonDispatcher()
     {
         $method = 'GET';
@@ -122,6 +125,9 @@ class FrameworkTest extends TestCase
         $this->framework->dispatcher(new Request());
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testPostJsonDispatcher()
     {
         $method = 'POST';

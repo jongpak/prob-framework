@@ -20,6 +20,9 @@ class ViewResolverTest extends TestCase
         $view->render();
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testJsonResolveByArray()
     {
         $array = [
@@ -37,6 +40,9 @@ class ViewResolverTest extends TestCase
         $view->render();
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testJsonResolveByObject()
     {
         $object = new DumpObject();
