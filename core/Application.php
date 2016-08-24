@@ -10,7 +10,7 @@ use Prob\Router\Matcher;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
-class Framework
+class Application
 {
     private $map;
     private $siteConfig = [];
@@ -22,7 +22,7 @@ class Framework
     }
 
     /**
-     * @return Framework
+     * @return Application
      */
     public static function getInstance()
     {

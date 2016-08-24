@@ -5,38 +5,38 @@ namespace Core;
 use PHPUnit\Framework\TestCase;
 use Prob\Router\Map;
 use Prob\Rewrite\Request;
-use App\ViewEngine\StringViewForTestFramework;
+use App\ViewEngine\StringViewForApplicationTest;
 
-class FrameworkTest extends TestCase
+class ApplicationTest extends TestCase
 {
     /**
-     * @var Framework
+     * @var Application
      */
-    private $framework;
+    private $application;
 
     public function setUp()
     {
-        $framework = Framework::getInstance();
-        $framework->setSiteConfig($this->getSiteConfig());
-        $framework->setViewEngineConfig($this->getViewEngineConfig());
-        $framework->setRouterMap($this->getRouteMap());
+        $application = Application::getInstance();
+        $application->setSiteConfig($this->getSiteConfig());
+        $application->setViewEngineConfig($this->getViewEngineConfig());
+        $application->setRouterMap($this->getRouteMap());
 
-        $this->framework = $framework;
+        $this->application = $application;
     }
 
     private function getSiteConfig()
     {
         return [
             'url' => 'http://test.com/',
-            'viewEngine' => 'StringViewForTestFramework'
+            'viewEngine' => 'StringViewForApplicationTest'
         ];
     }
 
     private function getViewEngineConfig()
     {
         return [
-            'StringViewForTestFramework' => [
-                'engine' => 'StringViewForTestFramework'
+            'StringViewForApplicationTest' => [
+                'engine' => 'StringViewForApplicationTest'
             ]
         ];
     }
@@ -71,7 +71,7 @@ class FrameworkTest extends TestCase
         $board = 'free';
         $post = '5';
 
-        $view = new StringViewForTestFramework();
+        $view = new StringViewForApplicationTest();
         $controller = new TestController();
         $viewModel = new ViewModel();
 
@@ -82,7 +82,7 @@ class FrameworkTest extends TestCase
         $this->expectOutputString($view->getRenderingResult());
 
         $this->setUpRequestAndPathInfo($method, $prefix, $board, $post);
-        $this->framework->dispatcher(new Request());
+        $this->application->dispatcher(new Request());
     }
 
     public function testPostStringDispatcher()
@@ -92,7 +92,7 @@ class FrameworkTest extends TestCase
         $board = 'free';
         $post = '5';
 
-        $view = new StringViewForTestFramework();
+        $view = new StringViewForApplicationTest();
         $controller = new TestController();
         $viewModel = new ViewModel();
 
@@ -103,7 +103,7 @@ class FrameworkTest extends TestCase
         $this->expectOutputString($view->getRenderingResult());
 
         $this->setUpRequestAndPathInfo($method, $prefix, $board, $post);
-        $this->framework->dispatcher(new Request());
+        $this->application->dispatcher(new Request());
     }
 
     /**
@@ -122,7 +122,7 @@ class FrameworkTest extends TestCase
         $this->expectOutputString($jsonResult);
 
         $this->setUpRequestAndPathInfo($method, $prefix, $board, $post);
-        $this->framework->dispatcher(new Request());
+        $this->application->dispatcher(new Request());
     }
 
     /**
@@ -141,7 +141,7 @@ class FrameworkTest extends TestCase
         $this->expectOutputString($jsonResult);
 
         $this->setUpRequestAndPathInfo($method, $prefix, $board, $post);
-        $this->framework->dispatcher(new Request());
+        $this->application->dispatcher(new Request());
     }
 
     public function testGetDummyDispatcher()
@@ -156,7 +156,7 @@ class FrameworkTest extends TestCase
         $this->expectOutputString($controller->generateViewModelKeyValue($method, $board, $post));
 
         $this->setUpRequestAndPathInfo($method, $prefix, $board, $post);
-        $this->framework->dispatcher(new Request());
+        $this->application->dispatcher(new Request());
     }
 
     public function testPostDummyDispatcher()
@@ -171,7 +171,7 @@ class FrameworkTest extends TestCase
         $this->expectOutputString($controller->generateViewModelKeyValue($method, $board, $post));
 
         $this->setUpRequestAndPathInfo($method, $prefix, $board, $post);
-        $this->framework->dispatcher(new Request());
+        $this->application->dispatcher(new Request());
     }
 }
 
@@ -223,7 +223,7 @@ class TestController
 
 namespace App\ViewEngine;
 
-class StringViewForTestFramework extends DummyView
+class StringViewForApplicationTest extends DummyView
 {
     private $templateFilename = '';
     private $var = [];

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Post;
 
-use Core\Framework;
+use Core\Application;
 use Doctrine\ORM\EntityManager;
 
 class Test
@@ -16,7 +16,7 @@ class Test
 
     public function __construct()
     {
-        $this->entityManager = Framework::getInstance()->getEntityManager();
+        $this->entityManager = Application::getInstance()->getEntityManager();
     }
 
     public function echoTest()

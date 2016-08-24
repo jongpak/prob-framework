@@ -2,7 +2,6 @@
 
 require '../vendor/autoload.php';
 
-use Core\Framework;
+use Core\Application;
 
-$framework = Framework::getInstance();
-$framework->boot();
+Application::getInstance()->boot();
