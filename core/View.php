@@ -23,12 +23,25 @@ interface View
     public function set($key, $value);
 
     /**
+     * return variables of view
+     * @return array
+     */
+    public function getVariables();
+
+    /**
      * set rendering file
      *
      * @param $fileName
      * @return mixed
      */
     public function file($fileName);
+
+    /**
+     * return rendering file
+     *
+     * @return mixed
+     */
+    public function getFile();
 
     /**
      * render view

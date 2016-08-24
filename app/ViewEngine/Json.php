@@ -18,9 +18,19 @@ class Json implements View
         // dummy
     }
 
+    public function getVariables()
+    {
+        return [];
+    }
+
     public function file($data)
     {
         $this->data = $data;
+    }
+
+    public function getFile()
+    {
+        return $this->data;
     }
 
     public function render()

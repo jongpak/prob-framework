@@ -16,9 +16,19 @@ class DummyView implements View
         // dummy
     }
 
+    public function getVariables()
+    {
+        return [];
+    }
+
     public function file($fileName)
     {
         // dummy
+    }
+
+    public function getFile()
+    {
+        return null;
     }
 
     public function render()

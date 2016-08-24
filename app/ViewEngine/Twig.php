@@ -44,9 +44,19 @@ class Twig implements View
         $this->var[$key] = $value;
     }
 
+    public function getVariables()
+    {
+        return $this->var;
+    }
+
     public function file($fileName)
     {
         $this->templateFilename = $fileName . $this->settings['postfix'];
+    }
+
+    public function getFile()
+    {
+        return $this->fileName;
     }
 
     public function render()
