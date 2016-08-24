@@ -4,6 +4,4 @@
 /data
 /config/db.php
 /config/site.php
-phpunit.xml
-composer.phar
 composer.lock
