@@ -35,6 +35,11 @@ class Test
         return $posts;
     }
 
+    public function goMain()
+    {
+        return 'redirect: /';
+    }
+
     public function jsonTest()
     {
         return [
