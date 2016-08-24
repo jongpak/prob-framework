@@ -17,7 +17,8 @@ class ViewResolver
         'string' => null,
         'array'  => 'Json',
         'object' => 'Json',
-        'NULL'   => 'DummyView'
+        'NULL'   => 'DummyView',
+        'redirect' => 'Redirect'
     ];
 
     /**
@@ -44,7 +45,7 @@ class ViewResolver
 
         $view = new $viewClassName;
         $view->init($settings);
-        $view->file($this->viewData);
+        $view->file($this->isRedirectView() ? $this->getRedirectUrl() : $this->viewData);
 
         return $view;
     }
@@ -52,6 +53,25 @@ class ViewResolver
     private function getResolvedViewClassName()
     {
         $engineClassName = $this->resolveViewType[gettype($this->viewData)];
+
+        if ($this->isRedirectView()) {
+            $engineClassName = $this->resolveViewType['redirect'];
+        }
+
         return $this->namespaceOfViewEngine . $engineClassName;
+    }
+
+    private function isRedirectView()
+    {
+        if (gettype($this->viewData) !== 'string') {
+            return false;
+        }
+        return preg_match('/redirect:(.*)/', $this->viewData) > 0;
+    }
+
+    private function getRedirectUrl()
+    {
+        preg_match('/redirect:(.*)/', $this->viewData, $url);
+        return trim($url[1]);
     }
 }

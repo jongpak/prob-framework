@@ -5,6 +5,7 @@ namespace Core;
 use PHPUnit\Framework\TestCase;
 use App\ViewEngine\StringViewForTest;
 use App\ViewEngine\Json;
+use App\ViewEngine\Redirect;
 use App\ViewEngine\DummyView;
 
 class ViewResolverTest extends TestCase
@@ -71,6 +72,18 @@ class ViewResolverTest extends TestCase
         $this->assertEquals(null, $view->getFile());
         $this->expectOutputString(null);
         $view->render();
+    }
+
+    public function testRedirectResolve()
+    {
+        $url = 'test/url';
+
+        $viewResolver = new ViewResolver('redirect: ' . $url);
+        $view = $viewResolver->resolve(['engine' => 'StringViewForTest']);
+
+        $this->assertEquals(Redirect::class, get_class($view));
+        $this->assertEquals([], $view->getVariables());
+        $this->assertEquals($url, $view->getFile());
     }
 }
 
