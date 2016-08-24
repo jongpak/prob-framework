@@ -17,6 +17,9 @@ class Application
     private $viewEngineConfig = [];
     private $dbConfig = [];
 
+    /**
+     * Singleton: private constructor
+     */
     private function __construct()
     {
     }
