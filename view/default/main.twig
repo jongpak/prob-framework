@@ -1,8 +1,10 @@
 {% extends 'default/layout.twig' %}
 
 {% block body %}
-
-    Hello Prob!<br />
-    Current time is {{ time }}
-
+    <dl>
+    <dt>Server time</dt>
+        <dd>{{ time }}</dd>
+    <dt>Site URL</dt>
+        <dd>{{ url() }}</dd>
+    </dl>
 {% endblock %}

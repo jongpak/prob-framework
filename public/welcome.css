@@ -1,0 +1,41 @@
+body {
+    font-family: 'Arial';
+    font-size: 18pt;
+}
+
+.welcome {
+    margin: 100px;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 10px;
+}
+
+.welcome p {
+    margin: 1em 0;
+}
+
+.welcome dt {
+    font-weight: bold;
+}
+
+.welcome dd {
+    margin-bottom: 1em;
+}
+
+.welcome .title {
+    margin: 0;
+    padding: 15px;
+    background: rgb(240, 240, 240);
+    border-bottom: 1px solid rgb(220, 220, 220);
+    border-radius: 10px;
+    font-size: 24pt;
+    font-weight: bold;
+}
+
+.welcome .body {
+    margin: 0;
+    padding: 25px;
+}
+
+.welcome .body *:first-child {
+    margin-top: 0;
+}
