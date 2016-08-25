@@ -19,7 +19,7 @@ class ApplicationTest extends TestCase
         $application = Application::getInstance();
         $application->setSiteConfig($this->getSiteConfig());
         $application->setViewEngineConfig($this->getViewEngineConfig());
-        $application->setRouterMap($this->getRouteMap());
+        $application->setRouterConfig($this->getRouteMap());
 
         $this->application = $application;
     }
@@ -43,19 +43,24 @@ class ApplicationTest extends TestCase
 
     private function getRouteMap()
     {
-        $map = new Map();
-        $map->setNamespace('Core');
+        return [
+            'namespace' => 'Core',
 
-        $map->get('/string/{board}/{post}', 'TestController.getString');
-        $map->post('/string/{board}/{post}', 'TestController.postString');
+            '/string/{board}/{post}' => [
+                'GET' => 'TestController.getString',
+                'POST' => 'TestController.postString'
+            ],
 
-        $map->get('/json/{board}/{post}', 'TestController.getJson');
-        $map->post('/json/{board}/{post}', 'TestController.postJson');
+            '/json/{board}/{post}' => [
+                'GET' => 'TestController.getJson',
+                'POST' => 'TestController.postJson'
+            ],
 
-        $map->get('/dummy/{board}/{post}', 'TestController.getDummy');
-        $map->post('/dummy/{board}/{post}', 'TestController.postDummy');
-
-        return $map;
+            '/dummy/{board}/{post}' => [
+                'GET' => 'TestController.getDummy',
+                'POST' => 'TestController.postDummy'
+            ]
+        ];
     }
 
     private function setUpRequestAndPathInfo($method, $prefix, $board, $post)

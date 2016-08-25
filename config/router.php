@@ -1,15 +1,13 @@
 <?php
 
-use Prob\Router\Map;
+return [
+    'namespace' => 'App\\Controller',
 
-$map = new Map();
-$map->setNamespace('App\\Controller');
+    '/' => 'Welcome.index',
 
-$map->get('/', 'Welcome.index');
-$map->get('/test', 'Test.echoTest');
-$map->get('/test/json', 'Test.jsonTest');
-$map->get('/test/db', 'Test.dbTest');
-$map->get('/test/main', 'Test.goMain');
-$map->get('/test/{name}', 'Test.paramTest');
-
-return $map;
+    '/test' => 'Test.echoTest',
+    '/test/json' => 'Test.jsonTest',
+    '/test/db' => 'Test.dbTest',
+    '/test/main' => 'Test.goMain',
+    '/test/{name}' => 'Test.paramTest',
+];

@@ -12,7 +12,12 @@ use Doctrine\ORM\EntityManager;
 
 class Application
 {
-    private $map;
+    /**
+     * @var Map
+     */
+    private $routerMap;
+
+    private $routeConfig = [];
     private $siteConfig = [];
     private $viewEngineConfig = [];
     private $dbConfig = [];
@@ -45,7 +50,7 @@ class Application
         $this->setSiteConfig(require '../config/site.php');
         $this->setDbConfig(require '../config/db.php');
         $this->setViewEngineConfig(require '../config/viewEngine.php');
-        $this->setRouterMap(require '../config/router.php');
+        $this->setRouterConfig(require '../config/router.php');
 
         $this->dispatcher(new Request());
     }
@@ -56,9 +61,10 @@ class Application
         ini_set('display_errors', $isDisplay);
     }
 
-    public function setRouterMap(Map $routeMap)
+    public function setRouterConfig(array $routeConfig)
     {
-        $this->map = $routeMap;
+        $this->routeConfig = $routeConfig;
+        $this->buildRouterMap();
     }
 
     public function setSiteConfig(array $siteConfig)
@@ -75,6 +81,43 @@ class Application
     {
         $this->viewEngineConfig = $viewEngineConfig;
     }
+
+    private function buildRouterMap()
+    {
+        $routerMap = new Map();
+
+        foreach ($this->routeConfig as $k => $v) {
+            if ($k === 'namespace') {
+                $routerMap->setNamespace($v);
+            } else {
+                $this->addRouterMap($routerMap, $k, $v);
+            }
+        }
+
+        $this->routerMap = $routerMap;
+    }
+
+    private function addRouterMap(Map $routerMap, $path, $handler)
+    {
+        // string | closure
+        if (gettype($handler) === 'string' || is_callable($handler)) {
+            $routerMap->get($path, $handler);
+            return;
+        }
+
+        // array
+        // [
+        //     'GET' => '...',
+        //     'POST' => '...'
+        // ]
+        if (isset($handler['GET'])) {
+            $routerMap->get($path, $handler['GET']);
+        }
+        if (isset($handler['POST'])) {
+            $routerMap->post($path, $handler['POST']);
+        }
+    }
+
 
     public function url($url = '')
     {
@@ -111,13 +154,13 @@ class Application
 
     private function resolveUrl(Request $request)
     {
-        $matcher = new Matcher($this->map);
+        $matcher = new Matcher($this->routerMap);
         return $matcher->match($request)['urlNameMatching'] ?: [];
     }
 
     private function executeController(Request $request, ParameterMap $parameterMap)
     {
-        $dispatcher = new Dispatcher($this->map);
+        $dispatcher = new Dispatcher($this->routerMap);
         return $dispatcher->dispatch($request, $parameterMap);
     }
 
