@@ -76,6 +76,11 @@ class Application
         $this->viewEngineConfig = $viewEngineConfig;
     }
 
+    public function url($url = '')
+    {
+        return $this->siteConfig['url'] . $url;
+    }
+
     /**
      * @return EntityManager
      */

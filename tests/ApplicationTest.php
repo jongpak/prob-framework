@@ -173,6 +173,16 @@ class ApplicationTest extends TestCase
         $this->setUpRequestAndPathInfo($method, $prefix, $board, $post);
         $this->application->dispatcher(new Request());
     }
+
+    public function testUrl()
+    {
+        $siteUrl = $this->getSiteConfig()['url'];
+        $url = '/test/ok';
+
+        $expectUrl = $siteUrl.$url;
+
+        $this->assertEquals($expectUrl, $this->application->url($url));
+    }
 }
 
 class TestController
