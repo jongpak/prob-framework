@@ -37,7 +37,7 @@ class Test
 
     public function goMain()
     {
-        return 'redirect: /';
+        return 'redirect: ' . Application::getInstance()->url();
     }
 
     public function jsonTest()
