@@ -5,7 +5,7 @@ use Prob\Router\Map;
 $map = new Map();
 $map->setNamespace('App\\Controller');
 
-$map->get('/', 'Home.index');
+$map->get('/', 'Welcome.index');
 $map->get('/test', 'Test.echoTest');
 $map->get('/test/json', 'Test.jsonTest');
 $map->get('/test/db', 'Test.dbTest');

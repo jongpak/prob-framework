@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Core\ViewModel;
 
-class Home
+class Welcome
 {
 
     public function index(ViewModel $viewModel)
