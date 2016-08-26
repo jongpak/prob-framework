@@ -6,7 +6,6 @@ use Core\ViewModel;
 
 class TestController
 {
-
     public static function generateViewModelKeyValue($method, $board, $post)
     {
         return $method . ': /' . $board . '/' . $post;
@@ -17,6 +16,10 @@ class TestController
         return [ $method, $board, $post ];
     }
 
+    public function echoTest()
+    {
+        echo 'Test!';
+    }
 
     public function getString($board, $post, ViewModel $model)
     {

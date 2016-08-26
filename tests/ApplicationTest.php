@@ -50,6 +50,8 @@ class ApplicationTest extends TestCase
         return [
             'namespace' => 'App\\Controller',
 
+            '/test' => 'TestController.echoTest',
+
             '/string/{board}/{post}' => [
                 'GET' => 'TestController.getString',
                 'POST' => 'TestController.postString'
@@ -71,6 +73,17 @@ class ApplicationTest extends TestCase
     {
         $_SERVER['REQUEST_METHOD'] = $method;
         $_SERVER['PATH_INFO'] = '/'. $prefix . '/' . $board . '/' . $post;
+    }
+
+    public function testGetStringDispatcherByDefaultGetMap()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $_SERVER['PATH_INFO'] = '/test';
+
+        $controller = new TestController();
+
+        $this->expectOutputString('Test!');
+        $this->application->dispatcher(new Request());
     }
 
     public function testGetStringDispatcher()
