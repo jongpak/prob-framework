@@ -16,6 +16,8 @@ class ApplicationTest extends TestCase
 
     public function setUp()
     {
+        include_once 'mock/StringViewForApplicationTest.php';
+
         $application = Application::getInstance();
         $application->setSiteConfig($this->getSiteConfig());
         $application->setViewEngineConfig($this->getViewEngineConfig());
@@ -233,33 +235,5 @@ class TestController
     public function postDummy($board, $post)
     {
         echo $this->generateViewModelKeyValue('POST', $board, $post);
-    }
-}
-
-namespace App\ViewEngine;
-
-class StringViewForApplicationTest extends DummyView
-{
-    private $templateFilename = '';
-    private $var = [];
-
-    public function set($key, $value)
-    {
-        $this->var[$key] = $value;
-    }
-
-    public function file($fileName)
-    {
-        $this->templateFilename = $fileName;
-    }
-
-    public function getRenderingResult()
-    {
-        return $this->templateFilename . ' -- ' . $this->var['key'];
-    }
-
-    public function render()
-    {
-        echo $this->getRenderingResult();
     }
 }
