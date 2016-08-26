@@ -65,7 +65,7 @@ class Twig implements View
 
     public function getFile()
     {
-        return $this->fileName;
+        return $this->templateFilename;
     }
 
     public function render()
