@@ -75,24 +75,41 @@ class Twig implements View
 
     private function addCssFunction()
     {
-        $function = new Twig_SimpleFunction('css', function ($url) {
-            return sprintf('<link rel="stylesheet" type="text/css" href="%s">', $url);
-        }, ['is_safe' => ['html']]);
-
-        $this->twig->addFunction($function);
+        $this->twig->addFunction(new Twig_SimpleFunction(
+            'css',
+            [$this, 'cssFunction'],
+            ['is_safe' => ['html']]
+        ));
     }
 
     private function addAssetFunction()
     {
-        $this->twig->addFunction(new Twig_SimpleFunction('asset', function ($file) {
-            return Application::getInstance()->url($this->PUBLIC_PATH . $file);
-        }));
+        $this->twig->addFunction(new Twig_SimpleFunction(
+            'asset',
+            [$this, 'assetFunction']
+        ));
     }
 
     private function addUrlFunction()
     {
-        $this->twig->addFunction(new Twig_SimpleFunction('url', function ($url = '') {
-            return Application::getInstance()->url($url);
-        }));
+        $this->twig->addFunction(new Twig_SimpleFunction(
+            'url',
+            [$this, 'urlFunction']
+        ));
+    }
+
+    public function cssFunction($url)
+    {
+        return sprintf('<link rel="stylesheet" type="text/css" href="%s">', $url);
+    }
+
+    public function assetFunction($file)
+    {
+        return Application::getInstance()->url($this->PUBLIC_PATH . $file);
+    }
+
+    public function urlFunction($url = '')
+    {
+        return Application::getInstance()->url($url);
     }
 }
