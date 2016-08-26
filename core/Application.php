@@ -85,16 +85,21 @@ class Application
     private function buildRouterMap()
     {
         $routerMap = new Map();
+        $routerMap->setNamespace($this->routeConfig['namespace']);
 
-        foreach ($this->routeConfig as $k => $v) {
-            if ($k === 'namespace') {
-                $routerMap->setNamespace($v);
-            } else {
-                $this->addRouterMap($routerMap, $k, $v);
-            }
+        foreach ($this->getRoutePathMap() as $k => $v) {
+            $this->addRouterMap($routerMap, $k, $v);
         }
 
         $this->routerMap = $routerMap;
+    }
+
+    private function getRoutePathMap()
+    {
+        $paths = $this->routeConfig;
+        unset($paths['namespace']);
+
+        return $paths;
     }
 
     /**
