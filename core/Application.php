@@ -97,6 +97,11 @@ class Application
         $this->routerMap = $routerMap;
     }
 
+    /**
+     * @param Map    $routerMap
+     * @param string $path  url path
+     * @param string|array|closure $handler
+     */
     private function addRouterMap(Map $routerMap, $path, $handler)
     {
         // string | closure
@@ -105,11 +110,13 @@ class Application
             return;
         }
 
-        // array
-        // [
-        //     'GET' => '...',
-        //     'POST' => '...'
-        // ]
+        /**
+         * $handler array schema
+         * (optional) $handler['GET' | 'POST']
+         *                => method_name(ex. 'classname.methodname')
+         *                    or function_name
+         *                    or closure
+         */
         if (isset($handler['GET'])) {
             $routerMap->get($path, $handler['GET']);
         }
