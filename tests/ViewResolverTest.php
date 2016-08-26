@@ -12,7 +12,7 @@ class ViewResolverTest extends TestCase
 {
     public function testStringResolve()
     {
-        include_once 'mock/StringViewForTest.php';
+        include_once 'mock/StringViewForViewTest.php';
 
         $viewResolver = new ViewResolver('default/test');
         $view = $viewResolver->resolve(['engine' => 'StringViewForTest']);

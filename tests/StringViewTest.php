@@ -9,7 +9,7 @@ class StringViewTest extends TestCase
 {
     public function testStringView()
     {
-        include_once 'mock/StringViewForTest.php';
+        include_once 'mock/StringViewForViewTest.php';
 
         $viewResolver = new ViewResolver('default/test');
         $view = $viewResolver->resolve(['engine' => 'StringViewForTest']);
