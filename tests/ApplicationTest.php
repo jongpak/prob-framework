@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Prob\Router\Map;
 use Prob\Rewrite\Request;
 use App\ViewEngine\StringViewForApplicationTest;
+use App\Controller\TestController;
 
 class ApplicationTest extends TestCase
 {
@@ -17,6 +18,7 @@ class ApplicationTest extends TestCase
     public function setUp()
     {
         include_once 'mock/StringViewForApplicationTest.php';
+        include_once 'mock/TestController.php';
 
         $application = Application::getInstance();
         $application->setSiteConfig($this->getSiteConfig());
@@ -46,7 +48,7 @@ class ApplicationTest extends TestCase
     private function getRouteMap()
     {
         return [
-            'namespace' => 'Core',
+            'namespace' => 'App\\Controller',
 
             '/string/{board}/{post}' => [
                 'GET' => 'TestController.getString',
@@ -189,51 +191,5 @@ class ApplicationTest extends TestCase
         $expectUrl = $siteUrl.$url;
 
         $this->assertEquals($expectUrl, $this->application->url($url));
-    }
-}
-
-class TestController
-{
-    public static function generateViewModelKeyValue($method, $board, $post)
-    {
-        return $method . ': /' . $board . '/' . $post;
-    }
-
-    public static function generateJsonArray($method, $board, $post)
-    {
-        return [ $method, $board, $post ];
-    }
-
-
-    public function getString($board, $post, ViewModel $model)
-    {
-        $model->set('key', $this->generateViewModelKeyValue('GET', $board, $post));
-        return 'test/get';
-    }
-
-    public function postString($board, $post, ViewModel $model)
-    {
-        $model->set('key', $this->generateViewModelKeyValue('POST', $board, $post));
-        return 'test/post';
-    }
-
-    public function getJson($board, $post)
-    {
-        return $this->generateJsonArray('GET', $board, $post);
-    }
-
-    public function postJson($board, $post)
-    {
-        return $this->generateJsonArray('POST', $board, $post);
-    }
-
-    public function getDummy($board, $post)
-    {
-        echo $this->generateViewModelKeyValue('GET', $board, $post);
-    }
-
-    public function postDummy($board, $post)
-    {
-        echo $this->generateViewModelKeyValue('POST', $board, $post);
     }
 }
