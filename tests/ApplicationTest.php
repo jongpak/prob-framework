@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use Prob\Router\Map;
 use Prob\Rewrite\Request;
 use App\Controller\TestController;
-use App\ViewEngine\Twig;
 
 class ApplicationTest extends TestCase
 {
@@ -23,6 +22,7 @@ class ApplicationTest extends TestCase
         $application->setSiteConfig($this->getSiteConfig());
         $application->setErrorReporterConfig($this->getErrorReporterConfig());
         $application->setViewEngineConfig($this->getViewEngineConfig());
+
         $application->setRouterConfig($this->getRouteMap());
 
         $this->application = $application;
@@ -44,7 +44,12 @@ class ApplicationTest extends TestCase
             'namespace' => 'App\\ErrorReporter',
 
             'Html' => [
-                'class' => 'Html'
+                'class' => 'Html',
+                'view' => 'App\\ViewEngine\\Twig',
+                'path' => __DIR__ . '/mock',
+                'file' => 'error',
+                'postfix' => '.twig',
+                'settings' => []
             ]
         ];
     }
