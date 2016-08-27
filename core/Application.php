@@ -89,14 +89,7 @@ class Application
 
     public function registerErrorReporters()
     {
-        $enabledReporters = $this->siteConfig['errorReporters'];
-        $errorReporters = [];
-
-        foreach ($enabledReporters as $reporter) {
-            $errorReporters[] = $this->buildErrorReporter($reporter);
-        }
-
-        $this->errorReporters = $errorReporters;
+        $this->errorReporters = $this->getErrorReporterInstances();
 
         /**
          * @var ErrorReporter $reporter
@@ -106,6 +99,18 @@ class Application
                 $reporter->report($exception);
             }
         });
+    }
+
+    private function getErrorReporterInstances()
+    {
+        $enabledReporters = $this->siteConfig['errorReporters'];
+        $errorReporters = [];
+
+        foreach ($enabledReporters as $reporter) {
+            $errorReporters[] = $this->buildErrorReporter($reporter);
+        }
+
+        return $errorReporters;
     }
 
     private function buildErrorReporter($reporterName)
