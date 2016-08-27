@@ -192,6 +192,11 @@ class Application
     }
 
 
+    /**
+     * Return url path with site url
+     * @param  string $url sub url
+     * @return string
+     */
     public function url($url = '')
     {
         return $this->siteConfig['url'] . $url;
