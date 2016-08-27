@@ -47,24 +47,18 @@ class Application
     public function boot()
     {
         $this->setSiteConfig(require '../config/site.php');
-        $this->setDisplayError($this->siteConfig['displayErrors']);
-
         $this->setDbConfig(require '../config/db.php');
         $this->setViewEngineConfig(require '../config/viewEngine.php');
-        $this->setRouterConfig(require '../config/router.php');
 
+        $this->setDisplayError($this->siteConfig['displayErrors']);
+
+        $this->setRouterConfig(require '../config/router.php');
         $this->dispatcher(new Request());
     }
 
     public function setSiteConfig(array $siteConfig)
     {
         $this->siteConfig = $siteConfig;
-    }
-
-    public function setDisplayError($isDisplay)
-    {
-        error_reporting(E_ALL);
-        ini_set('display_errors', $isDisplay);
     }
 
     public function setDbConfig(array $dbConfig)
@@ -75,6 +69,12 @@ class Application
     public function setViewEngineConfig(array $viewEngineConfig)
     {
         $this->viewEngineConfig = $viewEngineConfig;
+    }
+
+    public function setDisplayError($isDisplay)
+    {
+        error_reporting(E_ALL);
+        ini_set('display_errors', $isDisplay);
     }
 
     public function setRouterConfig(array $routeConfig)
