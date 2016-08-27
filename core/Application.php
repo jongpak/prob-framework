@@ -132,23 +132,6 @@ class Application
     }
 
 
-    public function url($url = '')
-    {
-        return $this->siteConfig['url'] . $url;
-    }
-
-    /**
-     * @return EntityManager
-     */
-    public function getEntityManager()
-    {
-        $config = Setup::createAnnotationMetadataConfiguration(
-                    $this->dbConfig['entityPath'],
-                    $this->dbConfig['devMode']
-                    );
-        return EntityManager::create($this->dbConfig[$this->siteConfig['database']], $config);
-    }
-
     public function dispatcher(Request $request)
     {
         $url = $this->resolveUrl($request);
@@ -206,5 +189,24 @@ class Application
         foreach ($var as $key => $value) {
             $view->set($key, $value);
         }
+    }
+
+
+    public function url($url = '')
+    {
+        return $this->siteConfig['url'] . $url;
+    }
+
+
+    /**
+     * @return EntityManager
+     */
+    public function getEntityManager()
+    {
+        $config = Setup::createAnnotationMetadataConfiguration(
+                    $this->dbConfig['entityPath'],
+                    $this->dbConfig['devMode']
+                    );
+        return EntityManager::create($this->dbConfig[$this->siteConfig['database']], $config);
     }
 }
