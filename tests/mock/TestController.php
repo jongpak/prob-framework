@@ -24,13 +24,13 @@ class TestController
     public function getString($board, $post, ViewModel $model)
     {
         $model->set('key', $this->generateViewModelKeyValue('GET', $board, $post));
-        return 'test/get';
+        return 'test';
     }
 
     public function postString($board, $post, ViewModel $model)
     {
         $model->set('key', $this->generateViewModelKeyValue('POST', $board, $post));
-        return 'test/post';
+        return 'test';
     }
 
     public function getJson($board, $post)

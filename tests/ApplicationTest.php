@@ -5,8 +5,8 @@ namespace Core;
 use PHPUnit\Framework\TestCase;
 use Prob\Router\Map;
 use Prob\Rewrite\Request;
-use App\ViewEngine\StringViewForApplicationTest;
 use App\Controller\TestController;
+use App\ViewEngine\Twig;
 
 class ApplicationTest extends TestCase
 {
@@ -17,11 +17,11 @@ class ApplicationTest extends TestCase
 
     public function setUp()
     {
-        include_once 'mock/StringViewForApplicationTest.php';
         include_once 'mock/TestController.php';
 
         $application = Application::getInstance();
         $application->setSiteConfig($this->getSiteConfig());
+        $application->setErrorReporterConfig($this->getErrorReporterConfig());
         $application->setViewEngineConfig($this->getViewEngineConfig());
         $application->setRouterConfig($this->getRouteMap());
 
@@ -32,15 +32,31 @@ class ApplicationTest extends TestCase
     {
         return [
             'url' => 'http://test.com/',
-            'viewEngine' => 'StringViewForApplicationTest'
+            'viewEngine' => 'Twig',
+            'displayErrors' => true,
+            'errorReporters' => [ 'Html' ]
+        ];
+    }
+
+    private function getErrorReporterConfig()
+    {
+        return [
+            'namespace' => 'App\\ErrorReporter',
+
+            'Html' => [
+                'class' => 'Html'
+            ]
         ];
     }
 
     private function getViewEngineConfig()
     {
         return [
-            'StringViewForApplicationTest' => [
-                'class' => 'StringViewForApplicationTest'
+            'Twig' => [
+                'class' => 'Twig',
+                'path' => __DIR__ . '/mock',
+                'postfix' => '.twig',
+                'settings' => []
             ]
         ];
     }
@@ -69,18 +85,29 @@ class ApplicationTest extends TestCase
         ];
     }
 
-    private function setUpRequestAndPathInfo($method, $prefix, $board, $post)
+    public function testSettingDisplayErrors()
     {
-        $_SERVER['REQUEST_METHOD'] = $method;
-        $_SERVER['PATH_INFO'] = '/'. $prefix . '/' . $board . '/' . $post;
+        $isDisplayErrors = true;
+
+        // clean
+        $prev = ini_get('display_errors');
+        ini_set('display_errors', !$isDisplayErrors);
+
+        // test set
+        $this->application->setDisplayError($isDisplayErrors);
+        $curr = ini_get('display_errors');
+
+        // restore
+        ini_set('display_errors', $prev);
+
+        $this->assertEquals($isDisplayErrors, $curr);
     }
+
 
     public function testGetStringDispatcherByDefaultGetMap()
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
         $_SERVER['PATH_INFO'] = '/test';
-
-        $controller = new TestController();
 
         $this->expectOutputString('Test!');
         $this->application->dispatcher(new Request());
@@ -88,43 +115,19 @@ class ApplicationTest extends TestCase
 
     public function testGetStringDispatcher()
     {
-        $method = 'GET';
-        $prefix = 'string';
-        $board = 'free';
-        $post = '5';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $_SERVER['PATH_INFO'] = '/string/free/5';
 
-        $view = new StringViewForApplicationTest();
-        $controller = new TestController();
-        $viewModel = new ViewModel();
-
-        $returnOfController = $controller->getString($board, $post, $viewModel);
-        $view->file($returnOfController);
-        $view->set('key', $viewModel->getVariables()['key']);
-
-        $this->expectOutputString($view->getRenderingResult());
-
-        $this->setUpRequestAndPathInfo($method, $prefix, $board, $post);
+        $this->expectOutputString(TestController::generateViewModelKeyValue('GET', 'free', '5'));
         $this->application->dispatcher(new Request());
     }
 
     public function testPostStringDispatcher()
     {
-        $method = 'POST';
-        $prefix = 'string';
-        $board = 'free';
-        $post = '5';
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $_SERVER['PATH_INFO'] = '/string/free/5';
 
-        $view = new StringViewForApplicationTest();
-        $controller = new TestController();
-        $viewModel = new ViewModel();
-
-        $returnOfController = $controller->postString($board, $post, $viewModel);
-        $view->file($returnOfController);
-        $view->set('key', $viewModel->getVariables()['key']);
-
-        $this->expectOutputString($view->getRenderingResult());
-
-        $this->setUpRequestAndPathInfo($method, $prefix, $board, $post);
+        $this->expectOutputString(TestController::generateViewModelKeyValue('POST', 'free', '5'));
         $this->application->dispatcher(new Request());
     }
 
@@ -133,17 +136,10 @@ class ApplicationTest extends TestCase
      */
     public function testGetJsonDispatcher()
     {
-        $method = 'GET';
-        $prefix = 'json';
-        $board = 'free';
-        $post = '5';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $_SERVER['PATH_INFO'] = '/json/free/5';
 
-        $controller = new TestController();
-
-        $jsonResult = json_encode($controller->getJson($board, $post));
-        $this->expectOutputString($jsonResult);
-
-        $this->setUpRequestAndPathInfo($method, $prefix, $board, $post);
+        $this->expectOutputString(json_encode(TestController::generateJsonArray('GET', 'free', '5')));
         $this->application->dispatcher(new Request());
     }
 
@@ -152,47 +148,28 @@ class ApplicationTest extends TestCase
      */
     public function testPostJsonDispatcher()
     {
-        $method = 'POST';
-        $prefix = 'json';
-        $board = 'free';
-        $post = '5';
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $_SERVER['PATH_INFO'] = '/json/free/5';
 
-        $controller = new TestController();
-
-        $jsonResult = json_encode($controller->postJson($board, $post));
-        $this->expectOutputString($jsonResult);
-
-        $this->setUpRequestAndPathInfo($method, $prefix, $board, $post);
+        $this->expectOutputString(json_encode(TestController::generateJsonArray('POST', 'free', '5')));
         $this->application->dispatcher(new Request());
     }
 
     public function testGetDummyDispatcher()
     {
-        $method = 'GET';
-        $prefix = 'dummy';
-        $board = 'free';
-        $post = '5';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $_SERVER['PATH_INFO'] = '/dummy/free/5';
 
-        $controller = new TestController();
-
-        $this->expectOutputString($controller->generateViewModelKeyValue($method, $board, $post));
-
-        $this->setUpRequestAndPathInfo($method, $prefix, $board, $post);
+        $this->expectOutputString(TestController::generateViewModelKeyValue('GET', 'free', '5'));
         $this->application->dispatcher(new Request());
     }
 
     public function testPostDummyDispatcher()
     {
-        $method = 'POST';
-        $prefix = 'dummy';
-        $board = 'free';
-        $post = '5';
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $_SERVER['PATH_INFO'] = '/dummy/free/5';
 
-        $controller = new TestController();
-
-        $this->expectOutputString($controller->generateViewModelKeyValue($method, $board, $post));
-
-        $this->setUpRequestAndPathInfo($method, $prefix, $board, $post);
+        $this->expectOutputString(TestController::generateViewModelKeyValue('POST', 'free', '5'));
         $this->application->dispatcher(new Request());
     }
 
