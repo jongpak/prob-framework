@@ -5,5 +5,6 @@ return [
     'viewEngine' => 'Twig',
     'database' => 'mysql',
 
-    'displayErrors' => true
+    'displayErrors' => true,
+    'errorReporters' => [ 'Html' ]
 ];

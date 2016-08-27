@@ -9,6 +9,7 @@ use Prob\Router\Map;
 use Prob\Router\Matcher;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
+use Core\ErrorReporter;
 
 class Application
 {
@@ -19,9 +20,11 @@ class Application
 
     private $routeConfig = [];
     private $siteConfig = [];
-    private $errorConfig = [];
+    private $errorReporterConfig = [];
     private $viewEngineConfig = [];
     private $dbConfig = [];
+
+    private $errorReporters = [];
 
     /**
      * Singleton: private constructor
@@ -47,10 +50,12 @@ class Application
     public function boot()
     {
         $this->setSiteConfig(require '../config/site.php');
+        $this->setErrorReporterConfig(require '../config/errorReporter.php');
         $this->setDbConfig(require '../config/db.php');
         $this->setViewEngineConfig(require '../config/viewEngine.php');
 
         $this->setDisplayError($this->siteConfig['displayErrors']);
+        $this->registerErrorReporters();
 
         $this->setRouterConfig(require '../config/router.php');
         $this->dispatcher(new Request());
@@ -59,6 +64,11 @@ class Application
     public function setSiteConfig(array $siteConfig)
     {
         $this->siteConfig = $siteConfig;
+    }
+
+    public function setErrorReporterConfig(array $errorReporterConfig)
+    {
+        $this->errorReporterConfig = $errorReporterConfig;
     }
 
     public function setDbConfig(array $dbConfig)
@@ -75,6 +85,41 @@ class Application
     {
         error_reporting(E_ALL);
         ini_set('display_errors', $isDisplay);
+    }
+
+    public function registerErrorReporters()
+    {
+        $enabledReporters = $this->siteConfig['errorReporters'];
+        $errorReporters = [];
+
+        foreach ($enabledReporters as $reporter) {
+            $errorReporters[] = $this->buildErrorReporter($reporter);
+        }
+
+        $this->errorReporters = $errorReporters;
+
+        /**
+         * @var ErrorReporter $reporter
+         */
+        set_exception_handler(function ($exception) {
+            foreach ($this->errorReporters as $reporter) {
+                $reporter->report($exception);
+            }
+        });
+    }
+
+    private function buildErrorReporter($reporterName)
+    {
+        $namespace = $this->errorReporterConfig['namespace'];
+        $class = $namespace. '\\' . $reporterName;
+
+        $setting = $this->errorReporterConfig[$reporterName];
+
+        /* @var ErrorReporter */
+        $reporter = new $class();
+        $reporter->init($setting);
+
+        return $reporter;
     }
 
     public function setRouterConfig(array $routeConfig)
