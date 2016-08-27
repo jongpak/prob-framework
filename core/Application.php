@@ -45,9 +45,9 @@ class Application
 
     public function boot()
     {
-        $this->setDisplayError(true);
-
         $this->setSiteConfig(require '../config/site.php');
+        $this->setDisplayError($this->siteConfig['displayErrors']);
+
         $this->setDbConfig(require '../config/db.php');
         $this->setViewEngineConfig(require '../config/viewEngine.php');
         $this->setRouterConfig(require '../config/router.php');

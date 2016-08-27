@@ -3,5 +3,7 @@
 return [
     'url' => 'http://mysite.com/',
     'viewEngine' => 'Twig',
-    'database' => 'mysql'
+    'database' => 'mysql',
+
+    'displayErrors' => true
 ];
