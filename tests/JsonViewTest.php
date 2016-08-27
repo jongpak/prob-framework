@@ -19,8 +19,8 @@ class JsonViewTest extends TestCase
             ['ok']
         ];
 
-        $viewResolver = new ViewResolver($array);
-        $view = $viewResolver->resolve(['class' => null]);
+        $view = new Json();
+        $view->file($array);
         $view->set('one', 1);
         $view->set('two', 2);
 
@@ -39,8 +39,8 @@ class JsonViewTest extends TestCase
         $object->var1 = 'test';
         $object->var2 = ['ok'];
 
-        $viewResolver = new ViewResolver($object);
-        $view = $viewResolver->resolve(['class' => null]);
+        $view = new Json();
+        $view->file($object);
         $view->set('one', 1);
         $view->set('two', 2);
 

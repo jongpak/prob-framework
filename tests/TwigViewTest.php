@@ -4,20 +4,19 @@ namespace Core;
 
 use PHPUnit\Framework\TestCase;
 use App\ViewEngine\Twig;
-use Core\Application;
 
 class TwigViewTest extends TestCase
 {
     public function testStringView()
     {
-        $viewResolver = new ViewResolver('test');
-        $view = $viewResolver->resolve([
+        $view = new Twig();
+        $view->init([
             'class' => 'Twig',
             'path' => __DIR__ . '/mock',
             'postfix' => '.twig',
             'settings' => []
         ]);
-
+        $view->file('test');
         $view->set('key', 'ok');
 
         $this->assertEquals(['key' => 'ok'], $view->getVariables());
@@ -34,13 +33,14 @@ class TwigViewTest extends TestCase
             'viewEngine' => 'Twig',
         ]);
 
-        $viewResolver = new ViewResolver('testCustomFunction');
-        $view = $viewResolver->resolve([
+        $view = new Twig();
+        $view->init([
             'class' => 'Twig',
             'path' => __DIR__ . '/mock',
             'postfix' => '.twig',
             'settings' => []
         ]);
+        $view->file('testCustomFunction');
 
         $this->expectOutputString(
             "<link rel=\"stylesheet\" type=\"text/css\" href=\"css_test\">\n" .

@@ -14,8 +14,8 @@ class RedirectViewTest extends TestCase
     {
         $url = 'test/url';
 
-        $viewResolver = new ViewResolver('redirect: ' . $url);
-        $view = $viewResolver->resolve(['class' => null]);
+        $view = new Redirect();
+        $view->file($url);
         $view->set('one', 1);
         $view->set('two', 2);
 

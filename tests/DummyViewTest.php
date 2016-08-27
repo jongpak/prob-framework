@@ -9,8 +9,8 @@ class DummyViewTest extends TestCase
 {
     public function testDummyView()
     {
-        $viewResolver = new ViewResolver(null);
-        $view = $viewResolver->resolve(['class' => null]);
+        $view = new DummyView();
+        $view->file('test');
         $view->set('one', 1);
         $view->set('two', 2);
 
