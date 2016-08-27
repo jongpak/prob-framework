@@ -45,7 +45,7 @@ class Application
 
     public function boot()
     {
-        $this->setDisplayError();
+        $this->setDisplayError(true);
 
         $this->setSiteConfig(require '../config/site.php');
         $this->setDbConfig(require '../config/db.php');
@@ -55,7 +55,7 @@ class Application
         $this->dispatcher(new Request());
     }
 
-    public function setDisplayError($isDisplay = true)
+    public function setDisplayError($isDisplay)
     {
         error_reporting(E_ALL);
         ini_set('display_errors', $isDisplay);
