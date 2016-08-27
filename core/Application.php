@@ -19,6 +19,7 @@ class Application
 
     private $routeConfig = [];
     private $siteConfig = [];
+    private $errorConfig = [];
     private $viewEngineConfig = [];
     private $dbConfig = [];
 
@@ -55,21 +56,15 @@ class Application
         $this->dispatcher(new Request());
     }
 
+    public function setSiteConfig(array $siteConfig)
+    {
+        $this->siteConfig = $siteConfig;
+    }
+
     public function setDisplayError($isDisplay)
     {
         error_reporting(E_ALL);
         ini_set('display_errors', $isDisplay);
-    }
-
-    public function setRouterConfig(array $routeConfig)
-    {
-        $this->routeConfig = $routeConfig;
-        $this->buildRouterMap();
-    }
-
-    public function setSiteConfig(array $siteConfig)
-    {
-        $this->siteConfig = $siteConfig;
     }
 
     public function setDbConfig(array $dbConfig)
@@ -80,6 +75,12 @@ class Application
     public function setViewEngineConfig(array $viewEngineConfig)
     {
         $this->viewEngineConfig = $viewEngineConfig;
+    }
+
+    public function setRouterConfig(array $routeConfig)
+    {
+        $this->routeConfig = $routeConfig;
+        $this->buildRouterMap();
     }
 
     private function buildRouterMap()
