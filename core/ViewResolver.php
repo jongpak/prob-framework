@@ -39,7 +39,7 @@ class ViewResolver
      */
     public function resolve(array $settings)
     {
-        $this->resolveViewType['string'] = $settings['engine'];
+        $this->resolveViewType['string'] = $settings['class'];
 
         $viewClassName = $this->getResolvedViewClassName();
 

@@ -3,7 +3,7 @@
 namespace Core;
 
 use PHPUnit\Framework\TestCase;
-use App\ViewEngine\StringViewForTest;
+use App\ViewEngine\StringViewForViewTest;
 use App\ViewEngine\Json;
 use App\ViewEngine\Redirect;
 use App\ViewEngine\DummyView;
@@ -15,8 +15,8 @@ class ViewResolverTest extends TestCase
         include_once 'mock/StringViewForViewTest.php';
 
         $viewResolver = new ViewResolver('default/test');
-        $view = $viewResolver->resolve(['engine' => 'StringViewForTest']);
-        $this->assertEquals(StringViewForTest::class, get_class($view));
+        $view = $viewResolver->resolve(['class' => 'StringViewForViewTest']);
+        $this->assertEquals(StringViewForViewTest::class, get_class($view));
     }
 
     /**
@@ -32,7 +32,7 @@ class ViewResolverTest extends TestCase
         ];
 
         $viewResolver = new ViewResolver($array);
-        $view = $viewResolver->resolve(['engine' => 'StringViewForTest']);
+        $view = $viewResolver->resolve(['class' => 'StringViewForViewTest']);
 
         $this->assertEquals(Json::class, get_class($view));
     }
@@ -45,7 +45,7 @@ class ViewResolverTest extends TestCase
         $object = new \stdClass();
 
         $viewResolver = new ViewResolver($object);
-        $view = $viewResolver->resolve(['engine' => 'StringViewForTest']);
+        $view = $viewResolver->resolve(['class' => 'StringViewForViewTest']);
 
         $this->assertEquals(Json::class, get_class($view));
     }
@@ -53,7 +53,7 @@ class ViewResolverTest extends TestCase
     public function testDummyResolve()
     {
         $viewResolver = new ViewResolver(null);
-        $view = $viewResolver->resolve(['engine' => 'StringViewForTest']);
+        $view = $viewResolver->resolve(['class' => 'StringViewForViewTest']);
 
         $this->assertEquals(DummyView::class, get_class($view));
     }
@@ -61,7 +61,7 @@ class ViewResolverTest extends TestCase
     public function testRedirectResolve()
     {
         $viewResolver = new ViewResolver('redirect: test/url');
-        $view = $viewResolver->resolve(['engine' => 'StringViewForTest']);
+        $view = $viewResolver->resolve(['class' => 'StringViewForViewTest']);
 
         $this->assertEquals(Redirect::class, get_class($view));
     }

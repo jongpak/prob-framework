@@ -4,7 +4,7 @@ namespace App\ViewEngine;
 
 use Core\View;
 
-class StringViewForTest implements View
+class StringViewForViewTest implements View
 {
 
 

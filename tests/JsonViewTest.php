@@ -20,7 +20,7 @@ class JsonViewTest extends TestCase
         ];
 
         $viewResolver = new ViewResolver($array);
-        $view = $viewResolver->resolve(['engine' => 'mock']);
+        $view = $viewResolver->resolve(['class' => null]);
 
         $this->assertEquals([], $view->getVariables());
         $this->assertEquals($array, $view->getFile());
@@ -38,7 +38,7 @@ class JsonViewTest extends TestCase
         $object->var2 = ['ok'];
 
         $viewResolver = new ViewResolver($object);
-        $view = $viewResolver->resolve(['engine' => 'mock']);
+        $view = $viewResolver->resolve(['class' => null]);
 
         $this->assertEquals([], $view->getVariables());
         $this->assertEquals($object, $view->getFile());

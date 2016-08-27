@@ -40,7 +40,7 @@ class ApplicationTest extends TestCase
     {
         return [
             'StringViewForApplicationTest' => [
-                'engine' => 'StringViewForApplicationTest'
+                'class' => 'StringViewForApplicationTest'
             ]
         ];
     }

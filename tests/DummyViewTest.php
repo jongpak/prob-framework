@@ -10,7 +10,7 @@ class DummyViewTest extends TestCase
     public function testDummyView()
     {
         $viewResolver = new ViewResolver(null);
-        $view = $viewResolver->resolve(['engine' => 'mock']);
+        $view = $viewResolver->resolve(['class' => null]);
 
         $this->assertEquals([], $view->getVariables());
         $this->assertEquals(null, $view->getFile());

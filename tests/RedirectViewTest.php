@@ -12,7 +12,7 @@ class RedirectViewTest extends TestCase
         $url = 'test/url';
 
         $viewResolver = new ViewResolver('redirect: ' . $url);
-        $view = $viewResolver->resolve(['engine' => 'mock']);
+        $view = $viewResolver->resolve(['class' => null]);
 
         $this->assertEquals([], $view->getVariables());
         $this->assertEquals($url, $view->getFile());

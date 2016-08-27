@@ -12,7 +12,7 @@ class StringViewTest extends TestCase
         include_once 'mock/StringViewForViewTest.php';
 
         $viewResolver = new ViewResolver('default/test');
-        $view = $viewResolver->resolve(['engine' => 'StringViewForTest']);
+        $view = $viewResolver->resolve(['class' => 'StringViewForViewTest']);
         $view->set('key', 'ok');
 
         $this->assertEquals(['key' => 'ok'], $view->getVariables());

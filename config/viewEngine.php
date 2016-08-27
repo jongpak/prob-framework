@@ -2,7 +2,7 @@
 
 return [
     'Twig' => [
-        'engine' => 'Twig',
+        'class' => 'Twig',
         'path' => '../view/',
         'postfix' => '.twig',
         'settings' => []
