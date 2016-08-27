@@ -21,6 +21,8 @@ class JsonViewTest extends TestCase
 
         $viewResolver = new ViewResolver($array);
         $view = $viewResolver->resolve(['class' => null]);
+        $view->set('one', 1);
+        $view->set('two', 2);
 
         $this->assertEquals([], $view->getVariables());
         $this->assertEquals($array, $view->getFile());
@@ -39,6 +41,8 @@ class JsonViewTest extends TestCase
 
         $viewResolver = new ViewResolver($object);
         $view = $viewResolver->resolve(['class' => null]);
+        $view->set('one', 1);
+        $view->set('two', 2);
 
         $this->assertEquals([], $view->getVariables());
         $this->assertEquals($object, $view->getFile());
