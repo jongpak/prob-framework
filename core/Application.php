@@ -10,6 +10,7 @@ use Prob\Router\Matcher;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 use Core\ErrorReporter;
+use \ErrorException;
 
 class Application
 {
@@ -98,6 +99,10 @@ class Application
             foreach ($this->errorReporters as $reporter) {
                 $reporter->report($exception);
             }
+        });
+
+        set_error_handler(function ($errno, $errstr, $errfile, $errline, array $errcontext) {
+            throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
         });
     }
 

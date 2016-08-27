@@ -24,13 +24,13 @@ class Html implements ErrorReporter
         $this->view->file($setting['file']);
     }
 
-    public function report(Exception $exception)
+    public function report($exception)
     {
         $this->setReportVariables($exception);
         echo $this->view->render();
     }
 
-    private function setReportVariables(Exception $exception)
+    private function setReportVariables($exception)
     {
         $this->view->set('message', $exception->getMessage());
         $this->view->set('file', $exception->getFile());

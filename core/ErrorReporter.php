@@ -7,5 +7,9 @@ use \Exception;
 interface ErrorReporter
 {
     public function init($setting = []);
-    public function report(Exception $exception);
+
+    /**
+     * @param  Exception|Error|Throwable $exception
+     */
+    public function report($exception);
 }
