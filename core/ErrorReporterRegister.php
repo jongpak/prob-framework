@@ -22,13 +22,13 @@ class ErrorReporterRegister
         $this->enabledReporters = $reports;
     }
 
-    public function regist()
+    public function register()
     {
         $this->buildErrorReporters();
-        $this->registErrorReporters();
+        $this->registerErrorReporters();
     }
 
-    private function registErrorReporters()
+    private function registerErrorReporters()
     {
         /**
          * @var ErrorReporter $reporter

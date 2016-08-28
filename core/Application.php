@@ -66,7 +66,7 @@ class Application
         $register = new ErrorReporterRegister();
         $register->setErrorReporterConfig($this->errorReporterConfig);
         $register->setEnabledReporters($this->siteConfig['errorReporters']);
-        $register->regist();
+        $register->register();
     }
 
     public function setRouterConfig(array $routerConfig)
