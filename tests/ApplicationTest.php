@@ -72,6 +72,9 @@ class ApplicationTest extends TestCase
             'namespace' => 'App\\Controller',
 
             '/test' => 'TestController.echoTest',
+            '/test/closure' => function () {
+                echo 'Test!';
+            },
 
             '/string/{board}/{post}' => [
                 'GET' => 'TestController.getString',

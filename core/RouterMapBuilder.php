@@ -65,6 +65,10 @@ class RouterMapBuilder
 
     private function resolveHttpPostHandler($handlers)
     {
+        if (gettype($handlers) === 'string' || is_callable($handlers)) {
+            return;
+        }
+
         return isset($handlers['POST']) ? $handlers['POST'] : null;
     }
 }
