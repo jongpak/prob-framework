@@ -6,6 +6,7 @@ use Prob\Handler\ParameterMap;
 use Prob\Router\Dispatcher;
 use Prob\Rewrite\Request;
 use Prob\Router\Matcher;
+use Prob\Router\Map;
 
 class AppDispatcher
 {
