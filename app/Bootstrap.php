@@ -21,7 +21,7 @@ class Bootstrap
         $application->registerErrorReporters();
 
         $application->setRouterConfig(self::getRouterConfig());
-        $application->dispatcher(new Request());
+        $application->dispatch(new Request());
     }
 
     public static function getSiteConfig()

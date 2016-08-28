@@ -74,7 +74,7 @@ class Application
         $this->routerConfig = $routerConfig;
     }
 
-    public function dispatcher(Request $request)
+    public function dispatch(Request $request)
     {
         $dispatcher = new AppDispatcher();
         $dispatcher->setRouterConfig($this->routerConfig);

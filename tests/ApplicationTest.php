@@ -115,7 +115,7 @@ class ApplicationTest extends TestCase
         $_SERVER['PATH_INFO'] = '/test';
 
         $this->expectOutputString('Test!');
-        $this->application->dispatcher(new Request());
+        $this->application->dispatch(new Request());
     }
 
     public function testGetStringDispatcher()
@@ -124,7 +124,7 @@ class ApplicationTest extends TestCase
         $_SERVER['PATH_INFO'] = '/string/free/5';
 
         $this->expectOutputString(TestController::generateViewModelKeyValue('GET', 'free', '5'));
-        $this->application->dispatcher(new Request());
+        $this->application->dispatch(new Request());
     }
 
     public function testPostStringDispatcher()
@@ -133,7 +133,7 @@ class ApplicationTest extends TestCase
         $_SERVER['PATH_INFO'] = '/string/free/5';
 
         $this->expectOutputString(TestController::generateViewModelKeyValue('POST', 'free', '5'));
-        $this->application->dispatcher(new Request());
+        $this->application->dispatch(new Request());
     }
 
     /**
@@ -145,7 +145,7 @@ class ApplicationTest extends TestCase
         $_SERVER['PATH_INFO'] = '/json/free/5';
 
         $this->expectOutputString(json_encode(TestController::generateJsonArray('GET', 'free', '5')));
-        $this->application->dispatcher(new Request());
+        $this->application->dispatch(new Request());
     }
 
     /**
@@ -157,7 +157,7 @@ class ApplicationTest extends TestCase
         $_SERVER['PATH_INFO'] = '/json/free/5';
 
         $this->expectOutputString(json_encode(TestController::generateJsonArray('POST', 'free', '5')));
-        $this->application->dispatcher(new Request());
+        $this->application->dispatch(new Request());
     }
 
     public function testGetDummyDispatcher()
@@ -166,7 +166,7 @@ class ApplicationTest extends TestCase
         $_SERVER['PATH_INFO'] = '/dummy/free/5';
 
         $this->expectOutputString(TestController::generateViewModelKeyValue('GET', 'free', '5'));
-        $this->application->dispatcher(new Request());
+        $this->application->dispatch(new Request());
     }
 
     public function testPostDummyDispatcher()
@@ -175,7 +175,7 @@ class ApplicationTest extends TestCase
         $_SERVER['PATH_INFO'] = '/dummy/free/5';
 
         $this->expectOutputString(TestController::generateViewModelKeyValue('POST', 'free', '5'));
-        $this->application->dispatcher(new Request());
+        $this->application->dispatch(new Request());
     }
 
     public function testUrl()
