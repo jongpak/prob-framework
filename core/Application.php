@@ -9,6 +9,7 @@ use Prob\Router\Map;
 use Prob\Router\Matcher;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
+use Core\RouterMapBuilder;
 
 class Application
 {
@@ -17,7 +18,7 @@ class Application
      */
     private $routerMap;
 
-    private $routeConfig = [];
+    private $routerConfig = [];
     private $siteConfig = [];
     private $errorReporterConfig = [];
     private $viewEngineConfig = [];
@@ -80,60 +81,19 @@ class Application
         $register->regist();
     }
 
-    public function setRouterConfig(array $routeConfig)
+    public function setRouterConfig(array $routerConfig)
     {
-        $this->routeConfig = $routeConfig;
+        $this->routerConfig = $routerConfig;
         $this->buildRouterMap();
     }
 
     private function buildRouterMap()
     {
-        $routerMap = new Map();
-        $routerMap->setNamespace($this->routeConfig['namespace']);
+        $builder = new RouterMapBuilder();
+        $builder->setRouterConfig($this->routerConfig);
 
-        foreach ($this->getRoutePathMap() as $k => $v) {
-            $this->addRouterMap($routerMap, $k, $v);
-        }
-
-        $this->routerMap = $routerMap;
+        $this->routerMap = $builder->build();
     }
-
-    private function getRoutePathMap()
-    {
-        $paths = $this->routeConfig;
-        unset($paths['namespace']);
-
-        return $paths;
-    }
-
-    /**
-     * @param Map    $routerMap
-     * @param string $path  url path
-     * @param string|array|closure $handler
-     */
-    private function addRouterMap(Map $routerMap, $path, $handler)
-    {
-        // string | closure
-        if (gettype($handler) === 'string' || is_callable($handler)) {
-            $routerMap->get($path, $handler);
-            return;
-        }
-
-        /**
-         * $handler array schema
-         * (optional) $handler['GET' | 'POST']
-         *                => method_name(ex. 'classname.methodname')
-         *                    or function_name
-         *                    or closure
-         */
-        if (isset($handler['GET'])) {
-            $routerMap->get($path, $handler['GET']);
-        }
-        if (isset($handler['POST'])) {
-            $routerMap->post($path, $handler['POST']);
-        }
-    }
-
 
     public function dispatcher(Request $request)
     {
