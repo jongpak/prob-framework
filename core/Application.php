@@ -76,7 +76,7 @@ class Application
 
     public function dispatch(Request $request)
     {
-        $dispatcher = new AppDispatcher();
+        $dispatcher = new ControllerDispatcher();
         $dispatcher->setRouterConfig($this->routerConfig);
         $dispatcher->setViewEngineConfig($this->viewEngineConfig[$this->siteConfig['viewEngine']]);
         $dispatcher->dispatch($request);

@@ -8,7 +8,7 @@ use Prob\Rewrite\Request;
 use Prob\Router\Matcher;
 use Prob\Router\Map;
 
-class AppDispatcher
+class ControllerDispatcher
 {
 
     /**
