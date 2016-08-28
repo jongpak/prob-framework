@@ -14,8 +14,6 @@ class Application
     private $viewEngineConfig = [];
     private $dbConfig = [];
 
-    private $errorReporters = [];
-
     /**
      * Singleton: private constructor
      */
