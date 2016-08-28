@@ -40,6 +40,11 @@ class Test
         return 'redirect: ' . Application::getInstance()->url();
     }
 
+    public function event()
+    {
+        echo 'Event!';
+    }
+
     public function jsonTest()
     {
         return [
