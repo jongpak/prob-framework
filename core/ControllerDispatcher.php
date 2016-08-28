@@ -2,6 +2,7 @@
 
 namespace Core;
 
+use Prob\Handler\Proc;
 use Prob\Handler\ParameterMap;
 use Prob\Router\Dispatcher;
 use Prob\Rewrite\Request;
@@ -34,6 +35,7 @@ class ControllerDispatcher
 
         $viewModel = new ViewModel();
         $parameterMap = $this->getControllerParameterMap($request, $viewModel);
+
         $returnOfController = $this->executeController($request, $parameterMap);
 
         $this->renderView($returnOfController, $viewModel);
@@ -82,7 +84,29 @@ class ControllerDispatcher
     private function executeController(Request $request, ParameterMap $parameterMap)
     {
         $dispatcher = new Dispatcher($this->routerMap);
-        return $dispatcher->dispatch($request, $parameterMap);
+        $handlerResolvedName = $this->getMatchedHandler($request)->getResolvedName();
+
+        $this->triggerEvent('Controller.' . $handlerResolvedName['class'] . '.' . $handlerResolvedName['func'] . '.before');
+        $result = $dispatcher->dispatch($request, $parameterMap);
+        $this->triggerEvent('Controller.' . $handlerResolvedName['class'] . '.' . $handlerResolvedName['func'] . '.after');
+
+        return $result;
+    }
+
+    /**
+     * @return Proc
+     */
+    private function getMatchedHandler(Request $request)
+    {
+        $matcher = new Matcher($this->routerMap);
+        return $matcher->match($request)['handler'];
+    }
+
+    private function triggerEvent($eventName)
+    {
+        Application::getInstance()
+            ->getEventManager()
+                ->trigger($eventName);
     }
 
     private function renderView($returnOfController, ViewModel $viewModel)

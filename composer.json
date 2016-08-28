@@ -5,8 +5,10 @@
   "require": {
     "twig/twig": "*",
     "doctrine/orm": "*",
+    "jbzoo/event": "*",
     "prob/router": "dev-master",
-    "prob/rewrite-helper": "dev-master"
+    "prob/rewrite-helper": "dev-master",
+    "jongpak/array-key-glue": "dev-master"
   },
   "require-dev": {
     "phpunit/phpunit": "*"

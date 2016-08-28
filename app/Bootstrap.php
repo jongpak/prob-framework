@@ -20,6 +20,9 @@ class Bootstrap
         $application->setDisplayError(self::getSiteConfig()['displayErrors']);
         $application->registerErrorReporters();
 
+        $application->setEventListener(self::getEventListener());
+        $application->registerEventListener();
+
         $application->setRouterConfig(self::getRouterConfig());
         $application->dispatch(new Request());
     }
@@ -42,6 +45,11 @@ class Bootstrap
     public static function getViewEngineConfig()
     {
         return require '../config/viewEngine.php';
+    }
+
+    public static function getEventListener()
+    {
+        return require '../config/event.php';
     }
 
     public static function getRouterConfig()

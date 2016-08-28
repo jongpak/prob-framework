@@ -5,6 +5,7 @@ namespace Core;
 use Prob\Rewrite\Request;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
+use JBZoo\Event\EventManager;
 
 class Application
 {
@@ -13,6 +14,7 @@ class Application
     private $errorReporterConfig = [];
     private $viewEngineConfig = [];
     private $dbConfig = [];
+    private $eventListeners = [];
 
     /**
      * Singleton: private constructor
@@ -55,6 +57,11 @@ class Application
         $this->viewEngineConfig = $viewEngineConfig;
     }
 
+    public function setEventListener(array $eventListeners)
+    {
+        $this->eventListeners = $eventListeners;
+    }
+
     public function setDisplayError($isDisplay)
     {
         error_reporting(E_ALL);
@@ -73,6 +80,14 @@ class Application
     {
         $this->routerConfig = $routerConfig;
     }
+
+    public function registerEventListener()
+    {
+        $register = new EventListenerRegister();
+        $register->setEventListener($this->eventListeners);
+        $register->register();
+    }
+
 
     public function dispatch(Request $request)
     {
@@ -104,5 +119,19 @@ class Application
                     $this->dbConfig['devMode']
                     );
         return EntityManager::create($this->dbConfig[$this->siteConfig['database']], $config);
+    }
+
+    /**
+     * @return EventManager
+     */
+    public function getEventManager()
+    {
+        static $instance = null;
+
+        if ($instance === null) {
+            $instance = new EventManager();
+        }
+
+        return $instance;
     }
 }
