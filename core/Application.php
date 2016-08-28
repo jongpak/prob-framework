@@ -9,8 +9,6 @@ use Prob\Router\Map;
 use Prob\Router\Matcher;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
-use Core\ErrorReporter;
-use \ErrorException;
 
 class Application
 {
@@ -76,46 +74,10 @@ class Application
 
     public function registerErrorReporters()
     {
-        $this->errorReporters = $this->getErrorReporterInstances();
-
-        /**
-         * @var ErrorReporter $reporter
-         */
-        set_exception_handler(function ($exception) {
-            foreach ($this->errorReporters as $reporter) {
-                $reporter->report($exception);
-            }
-        });
-
-        set_error_handler(function ($errno, $errstr, $errfile, $errline, array $errcontext) {
-            throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
-        });
-    }
-
-    private function getErrorReporterInstances()
-    {
-        $enabledReporters = $this->siteConfig['errorReporters'];
-        $errorReporters = [];
-
-        foreach ($enabledReporters as $reporter) {
-            $errorReporters[] = $this->buildErrorReporter($reporter);
-        }
-
-        return $errorReporters;
-    }
-
-    private function buildErrorReporter($reporterName)
-    {
-        $namespace = $this->errorReporterConfig['namespace'];
-        $class = $namespace. '\\' . $reporterName;
-
-        $setting = $this->errorReporterConfig[$reporterName];
-
-        /* @var ErrorReporter */
-        $reporter = new $class();
-        $reporter->init($setting);
-
-        return $reporter;
+        $register = new ErrorReporterRegister();
+        $register->setErrorReporterConfig($this->errorReporterConfig);
+        $register->setEnabledReporters($this->siteConfig['errorReporters']);
+        $register->regist();
     }
 
     public function setRouterConfig(array $routeConfig)
