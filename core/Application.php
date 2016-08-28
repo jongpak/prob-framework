@@ -2,22 +2,12 @@
 
 namespace Core;
 
-use Prob\Handler\ParameterMap;
-use Prob\Router\Dispatcher;
 use Prob\Rewrite\Request;
-use Prob\Router\Map;
-use Prob\Router\Matcher;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
-use Core\RouterMapBuilder;
 
 class Application
 {
-    /**
-     * @var Map
-     */
-    private $routerMap;
-
     private $routerConfig = [];
     private $siteConfig = [];
     private $errorReporterConfig = [];
@@ -84,74 +74,14 @@ class Application
     public function setRouterConfig(array $routerConfig)
     {
         $this->routerConfig = $routerConfig;
-        $this->buildRouterMap();
-    }
-
-    private function buildRouterMap()
-    {
-        $builder = new RouterMapBuilder();
-        $builder->setRouterConfig($this->routerConfig);
-
-        $this->routerMap = $builder->build();
     }
 
     public function dispatcher(Request $request)
     {
-        $url = $this->resolveUrl($request);
-        $viewModel = new ViewModel();
-
-        $parameterMap = new ParameterMap();
-        $this->bindUrlParameter($parameterMap, $url);
-        $this->bindViewModelParameter($parameterMap, $viewModel);
-
-        $returnOfController = $this->executeController($request, $parameterMap);
-
-        $view = $this->resolveView($returnOfController);
-        $this->setViewVariables($view, $viewModel->getVariables());
-        $view->render();
-    }
-
-    private function resolveUrl(Request $request)
-    {
-        $matcher = new Matcher($this->routerMap);
-        return $matcher->match($request)['urlNameMatching'] ?: [];
-    }
-
-    private function executeController(Request $request, ParameterMap $parameterMap)
-    {
-        $dispatcher = new Dispatcher($this->routerMap);
-        return $dispatcher->dispatch($request, $parameterMap);
-    }
-
-    /**
-     * @param  mixed $returnOfController
-     * @return View
-     */
-    private function resolveView($returnOfController)
-    {
-        $viewResolver = new ViewResolver($returnOfController);
-        return $viewResolver->resolve($this->viewEngineConfig[$this->siteConfig['viewEngine']]);
-    }
-
-    private function bindUrlParameter(ParameterMap $map, array $url)
-    {
-        $map->bindByNameWithType('array', 'url', $url);
-
-        foreach ($url as $name => $value) {
-            $map->bindByName($name, $value);
-        }
-    }
-
-    private function bindViewModelParameter(ParameterMap $map, ViewModel $viewModel)
-    {
-        $map->bindByType(ViewModel::class, $viewModel);
-    }
-
-    private function setViewVariables(View $view, array $var)
-    {
-        foreach ($var as $key => $value) {
-            $view->set($key, $value);
-        }
+        $dispatcher = new AppDispatcher();
+        $dispatcher->setRouterConfig($this->routerConfig);
+        $dispatcher->setViewEngineConfig($this->viewEngineConfig[$this->siteConfig['viewEngine']]);
+        $dispatcher->dispatch($request);
     }
 
 
