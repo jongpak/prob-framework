@@ -48,20 +48,6 @@ class Application
         return $instance;
     }
 
-    public function boot()
-    {
-        $this->setSiteConfig(require '../config/site.php');
-        $this->setErrorReporterConfig(require '../config/errorReporter.php');
-        $this->setDbConfig(require '../config/db.php');
-        $this->setViewEngineConfig(require '../config/viewEngine.php');
-
-        $this->setDisplayError($this->siteConfig['displayErrors']);
-        $this->registerErrorReporters();
-
-        $this->setRouterConfig(require '../config/router.php');
-        $this->dispatcher(new Request());
-    }
-
     public function setSiteConfig(array $siteConfig)
     {
         $this->siteConfig = $siteConfig;
