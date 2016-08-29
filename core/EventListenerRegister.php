@@ -23,7 +23,7 @@ class EventListenerRegister
                     ->on(
                         $eventName,
                         function () use ($handler) {
-                            $proc = new Proc($handler);
+                            $proc = new Proc($handler, null);
                             $proc->exec();
                         }
                     );
