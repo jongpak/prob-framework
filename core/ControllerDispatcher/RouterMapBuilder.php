@@ -20,14 +20,14 @@ class RouterMapBuilder
         $map = new Map();
         $map->setNamespace($this->routerConfig['namespace']);
 
-        foreach ($this->getRoutePathMap() as $k => $v) {
-            $this->addRouterMap($map, $k, $v);
+        foreach ($this->getRoutePaths() as $k => $v) {
+            $this->addRouterPath($map, $k, $v);
         }
 
         return $map;
     }
 
-    private function getRoutePathMap()
+    private function getRoutePaths()
     {
         $paths = $this->routerConfig;
         unset($paths['namespace']);
@@ -44,7 +44,7 @@ class RouterMapBuilder
      * @param string $path  url path
      * @param string|array|closure $handlers
      */
-    private function addRouterMap(Map $routerMap, $path, $handlers)
+    private function addRouterPath(Map $routerMap, $path, $handlers)
     {
         if ($this->resolveHttpGetHandler($handlers)) {
             $routerMap->get($path, $this->resolveHttpGetHandler($handlers));
