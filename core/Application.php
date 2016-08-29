@@ -6,6 +6,7 @@ use Prob\Rewrite\Request;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 use JBZoo\Event\EventManager;
+use Core\ControllerDispatcher\Dispatcher;
 
 class Application
 {
@@ -91,7 +92,7 @@ class Application
 
     public function dispatch(Request $request)
     {
-        $dispatcher = new ControllerDispatcher();
+        $dispatcher = new Dispatcher();
         $dispatcher->setRouterConfig($this->routerConfig);
         $dispatcher->setViewEngineConfig($this->viewEngineConfig[$this->siteConfig['viewEngine']]);
         $dispatcher->dispatch($request);

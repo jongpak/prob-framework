@@ -1,8 +1,9 @@
 <?php
 
-namespace Core;
+namespace Core\ControllerDispatcher;
 
 use Prob\Router\Map;
+use Core\ControllerDispatcher;
 
 class RouterMapBuilder
 {

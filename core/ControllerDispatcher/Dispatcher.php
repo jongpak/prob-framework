@@ -1,15 +1,18 @@
 <?php
 
-namespace Core;
+namespace Core\ControllerDispatcher;
 
 use Prob\Handler\Proc;
 use Prob\Handler\ParameterMap;
-use Prob\Router\Dispatcher;
+use Prob\Router\Dispatcher as RouterDispatcher;
 use Prob\Rewrite\Request;
 use Prob\Router\Matcher;
 use Prob\Router\Map;
+use Core\ViewModel;
+use Core\Application;
+use Core\ViewResolver;
 
-class ControllerDispatcher
+class Dispatcher
 {
 
     /**
@@ -83,7 +86,11 @@ class ControllerDispatcher
 
     private function executeController(Request $request, ParameterMap $parameterMap)
     {
-        $dispatcher = new Dispatcher($this->routerMap);
+        $dispatcher = new RouterDispatcher($this->routerMap);
+
+        /**
+         * TODO 클로저와 일반함수 형태에서도 컨트롤러 이벤트가 작동하도록 수정해야함.
+         */
         $handlerResolvedName = $this->getMatchedHandler($request)->getResolvedName();
 
         $this->triggerEvent('Controller.' . $handlerResolvedName['class'] . '.' . $handlerResolvedName['func'] . '.before');
