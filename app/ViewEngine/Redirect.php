@@ -2,9 +2,9 @@
 
 namespace App\ViewEngine;
 
-use Core\View;
+use Core\ViewEngineInterface;
 
-class Redirect implements View
+class Redirect implements ViewEngineInterface
 {
 
     private $url = '';

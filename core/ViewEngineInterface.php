@@ -2,7 +2,7 @@
 
 namespace Core;
 
-interface View
+interface ViewEngineInterface
 {
     /**
      * Initial view engine.

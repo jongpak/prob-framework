@@ -2,10 +2,10 @@
 
 namespace App\ErrorReporter;
 
-use Core\ErrorReporter;
+use Core\ErrorReporterInterface;
 use \Exception;
 
-class Html implements ErrorReporter
+class Html implements ErrorReporterInterface
 {
     /**
          * @var View

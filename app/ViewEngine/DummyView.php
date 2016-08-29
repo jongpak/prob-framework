@@ -2,9 +2,9 @@
 
 namespace App\ViewEngine;
 
-use Core\View;
+use Core\ViewEngineInterface;
 
-class DummyView implements View
+class DummyView implements ViewEngineInterface
 {
     public function init($setting = [])
     {

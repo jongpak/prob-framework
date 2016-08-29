@@ -4,7 +4,7 @@ namespace Core;
 
 use \Exception;
 
-interface ErrorReporter
+interface ErrorReporterInterface
 {
     public function init($setting = []);
 

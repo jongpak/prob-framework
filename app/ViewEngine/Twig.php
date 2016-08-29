@@ -2,13 +2,13 @@
 
 namespace App\ViewEngine;
 
-use Core\View;
+use Core\ViewEngineInterface;
 use Core\Application;
 use \Twig_Loader_Filesystem;
 use \Twig_Environment;
 use \Twig_SimpleFunction;
 
-class Twig implements View
+class Twig implements ViewEngineInterface
 {
 
     private $PUBLIC_PATH = 'public/';

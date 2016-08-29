@@ -2,9 +2,9 @@
 
 namespace App\ViewEngine;
 
-use Core\View;
+use Core\ViewEngineInterface;
 
-class Json implements View
+class Json implements ViewEngineInterface
 {
     private $data = null;
 
