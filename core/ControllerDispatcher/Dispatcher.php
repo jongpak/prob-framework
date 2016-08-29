@@ -49,9 +49,8 @@ class Dispatcher
         $viewModel = new ViewModel();
         $parameterMap = $this->getParameterMap($viewModel);
 
-        $returnOfController = $this->executeController($parameterMap);
-
-        $this->renderView($returnOfController, $viewModel);
+        $result = $this->execute($parameterMap);
+        $this->renderView($result, $viewModel);
     }
 
     private function buildRouterMap()
@@ -79,7 +78,7 @@ class Dispatcher
     }
 
 
-    private function executeController(ParameterMap $parameterMap)
+    private function execute(ParameterMap $parameterMap)
     {
         $dispatcher = new RouterDispatcher($this->routerMap);
 
@@ -120,9 +119,9 @@ class Dispatcher
                 ->trigger($eventName);
     }
 
-    private function renderView($returnOfController, ViewModel $viewModel)
+    private function renderView($controllerResult, ViewModel $viewModel)
     {
-        $view = $this->resolveView($returnOfController);
+        $view = $this->resolveView($controllerResult);
 
         foreach ($viewModel->getVariables() as $key => $value) {
             $view->set($key, $value);
@@ -132,12 +131,12 @@ class Dispatcher
     }
 
     /**
-     * @param  mixed $returnOfController
+     * @param  mixed $controllerResult
      * @return View
      */
-    private function resolveView($returnOfController)
+    private function resolveView($controllerResult)
     {
-        $viewResolver = new ViewResolver($returnOfController);
+        $viewResolver = new ViewResolver($controllerResult);
         return $viewResolver->resolve($this->viewEngineConfig);
     }
 }
