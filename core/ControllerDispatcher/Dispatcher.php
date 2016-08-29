@@ -22,6 +22,11 @@ class Dispatcher
     private $routerConfig = [];
     private $viewEngineConfig = [];
 
+    /**
+     * @var Request
+     */
+    private $request;
+
     public function setRouterConfig(array $routerConfig)
     {
         $this->routerConfig = $routerConfig;
@@ -32,14 +37,19 @@ class Dispatcher
         $this->viewEngineConfig = $config;
     }
 
-    public function dispatch(Request $request)
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
+
+    public function dispatch()
     {
         $this->buildRouterMap();
 
         $viewModel = new ViewModel();
-        $parameterMap = $this->getControllerParameterMap($request, $viewModel);
+        $parameterMap = $this->getParameterMap($viewModel);
 
-        $returnOfController = $this->executeController($request, $parameterMap);
+        $returnOfController = $this->executeController($parameterMap);
 
         $this->renderView($returnOfController, $viewModel);
     }
@@ -52,61 +62,51 @@ class Dispatcher
         $this->routerMap = $builder->build();
     }
 
-    private function getControllerParameterMap(Request $request, ViewModel $viewModel)
+    /**
+     * @param  Request   $request   [description]
+     * @param  ViewModel $viewModel [description]
+     * @return ParameterMap
+     */
+    private function getParameterMap(ViewModel $viewModel)
     {
-        $url = $this->resolveUrl($request);
+        $parameterMapper = new ParameterMapper();
 
-        $parameterMap = new ParameterMap();
-        $this->bindUrlParameter($parameterMap, $url);
-        $this->bindViewModelParameter($parameterMap, $viewModel);
+        $parameterMapper->setRequest($this->request);
+        $parameterMapper->setViewModel($viewModel);
+        $parameterMapper->setRouterMap($this->routerMap);
 
-        return $parameterMap;
-    }
-
-    private function resolveUrl(Request $request)
-    {
-        $matcher = new Matcher($this->routerMap);
-        return $matcher->match($request)['urlNameMatching'] ?: [];
-    }
-
-    private function bindUrlParameter(ParameterMap $map, array $url)
-    {
-        $map->bindByNameWithType('array', 'url', $url);
-
-        foreach ($url as $name => $value) {
-            $map->bindByName($name, $value);
-        }
-    }
-
-    private function bindViewModelParameter(ParameterMap $map, ViewModel $viewModel)
-    {
-        $map->bindByType(ViewModel::class, $viewModel);
+        return $parameterMapper->getParameterMap();
     }
 
 
-    private function executeController(Request $request, ParameterMap $parameterMap)
+    private function executeController(ParameterMap $parameterMap)
     {
         $dispatcher = new RouterDispatcher($this->routerMap);
 
         /**
          * TODO 클로저와 일반함수 형태에서도 컨트롤러 이벤트가 작동하도록 수정해야함.
          */
-        $handlerResolvedName = $this->getMatchedHandler($request)->getResolvedName();
 
-        $this->triggerEvent('Controller.' . $handlerResolvedName['class'] . '.' . $handlerResolvedName['func'] . '.before');
-        $result = $dispatcher->dispatch($request, $parameterMap);
-        $this->triggerEvent('Controller.' . $handlerResolvedName['class'] . '.' . $handlerResolvedName['func'] . '.after');
+        $this->triggerEvent($this->getControllerEventName() . '.before');
+        $result = $dispatcher->dispatch($this->request, $parameterMap);
+        $this->triggerEvent($this->getControllerEventName() . '.after');
 
         return $result;
+    }
+
+    private function getControllerEventName()
+    {
+        $handlerResolvedName = $this->getMatchedHandler()->getResolvedName();
+        return 'Controller.' . $handlerResolvedName['class'] . '.' . $handlerResolvedName['func'];
     }
 
     /**
      * @return Proc
      */
-    private function getMatchedHandler(Request $request)
+    private function getMatchedHandler()
     {
         $matcher = new Matcher($this->routerMap);
-        return $matcher->match($request)['handler'];
+        return $matcher->match($this->request)['handler'];
     }
 
     private function triggerEvent($eventName)

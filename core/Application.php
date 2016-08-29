@@ -93,9 +93,12 @@ class Application
     public function dispatch(Request $request)
     {
         $dispatcher = new Dispatcher();
+
+        $dispatcher->setRequest($request);
         $dispatcher->setRouterConfig($this->routerConfig);
         $dispatcher->setViewEngineConfig($this->viewEngineConfig[$this->siteConfig['viewEngine']]);
-        $dispatcher->dispatch($request);
+
+        $dispatcher->dispatch();
     }
 
 
