@@ -87,17 +87,21 @@ class Dispatcher
          * TODO 클로저와 일반함수 형태에서도 컨트롤러 이벤트가 작동하도록 수정해야함.
          */
 
-        $this->triggerEvent($this->getControllerEventName() . '.before');
+        $this->triggerEvent($this->getEventName('before'));
         $result = $dispatcher->dispatch($this->request, $parameterMap);
-        $this->triggerEvent($this->getControllerEventName() . '.after');
+        $this->triggerEvent($this->getEventName('after'));
 
         return $result;
     }
 
-    private function getControllerEventName()
+    private function getEventName($action)
     {
         $handlerResolvedName = $this->getMatchedHandler()->getResolvedName();
-        return 'Controller.' . $handlerResolvedName['class'] . '.' . $handlerResolvedName['func'];
+        return sprintf('Controller.%s.%s.%s',
+                            $handlerResolvedName['class'],
+                            $handlerResolvedName['func'],
+                            $action
+        );
     }
 
     /**
