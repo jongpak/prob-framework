@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use Prob\Handler\Proc;
+use Prob\Handler\ProcFactory;
 use Prob\ArrayUtil\KeyGlue;
 
 class EventListenerRegister
@@ -23,7 +23,7 @@ class EventListenerRegister
                     ->on(
                         $eventName,
                         function () use ($handler) {
-                            $proc = new Proc($handler, null);
+                            $proc = ProcFactory::getProc($handler);
                             $proc->exec();
                         }
                     );

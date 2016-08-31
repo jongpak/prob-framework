@@ -2,7 +2,7 @@
 
 namespace Core\ControllerDispatcher;
 
-use Prob\Handler\Proc;
+use Prob\Handler\ProcInterface;
 use Prob\Handler\ParameterMap;
 use Prob\Router\Dispatcher as RouterDispatcher;
 use Prob\Rewrite\Request;
@@ -95,16 +95,16 @@ class Dispatcher
 
     private function getEventName($action)
     {
-        $handlerResolvedName = $this->getMatchedHandler()->getResolvedName();
+        $token = explode('.', $this->getMatchedHandler()->getName());
         return sprintf('Controller.%s.%s.%s',
-                            $handlerResolvedName['class'],
-                            $handlerResolvedName['func'],
+                            $token[0],
+                            $token[1],
                             $action
         );
     }
 
     /**
-     * @return Proc
+     * @return ProcInterface
      */
     private function getMatchedHandler()
     {
