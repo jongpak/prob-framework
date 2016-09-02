@@ -53,7 +53,7 @@ class ParameterMapper
     public function getParameterMap()
     {
         $this->parameterMap = new ParameterMap();
-        
+
         $this->bindUrl();
         $this->bindViewModel();
 
@@ -62,7 +62,7 @@ class ParameterMapper
 
     private function bindUrl()
     {
-        $url = $this->resolveUrl($this->request);
+        $url = $this->resolveUrl();
         $this->parameterMap->bindByNameWithType('array', 'url', $url);
 
         foreach ($url as $name => $value) {
