@@ -58,7 +58,7 @@ class RouterMapBuilder
     private function getHttpHandler($method, $handlers)
     {
         if (gettype($handlers) === 'string' || is_callable($handlers)) {
-            return $handlers;
+            return $method === 'GET' ? $handlers : null;
         }
 
         return isset($handlers[$method]) ? $handlers[$method] : null;
