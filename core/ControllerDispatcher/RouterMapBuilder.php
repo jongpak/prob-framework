@@ -46,30 +46,21 @@ class RouterMapBuilder
      */
     private function addRouterPath(Map $routerMap, $path, $handlers)
     {
-        if ($this->resolveHttpGetHandler($handlers)) {
-            $routerMap->get($path, $this->resolveHttpGetHandler($handlers));
+        if ($this->getHttpHandler('GET', $handlers)) {
+            $routerMap->get($path, $this->getHttpHandler('GET', $handlers));
         }
 
-        if ($this->resolveHttpPostHandler($handlers)) {
-            $routerMap->post($path, $this->resolveHttpPostHandler($handlers));
+        if ($this->getHttpHandler('POST', $handlers)) {
+            $routerMap->post($path, $this->getHttpHandler('POST', $handlers));
         }
     }
 
-    private function resolveHttpGetHandler($handlers)
+    private function getHttpHandler($method, $handlers)
     {
         if (gettype($handlers) === 'string' || is_callable($handlers)) {
             return $handlers;
         }
 
-        return isset($handlers['GET']) ? $handlers['GET'] : null;
-    }
-
-    private function resolveHttpPostHandler($handlers)
-    {
-        if (gettype($handlers) === 'string' || is_callable($handlers)) {
-            return;
-        }
-
-        return isset($handlers['POST']) ? $handlers['POST'] : null;
+        return isset($handlers[$method]) ? $handlers[$method] : null;
     }
 }
