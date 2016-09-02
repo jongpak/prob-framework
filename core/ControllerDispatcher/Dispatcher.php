@@ -62,7 +62,6 @@ class Dispatcher
     }
 
     /**
-     * @param  Request   $request   [description]
      * @param  ViewModel $viewModel [description]
      * @return ParameterMap
      */
