@@ -4,6 +4,9 @@ namespace Core\ControllerDispatcher;
 
 use Prob\Rewrite\Request;
 use Prob\Handler\ParameterMap;
+use Prob\Handler\Parameter\Typed;
+use Prob\Handler\Parameter\Named;
+use Prob\Handler\Parameter\TypedAndNamed;
 use Prob\Router\Map;
 use Core\ViewModel;
 use Prob\Router\Matcher;
@@ -63,16 +66,16 @@ class ParameterMapper
     private function bindUrl()
     {
         $url = $this->resolveUrl();
-        $this->parameterMap->bindByNameWithType('array', 'url', $url);
+        $this->parameterMap->bindBy(new TypedAndNamed('array', 'url'), $url);
 
         foreach ($url as $name => $value) {
-            $this->parameterMap->bindByName($name, $value);
+            $this->parameterMap->bindBy(new Named($name), $value);
         }
     }
 
     private function bindViewModel()
     {
-        $this->parameterMap->bindByType(ViewModel::class, $this->viewModel);
+        $this->parameterMap->bindBy(new Typed(ViewModel::class), $this->viewModel);
     }
 
 
