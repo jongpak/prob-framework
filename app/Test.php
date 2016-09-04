@@ -45,6 +45,11 @@ class Test
         echo 'Event!';
     }
 
+    public function admin()
+    {
+        echo 'Admin page';
+    }
+
     public function jsonTest()
     {
         return [
