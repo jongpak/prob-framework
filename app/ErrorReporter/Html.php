@@ -12,16 +12,15 @@ class Html implements ErrorReporterInterface
          */
     private $view;
 
-    public function init($setting = [])
+    public function __construct($settings = [])
     {
-        $this->buildView($setting);
+        $this->buildView($settings);
     }
 
-    private function buildView($setting)
+    private function buildView($settings)
     {
-        $this->view = new $setting['view'];
-        $this->view->init($setting);
-        $this->view->file($setting['file']);
+        $this->view = new $settings['view']($settings);
+        $this->view->file($settings['file']);
     }
 
     public function report($exception)

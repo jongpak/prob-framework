@@ -7,15 +7,19 @@ use App\ViewEngine\Twig;
 
 class TwigViewTest extends TestCase
 {
-    public function testStringView()
+    public function getTwigSetting()
     {
-        $view = new Twig();
-        $view->init([
-            'class' => 'Twig',
+        return [
+            'class' => 'App\\ViewEngine\\Twig',
             'path' => __DIR__ . '/mock',
             'postfix' => '.twig',
             'settings' => []
-        ]);
+        ];
+    }
+
+    public function testStringView()
+    {
+        $view = new Twig($this->getTwigSetting());
         $view->file('test');
         $view->set('key', 'ok');
 
@@ -33,13 +37,7 @@ class TwigViewTest extends TestCase
             'viewEngine' => 'Twig',
         ]);
 
-        $view = new Twig();
-        $view->init([
-            'class' => 'Twig',
-            'path' => __DIR__ . '/mock',
-            'postfix' => '.twig',
-            'settings' => []
-        ]);
+        $view = new Twig($this->getTwigSetting());
         $view->file('testCustomFunction');
 
         $this->expectOutputString(

@@ -8,7 +8,7 @@ class Json implements ViewEngineInterface
 {
     private $data = null;
 
-    public function init($setting = [])
+    public function __construct($settings = [])
     {
         // dummy
     }

@@ -36,7 +36,7 @@ class Twig implements ViewEngineInterface
      */
     private $var = [];
 
-    public function init($settings = [])
+    public function __construct($settings = [])
     {
         $loader = new Twig_Loader_Filesystem($settings['path']);
         $this->twig = new Twig_Environment($loader, $settings['settings']);

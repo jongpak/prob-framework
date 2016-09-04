@@ -11,7 +11,7 @@ interface ViewEngineInterface
      * @param array $setting
      * @return mixed
      */
-    public function init($setting = []);
+    public function __construct($settings = []);
 
     /**
      * put variable used by rendering

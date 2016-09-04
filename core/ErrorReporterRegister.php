@@ -3,6 +3,7 @@
 namespace Core;
 
 use \ErrorException;
+use Core\ErrorReporterInterface;
 
 class ErrorReporterRegister
 {
@@ -55,14 +56,13 @@ class ErrorReporterRegister
         $this->errorReporters = $errorReporters;
     }
 
+    /**
+     * @param  string $reporterName
+     * @return ErrorReporterInterface
+     */
     private function getErrorReporterInstance($reporterName)
     {
         $class = $this->errorReporterConfig[$reporterName]['class'];
-
-        /* @var ErrorReporter */
-        $reporter = new $class();
-        $reporter->init($this->errorReporterConfig[$reporterName]);
-
-        return $reporter;
+        return new $class($this->errorReporterConfig[$reporterName]);
     }
 }

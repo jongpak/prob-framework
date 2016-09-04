@@ -6,7 +6,7 @@ use \Exception;
 
 interface ErrorReporterInterface
 {
-    public function init($setting = []);
+    public function __construct($settings = []);
 
     /**
      * @param  Exception|Error|Throwable $exception

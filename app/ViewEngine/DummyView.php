@@ -6,7 +6,7 @@ use Core\ViewEngineInterface;
 
 class DummyView implements ViewEngineInterface
 {
-    public function init($setting = [])
+    public function __construct($settings = [])
     {
         // dummy
     }

@@ -41,8 +41,7 @@ class ViewResolver
 
         $viewClassName = $this->getResolvedViewClassName();
 
-        $view = new $viewClassName;
-        $view->init($settings);
+        $view = new $viewClassName($settings);
         $view->file($this->isRedirectView() ? $this->getRedirectUrl() : $this->viewData);
 
         return $view;

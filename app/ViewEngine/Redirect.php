@@ -9,7 +9,7 @@ class Redirect implements ViewEngineInterface
 
     private $url = '';
 
-    public function init($setting = [])
+    public function __construct($settings = [])
     {
         // dummy
     }
