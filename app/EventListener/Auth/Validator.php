@@ -65,9 +65,15 @@ class Validator
             return false;
         }
 
-        return in_array(
-                $this->accountManager->getRole($this->loginManager->getLoggedAccountId()),
-                $this->controllerPermission[$this->controller->getName()]['role']
-        );
+        $accountRoles = $this->accountManager->getRole($this->loginManager->getLoggedAccountId());
+        $allowRoles = $this->controllerPermission[$this->controller->getName()]['role'];
+
+        foreach ($accountRoles as $role) {
+            if (in_array($role, $allowRoles) === true) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
