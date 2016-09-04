@@ -14,7 +14,7 @@ class ViewResolverTest extends TestCase
     {
         $viewResolver = new ViewResolver('default/test');
         $view = $viewResolver->resolve([
-            'class' => 'Twig',
+            'class' => 'App\\ViewEngine\\Twig',
             'path' => __DIR__ . '/mock',
             'postfix' => '.twig',
             'settings' => []

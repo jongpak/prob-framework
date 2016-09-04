@@ -4,8 +4,6 @@ namespace Core;
 
 class ViewResolver
 {
-    private $namespaceOfViewEngine = '\\App\\ViewEngine\\';
-
     /**
      * raw view data (return value of controller)
      *
@@ -15,10 +13,10 @@ class ViewResolver
 
     private $resolveViewType = [
         'string' => null,
-        'array'  => 'Json',
-        'object' => 'Json',
-        'NULL'   => 'DummyView',
-        'redirect' => 'Redirect'
+        'array'  => 'App\\ViewEngine\\Json',
+        'object' => 'App\\ViewEngine\\Json',
+        'NULL'   => 'App\\ViewEngine\\DummyView',
+        'redirect' => 'App\\ViewEngine\\Redirect'
     ];
 
     /**
@@ -58,7 +56,7 @@ class ViewResolver
             $engineClassName = $this->resolveViewType['redirect'];
         }
 
-        return $this->namespaceOfViewEngine . $engineClassName;
+        return $engineClassName;
     }
 
     private function isRedirectView()

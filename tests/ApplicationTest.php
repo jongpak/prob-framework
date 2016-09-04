@@ -58,7 +58,7 @@ class ApplicationTest extends TestCase
     {
         return [
             'Twig' => [
-                'class' => 'Twig',
+                'class' => 'App\\ViewEngine\\Twig',
                 'path' => __DIR__ . '/mock',
                 'postfix' => '.twig',
                 'settings' => []
