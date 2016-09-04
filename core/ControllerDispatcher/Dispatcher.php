@@ -119,9 +119,13 @@ class Dispatcher
 
     private function triggerEvent($eventName)
     {
-        Application::getInstance()
-            ->getEventManager()
-                ->trigger($eventName);
+        $parameterMapper = new ParameterMapper();
+        $parameterMapper->setRequest($this->request);
+        $parameterMapper->setRouterMap($this->routerMap);
+
+        $parameterMap = $parameterMapper->getParameterMap();
+
+        Application::getInstance()->getEventManager()->trigger($eventName, [$parameterMap]);
     }
 
     private function renderView($controllerResult, ViewModel $viewModel)

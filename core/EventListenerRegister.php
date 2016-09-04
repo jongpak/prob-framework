@@ -3,6 +3,7 @@
 namespace Core;
 
 use Prob\Handler\ProcFactory;
+use Prob\Handler\ParameterMap;
 use Prob\ArrayUtil\KeyGlue;
 
 class EventListenerRegister
@@ -18,15 +19,8 @@ class EventListenerRegister
     public function register()
     {
         foreach ($this->getEventNames() as $eventName => $handler) {
-            Application::getInstance()
-                ->getEventManager()
-                    ->on(
-                        $eventName,
-                        function () use ($handler) {
-                            $proc = ProcFactory::getProc($handler);
-                            $proc->exec();
-                        }
-                    );
+            $proc = $this->getEventListenerProc($handler);
+            Application::getInstance()->getEventManager()->on($eventName, $proc);
         }
     }
 
@@ -38,5 +32,14 @@ class EventListenerRegister
         $glue->setGlueCharacter('.');
 
         return $glue->glue();
+    }
+
+    private function getEventListenerProc($handler)
+    {
+        return function (ParameterMap $parameterMap) use ($handler) {
+            /** @var ProcInterface */
+            $proc = ProcFactory::getProc($handler);
+            $proc->execWithParameterMap($parameterMap);
+        };
     }
 }
