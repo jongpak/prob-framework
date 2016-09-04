@@ -2,11 +2,31 @@
 
 {% block body %}
     <dl>
-    <dt>Server time</dt>
-        <dd>{{ time }}</dd>
-    <dt>Site URL</dt>
-        <dd>{{ url() }}</dd>
-    <dt>Logged account</dt>
-        <dd>{{ accountId }} ({{ accountRole|join }})</dd>
+        <dt>Server time</dt>
+            <dd>{{ time }}</dd>
+        <dt>Site URL</dt>
+            <dd>{{ url() }}</dd>
+        <dt>Logged account</dt>
+            <dd>{{ accountId }} ({{ accountRole|join }})</dd>
+        <dt>Auth pages</dt>
+            <dd>
+                <ul>
+                    <li><a href="auth/login">login link</a></li>
+                    <li><a href="auth/logout">logout link</a></li>
+                    <li><a href="test/admin">admin page</a></li>
+                </ul>
+            </dd>
+        <dt>Test controller pages</dt>
+            <dd>
+                <ul>
+                    <li><a href="test">echo test page</a></li>
+                    <li><a href="test/json">json test page</a></li>
+                    <li><a href="test/db">db test page</a></li>
+                    <li><a href="test/main">redirection test page</a></li>
+                    <li><a href="test/event">event listener test page</a></li>
+                    <li><a href="test/prob">url variable test page1</a></li>
+                    <li><a href="test/web">url variable test page2</a></li>
+                </ul>
+            </dd>
     </dl>
 {% endblock %}
