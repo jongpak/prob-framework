@@ -1,0 +1,22 @@
+{% extends 'auth/layout.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+<form action="" method="post">
+<fieldset>
+    <legend>Login</legend>
+    <p>
+        <label>ID: </label><br />
+        <input type="text" name="account_id" value="" />
+    </p>
+    <p>
+        <label>Password: </label><br />
+        <input type="password" name="password" value="" />
+    </p>
+    <p>
+        <input type="submit" value="login" />
+    </p>
+</fieldset>
+</form>
+{% endblock %}
