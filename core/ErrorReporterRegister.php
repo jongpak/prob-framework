@@ -57,18 +57,12 @@ class ErrorReporterRegister
 
     private function getErrorReporterInstance($reporterName)
     {
-        $class = $this->getReporterClassName($reporterName);
+        $class = $this->errorReporterConfig[$reporterName]['class'];
 
         /* @var ErrorReporter */
         $reporter = new $class();
         $reporter->init($this->errorReporterConfig[$reporterName]);
 
         return $reporter;
-    }
-
-    private function getReporterClassName($reporterName)
-    {
-        $namespace = $this->errorReporterConfig['namespace'];
-        return $namespace. '\\' . $reporterName;
     }
 }

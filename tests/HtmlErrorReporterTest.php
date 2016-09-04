@@ -13,7 +13,7 @@ class HtmlErrorReporterTest extends TestCase
     {
         $reporter = new Html();
         $reporter->init([
-            'class' => 'Html',
+            'class' => 'App\\ErrorReporter\\Html',
             'view' => 'App\\ViewEngine\\Twig',
             'path' => __DIR__ . '/mock',
             'file' => 'error',

@@ -1,10 +1,8 @@
 <?php
 
 return [
-    'namespace' => 'App\\ErrorReporter',
-
     'Html' => [
-        'class' => 'Html',
+        'class' => 'App\\ErrorReporter\\Html',
         'view' => 'App\\ViewEngine\\Twig',
         'path' => '../view/error/',
         'file' => 'exception',
