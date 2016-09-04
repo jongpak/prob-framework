@@ -109,6 +109,7 @@ class Application
      */
     public function url($url = '')
     {
+        $url = $url === '/' ? '' : $url;
         return $this->siteConfig['url'] . $url;
     }
 
