@@ -7,6 +7,7 @@ use Prob\Handler\ParameterMap;
 use Prob\Handler\Parameter\Typed;
 use Prob\Handler\Parameter\Named;
 use Prob\Handler\Parameter\TypedAndNamed;
+use Prob\Handler\ProcInterface;
 use Prob\Router\Map;
 use Core\ViewModel;
 use Prob\Router\Matcher;
@@ -57,20 +58,46 @@ class ParameterMapper
     {
         $this->parameterMap = new ParameterMap();
 
-        $this->bindUrl();
+        $this->bindRequest();
+        $this->bindPatternedUrl();
+
+        $this->bindNamedUrl();
         $this->bindViewModel();
+
+        $this->bindProc();
 
         return $this->parameterMap;
     }
 
-    private function bindUrl()
+    private function bindRequest()
     {
-        $url = $this->resolveUrl();
-        $this->parameterMap->bindBy(new TypedAndNamed('array', 'url'), $url);
+        $this->parameterMap->bindBy(new Typed(Request::class), $this->request);
+    }
 
-        foreach ($url as $name => $value) {
+    private function bindPatternedUrl()
+    {
+        $matcher = new Matcher($this->routerMap);
+        $urlPattern = $matcher->match($this->request)['urlPattern'];
+
+        $this->parameterMap->bindBy(new Named('urlPattern'), $urlPattern);
+    }
+
+    private function bindNamedUrl()
+    {
+        $urlVariable = $this->resolveUrl();
+        $this->parameterMap->bindBy(new TypedAndNamed('array', 'urlVariable'), $urlVariable);
+
+        foreach ($urlVariable as $name => $value) {
             $this->parameterMap->bindBy(new Named($name), $value);
         }
+    }
+
+    private function bindProc()
+    {
+        $matcher = new Matcher($this->routerMap);
+        $proc = $matcher->match($this->request)['handler'];
+
+        $this->parameterMap->bindBy(new Typed(ProcInterface::class), $proc);
     }
 
     private function bindViewModel()
