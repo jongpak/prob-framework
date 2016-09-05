@@ -11,6 +11,8 @@ use Prob\Router\Map;
 use Core\ViewModel;
 use Core\Application;
 use Core\ViewResolver;
+use Core\ViewEngineInterface;
+use Core\ViewResolverInterface;
 
 class Dispatcher
 {
@@ -21,6 +23,8 @@ class Dispatcher
     private $routerMap;
     private $routerConfig = [];
     private $viewEngineConfig = [];
+
+    private $viewResolvers = [];
 
     /**
      * @var RequestInterface
@@ -35,6 +39,11 @@ class Dispatcher
     public function setViewEngineConfig(array $config)
     {
         $this->viewEngineConfig = $config;
+    }
+
+    public function setViewResolver(array $viewResolvers)
+    {
+        $this->viewResolvers = $viewResolvers;
     }
 
     public function setRequest(RequestInterface $request)
@@ -144,11 +153,24 @@ class Dispatcher
 
     /**
      * @param  mixed $controllerResult
-     * @return View
+     * @return ViewEngineInterface
      */
     private function resolveView($controllerResult)
     {
-        $viewResolver = new ViewResolver($controllerResult);
-        return $viewResolver->resolve($this->viewEngineConfig);
+        foreach ($this->viewResolvers as $name => $resolverClassName) {
+            /** @var ViewResolverInterface */
+            $resolver = new $resolverClassName();
+            $resolver->setViewEngineConfig(
+                isset($this->viewEngineConfig[$name])
+                    ? $this->viewEngineConfig[$name]
+                    : []
+            );
+
+            $view = $resolver->resolve($controllerResult);
+
+            if ($view !== null) {
+                return $view;
+            }
+        }
     }
 }

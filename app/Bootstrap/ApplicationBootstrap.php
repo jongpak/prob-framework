@@ -14,7 +14,9 @@ class ApplicationBootstrap implements BootstrapInterface, SiteConfigLoader
         $app->setSiteConfig($this->getSiteConfig());
         $app->setErrorReporterConfig($this->getErrorReporterConfig());
         $app->setDbConfig($this->getDbConfig());
+
         $app->setViewEngineConfig($this->getViewEngineConfig());
+        $app->setViewResolver($this->getViewResolvers());
 
         $app->setDisplayError($this->getSiteConfig()['displayErrors']);
         $app->registerErrorReporters();
@@ -43,6 +45,11 @@ class ApplicationBootstrap implements BootstrapInterface, SiteConfigLoader
     private function getViewEngineConfig()
     {
         return require __DIR__ . '/../../config/viewEngine.php';
+    }
+
+    private function getViewResolvers()
+    {
+        return require __DIR__ . '/../../config/viewResolver.php';
     }
 
     private function getEventListener()

@@ -15,7 +15,9 @@ class Application
     private $errorReporterConfig = [];
     private $viewEngineConfig = [];
     private $dbConfig = [];
+
     private $eventListeners = [];
+    private $viewResolvers = [];
 
     /**
      * Singleton: private constructor
@@ -63,6 +65,11 @@ class Application
         $this->eventListeners = $eventListeners;
     }
 
+    public function setViewResolver(array $viewResolvers)
+    {
+        $this->viewResolvers = $viewResolvers;
+    }
+
     public function setDisplayError($isDisplay)
     {
         error_reporting(E_ALL);
@@ -96,7 +103,8 @@ class Application
 
         $dispatcher->setRequest($request);
         $dispatcher->setRouterConfig($this->routerConfig);
-        $dispatcher->setViewEngineConfig($this->viewEngineConfig[$this->siteConfig['viewEngine']]);
+        $dispatcher->setViewEngineConfig($this->viewEngineConfig);
+        $dispatcher->setViewResolver($this->viewResolvers);
 
         $dispatcher->dispatch();
     }

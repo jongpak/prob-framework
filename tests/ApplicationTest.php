@@ -32,6 +32,7 @@ class ApplicationTest extends TestCase
         $application->setSiteConfig($this->getSiteConfig());
         $application->setErrorReporterConfig($this->getErrorReporterConfig());
         $application->setViewEngineConfig($this->getViewEngineConfig());
+        $application->setViewResolver($this->getViewResolvers());
 
         $application->setEventListener($this->getEventListener());
         $application->registerEventListener();
@@ -43,7 +44,6 @@ class ApplicationTest extends TestCase
     {
         return [
             'url' => 'http://test.com/',
-            'viewEngine' => 'Twig',
             'displayErrors' => true,
             'errorReporters' => [ 'Html' ]
         ];
@@ -67,11 +67,20 @@ class ApplicationTest extends TestCase
     {
         return [
             'Twig' => [
-                'class' => 'App\\ViewEngine\\Twig',
                 'path' => __DIR__ . '/mock',
                 'postfix' => '.twig',
                 'settings' => []
             ]
+        ];
+    }
+
+    private function getViewResolvers()
+    {
+        return [
+            'App\ViewResolver\DummyResolver',
+            'App\ViewResolver\RedirectResolver',
+            'Twig' => 'App\ViewResolver\TwigResolver',
+            'App\ViewResolver\JsonResolver'
         ];
     }
 
