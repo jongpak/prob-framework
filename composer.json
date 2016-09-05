@@ -1,4 +1,11 @@
 {
+  "name": "prob/framework",
+  "description": "A simple PHP framework",
+  "homepage": "https://github.com/jongpak/prob-framework",
+  "keyworks": ["framework"],
+  "type": "project",
+  "license": "MIT",
+
   "minimum-stability": "dev",
   "prefer-stable": true,
 
