@@ -2,6 +2,6 @@
 
 require '../vendor/autoload.php';
 
-use App\Bootstrap;
+use Core\Bootstrap\Bootstrap;
 
-Bootstrap::boot();
+(new Bootstrap())->boot();
