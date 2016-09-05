@@ -3,7 +3,7 @@
 namespace App\Auth;
 
 use PHPUnit\Framework\TestCase;
-use App\Auth\AccountManeger\FileBaseAccountManager;
+use App\Auth\AccountManager\FileBaseAccountManager;
 
 class FileBaseAccountManagerTest extends TestCase
 {

@@ -31,7 +31,7 @@ class ValidatorTest extends TestCase
 
         $authManager->setAccountManagerConfig([
             'FileBaseAccountManager' => [
-                'class' => 'App\\Auth\\AccountManeger\\FileBaseAccountManager',
+                'class' => 'App\\Auth\\AccountManager\\FileBaseAccountManager',
                 'settings' => [
                     'accounts' => [
                         'admin' => [

@@ -27,7 +27,7 @@ class SessionLoginManagerTest extends TestCase
 
         $authManager->setAccountManagerConfig([
             'FileBaseAccountManager' => [
-                'class' => 'App\\Auth\\AccountManeger\\FileBaseAccountManager',
+                'class' => 'App\\Auth\\AccountManager\\FileBaseAccountManager',
                 'settings' => [
                     'accounts' => [
                         'admin' => [
@@ -70,7 +70,7 @@ class SessionLoginManagerTest extends TestCase
     public function testLoginFail()
     {
         $this->expectException(AccountNotFound::class);
-        
+
         $this->loginManager->login('admin', '???');
     }
 

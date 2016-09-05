@@ -4,7 +4,7 @@ namespace App\Auth;
 
 use PHPUnit\Framework\TestCase;
 use App\Auth\AuthManager;
-use App\Auth\AccountManeger\FileBaseAccountManager;
+use App\Auth\AccountManager\FileBaseAccountManager;
 use App\Auth\LoginManager\SessionLoginManager;
 
 class AuthManagerTest extends TestCase
@@ -27,7 +27,7 @@ class AuthManagerTest extends TestCase
 
         $authManager->setAccountManagerConfig([
             'FileBaseAccountManager' => [
-                'class' => 'App\\Auth\\AccountManeger\\FileBaseAccountManager',
+                'class' => 'App\\Auth\\AccountManager\\FileBaseAccountManager',
                 'settings' => [
                     'accounts' => []
                 ]

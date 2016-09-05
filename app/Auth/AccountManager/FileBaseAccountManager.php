@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Auth\AccountManeger;
+namespace App\Auth\AccountManager;
 
 use App\Auth\AccountManagerInterface;
 
