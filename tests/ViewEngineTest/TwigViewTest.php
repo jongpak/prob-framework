@@ -11,7 +11,7 @@ class TwigViewTest extends TestCase
     {
         return [
             'class' => 'App\\ViewEngine\\Twig',
-            'path' => __DIR__ . '/mock',
+            'path' => __DIR__ . '/../mock',
             'postfix' => '.twig',
             'settings' => []
         ];
