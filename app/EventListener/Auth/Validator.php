@@ -43,6 +43,8 @@ class Validator
         if ($this->isAllowPermission() === false) {
             throw new PermissionDenied('This operation is not allowed');
         }
+
+        return true;
     }
 
     private function isAllowPermission()
