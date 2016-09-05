@@ -52,4 +52,9 @@ class TestController
     {
         echo $this->generateViewModelKeyValue('POST', $board, $post);
     }
+
+    public function eventTest()
+    {
+        echo 'Controller!';
+    }
 }

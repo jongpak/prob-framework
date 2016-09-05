@@ -18,14 +18,24 @@ class ApplicationTest extends TestCase
     {
         include_once 'mock/TestController.php';
 
+        static $inc = 0;
+
         $application = Application::getInstance();
+        $this->application = $application;
+
+        if ($inc > 0) {
+            return;
+        }
+        $inc++;
+
         $application->setSiteConfig($this->getSiteConfig());
         $application->setErrorReporterConfig($this->getErrorReporterConfig());
         $application->setViewEngineConfig($this->getViewEngineConfig());
 
-        $application->setRouterConfig($this->getRouteMap());
+        $application->setEventListener($this->getEventListener());
+        $application->registerEventListener();
 
-        $this->application = $application;
+        $application->setRouterConfig($this->getRouteMap());
     }
 
     private function getSiteConfig()
@@ -64,6 +74,36 @@ class ApplicationTest extends TestCase
         ];
     }
 
+    private function getEventListener()
+    {
+        return [
+            'Controller' => [
+                '{closure}' => [
+                    'before' => function ($urlPattern) {
+                        if ($urlPattern !== '/test/event2') {
+                            return;
+                        }
+                        echo '[before closure!]';
+                    },
+                    'after' => function ($urlPattern) {
+                        if ($urlPattern !== '/test/event2') {
+                            return;
+                        }
+                        echo '[after closure!]';
+                    },
+                ],
+                'TestController.eventTest' => [
+                    'before' => function () {
+                        echo '[before controller!]';
+                    },
+                    'after' => function () {
+                        echo '[after controller!]';
+                    },
+                ]
+            ]
+        ];
+    }
+
     private function getRouteMap()
     {
         return [
@@ -96,7 +136,12 @@ class ApplicationTest extends TestCase
             '/dummy/{board}/{post}' => [
                 'GET' => 'TestController.getDummy',
                 'POST' => 'TestController.postDummy'
-            ]
+            ],
+
+            '/test/event1' => 'TestController.eventTest',
+            '/test/event2' => function () {
+                echo 'Closure!';
+            }
         ];
     }
 
@@ -214,6 +259,26 @@ class ApplicationTest extends TestCase
         $this->expectOutputString(TestController::generateViewModelKeyValue('POST', 'free', '5'));
         $this->application->dispatch(new Request());
     }
+
+
+    public function testControllerEventListener()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $_SERVER['PATH_INFO'] = '/test/event1';
+
+        $this->expectOutputString('[before controller!]Controller![after controller!]');
+        $this->application->dispatch(new Request());
+    }
+
+    public function testClosureEventListener()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $_SERVER['PATH_INFO'] = '/test/event2';
+
+        $this->expectOutputString('[before closure!]Closure![after closure!]');
+        $this->application->dispatch(new Request());
+    }
+
 
     public function testUrl()
     {
