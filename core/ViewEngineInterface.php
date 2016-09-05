@@ -5,11 +5,7 @@ namespace Core;
 interface ViewEngineInterface
 {
     /**
-     * Initial view engine.
-     * $engine are used to initialize view.
-     *
-     * @param array $setting
-     * @return mixed
+     * @param array $settings
      */
     public function __construct($settings = []);
 
