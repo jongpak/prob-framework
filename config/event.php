@@ -7,7 +7,7 @@ return [
     'Controller' => [
         '*.*' => [
             'before' => function (ProcInterface $proc) {
-                $validator = new Validator(require '../app/EventListener/Auth/controllerPermission.php');
+                $validator = new Validator(require '../app/EventListener/Auth/config/controllerPermission.php');
                 $validator->validate($proc);
             }
         ],
