@@ -126,6 +126,39 @@ class ValidatorTest extends TestCase
     /**
      * @runInSeparateProcess
      */
+    public function testValidator5()
+    {
+        $this->authManager->getDefaultLoginManager()->login('test', 'test');
+
+        $validator = new Validator([
+            'Test.admin' => [
+                'role' => []
+            ]
+        ]);
+
+        $this->expectException(PermissionDenied::class);
+        $this->assertEquals(true, $validator->validate(new TestAdminProc(null)));
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testValidator6()
+    {
+        $this->authManager->getDefaultLoginManager()->login('test', 'test');
+
+        $validator = new Validator([
+            'Test.admin' => [
+            ]
+        ]);
+
+        $this->expectException(PermissionDenied::class);
+        $this->assertEquals(true, $validator->validate(new TestAdminProc(null)));
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
     public function testValidatorDefaultAllowTrue()
     {
         $this->authManager->getDefaultLoginManager()->login('test', 'test');
