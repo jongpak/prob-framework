@@ -16,6 +16,7 @@
             <directory suffix=".php">./core</directory>
             <exclude>
                 <directory suffix=".php">./app/Auth/config</directory>
+                <directory suffix=".php">./app/EventListener/Auth/config</directory>
             </exclude>
         </whitelist>
     </filter>
