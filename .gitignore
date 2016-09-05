@@ -4,4 +4,5 @@
 /data
 /config/db.php
 /config/site.php
+/app/Auth/config/accounts.php
 composer.lock
