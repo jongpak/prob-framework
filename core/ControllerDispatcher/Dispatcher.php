@@ -98,13 +98,16 @@ class Dispatcher
         return $result;
     }
 
+    /**
+     * @param  string $action 'before' || 'after'
+     * @return string event name
+     */
     private function getEventName($action)
     {
-        $token = explode('.', $this->getMatchedHandler()->getName());
-        return sprintf('Controller.%s.%s.%s',
-                            $token[0],
-                            $token[1],
-                            $action
+        return sprintf(
+            'Controller.%s.%s',
+            $this->getMatchedHandler()->getName(),
+            $action
         );
     }
 
