@@ -6,7 +6,7 @@ use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 use JBZoo\Event\EventManager;
 use Core\ControllerDispatcher\Dispatcher;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class Application
 {
@@ -97,7 +97,7 @@ class Application
     }
 
 
-    public function dispatch(RequestInterface $request)
+    public function dispatch(ServerRequestInterface $request)
     {
         $dispatcher = new Dispatcher();
 

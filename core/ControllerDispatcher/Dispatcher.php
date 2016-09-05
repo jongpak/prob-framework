@@ -4,7 +4,7 @@ namespace Core\ControllerDispatcher;
 
 use Prob\Handler\ProcInterface;
 use Prob\Handler\ParameterMap;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Prob\Router\Dispatcher as RouterDispatcher;
 use Prob\Router\Matcher;
 use Prob\Router\Map;
@@ -27,7 +27,7 @@ class Dispatcher
     private $viewResolvers = [];
 
     /**
-     * @var RequestInterface
+     * @var ServerRequestInterface
      */
     private $request;
 
@@ -46,7 +46,7 @@ class Dispatcher
         $this->viewResolvers = $viewResolvers;
     }
 
-    public function setRequest(RequestInterface $request)
+    public function setRequest(ServerRequestInterface $request)
     {
         $this->request = $request;
     }

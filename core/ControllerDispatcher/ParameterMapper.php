@@ -2,7 +2,7 @@
 
 namespace Core\ControllerDispatcher;
 
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Prob\Handler\ParameterMap;
 use Prob\Handler\Parameter\Typed;
 use Prob\Handler\Parameter\Named;
@@ -16,7 +16,7 @@ class ParameterMapper
 {
 
     /**
-     * @var RequestInterface
+     * @var ServerRequestInterface
      */
     private $request;
 
@@ -36,7 +36,7 @@ class ParameterMapper
     private $parameterMap;
 
 
-    public function setRequest(RequestInterface $request)
+    public function setRequest(ServerRequestInterface $request)
     {
         $this->request = $request;
     }
@@ -71,7 +71,7 @@ class ParameterMapper
 
     private function bindRequest()
     {
-        $this->parameterMap->bindBy(new Typed(RequestInterface::class), $this->request);
+        $this->parameterMap->bindBy(new Typed(ServerRequestInterface::class), $this->request);
     }
 
     private function bindPatternedUrl()
