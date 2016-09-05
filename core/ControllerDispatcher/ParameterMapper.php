@@ -71,7 +71,7 @@ class ParameterMapper
 
     private function bindRequest()
     {
-        $this->parameterMap->bindBy(new Typed(Request::class), $this->request);
+        $this->parameterMap->bindBy(new Typed(RequestInterface::class), $this->request);
     }
 
     private function bindPatternedUrl()
