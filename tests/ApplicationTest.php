@@ -70,9 +70,18 @@ class ApplicationTest extends TestCase
             'namespace' => 'App\\Controller',
 
             '/test' => 'TestController.echoTest',
-            '/test/closure' => function () {
+            '/test/closure1' => function () {
                 echo 'Test!';
             },
+
+            '/test/closure2' => [
+                'GET' => function () {
+                    echo 'GET Test!';
+                },
+                'POST' => function () {
+                    echo 'POST Test!';
+                }
+            ],
 
             '/string/{board}/{post}' => [
                 'GET' => 'TestController.getString',
@@ -116,6 +125,33 @@ class ApplicationTest extends TestCase
         $_SERVER['PATH_INFO'] = '/test';
 
         $this->expectOutputString('Test!');
+        $this->application->dispatch(new Request());
+    }
+
+    public function testClosure1GetMethod()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $_SERVER['PATH_INFO'] = '/test/closure1';
+
+        $this->expectOutputString('Test!');
+        $this->application->dispatch(new Request());
+    }
+
+    public function testClosure2GetMethod()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $_SERVER['PATH_INFO'] = '/test/closure2';
+
+        $this->expectOutputString('GET Test!');
+        $this->application->dispatch(new Request());
+    }
+
+    public function testClosure2PostMethod()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $_SERVER['PATH_INFO'] = '/test/closure2';
+
+        $this->expectOutputString('POST Test!');
         $this->application->dispatch(new Request());
     }
 
