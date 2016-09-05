@@ -65,7 +65,7 @@ class Validator
             return false;
         }
 
-        $accountRoles = $this->accountManager->getRole($this->loginManager->getLoggedAccountId());
+        $accountRoles = $this->accountManager->getRole($this->loginManager->getLoggedAccountId()) ?: [];
         $allowRoles = $this->controllerPermission[$this->controller->getName()]['role'];
 
         foreach ($accountRoles as $role) {
