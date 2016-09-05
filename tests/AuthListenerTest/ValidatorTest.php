@@ -122,4 +122,39 @@ class ValidatorTest extends TestCase
 
         $this->assertEquals(true, $validator->validate(new TestAdminProc(null)));
     }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testValidatorDefaultAllowTrue()
+    {
+        $this->authManager->getDefaultLoginManager()->login('test', 'test');
+
+        $this->authManager->setConfig([
+            'defaultAllow' => true,
+            'defaultAccountManager' => 'FileBaseAccountManager',
+            'defaultLoginManager' => 'SessionLoginManager'
+        ]);
+        $validator = new Validator([]);
+
+        $this->assertEquals(true, $validator->validate(new TestAdminProc(null)));
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testValidatorDefaultAllowFalse()
+    {
+        $this->authManager->getDefaultLoginManager()->login('test', 'test');
+
+        $this->authManager->setConfig([
+            'defaultAllow' => false,
+            'defaultAccountManager' => 'FileBaseAccountManager',
+            'defaultLoginManager' => 'SessionLoginManager'
+        ]);
+        $validator = new Validator([]);
+
+        $this->expectException(PermissionDenied::class);
+        $validator->validate(new TestAdminProc(null));
+    }
 }
