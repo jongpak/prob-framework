@@ -36,7 +36,7 @@ class Validator
         $this->controllerPermission = $controllerPermission;
     }
 
-    public function validate($controller)
+    public function validate(ProcInterface $controller)
     {
         $this->controller = $controller;
 
