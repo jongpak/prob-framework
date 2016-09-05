@@ -3,8 +3,9 @@
 namespace App;
 
 use Core\Application;
-use Prob\Rewrite\Request;
 use App\Auth\AuthManager;
+use Zend\Diactoros\ServerRequestFactory;
+use Zend\Diactoros\Uri;
 
 class Bootstrap
 {
@@ -14,7 +15,7 @@ class Bootstrap
         self::setUpApplication();
         self::setUpAuthService();
 
-        Application::getInstance()->dispatch(new Request());
+        Application::getInstance()->dispatch(self::getServerRequest());
     }
 
     public static function setUpApplication()
@@ -42,6 +43,26 @@ class Bootstrap
         $auth->setConfig(self::getAuthConfig());
         $auth->setAccountManagerConfig(self::getAccountManagerConfig());
         $auth->setLoginManagerConfig(self::getLoginManagerConfig());
+    }
+
+    public static function getServerRequest()
+    {
+        $request = ServerRequestFactory::fromGlobals();
+
+        $stripedUri = new Uri(
+            self::stripUrlPrefix($request->getUri()->getPath())
+        );
+
+        return $request->withUri($stripedUri);
+    }
+
+    public static function stripUrlPrefix($url)
+    {
+        if (substr($url, 0, strlen(self::getSiteConfig()['url'])) === self::getSiteConfig()['url']) {
+            return '/' . substr($url, strlen(self::getSiteConfig()['url'])) ?: '/';
+        }
+
+        return $url;
     }
 
     public static function getSiteConfig()

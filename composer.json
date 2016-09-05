@@ -6,9 +6,10 @@
     "twig/twig": "*",
     "doctrine/orm": "*",
     "jbzoo/event": "*",
+    "psr/http-message": "*",
     "prob/router": "dev-master",
-    "prob/rewrite-helper": "dev-master",
-    "jongpak/array-key-glue": "dev-master"
+    "jongpak/array-key-glue": "dev-master",
+    "zendframework/zend-diactoros": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "*"

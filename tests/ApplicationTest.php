@@ -4,7 +4,8 @@ namespace Core;
 
 use PHPUnit\Framework\TestCase;
 use Prob\Router\Map;
-use Prob\Rewrite\Request;
+use Zend\Diactoros\Request;
+use Zend\Diactoros\Uri;
 use App\Controller\TestController;
 
 class ApplicationTest extends TestCase
@@ -166,56 +167,62 @@ class ApplicationTest extends TestCase
 
     public function testGetStringDispatcherByDefaultGetMap()
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
-        $_SERVER['PATH_INFO'] = '/test';
-
         $this->expectOutputString('Test!');
-        $this->application->dispatch(new Request());
+        $this->application->dispatch(
+            (new Request())
+                ->withUri(new Uri('/test'))
+                ->withMethod('GET')
+        );
     }
 
     public function testClosure1GetMethod()
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
-        $_SERVER['PATH_INFO'] = '/test/closure1';
-
         $this->expectOutputString('Test!');
-        $this->application->dispatch(new Request());
+        $this->application->dispatch(
+            (new Request())
+                ->withUri(new Uri('/test/closure1'))
+                ->withMethod('GET')
+        );
     }
 
     public function testClosure2GetMethod()
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
-        $_SERVER['PATH_INFO'] = '/test/closure2';
-
         $this->expectOutputString('GET Test!');
-        $this->application->dispatch(new Request());
+        $this->application->dispatch(
+            (new Request())
+                ->withUri(new Uri('/test/closure2'))
+                ->withMethod('GET')
+        );
     }
 
     public function testClosure2PostMethod()
     {
-        $_SERVER['REQUEST_METHOD'] = 'POST';
-        $_SERVER['PATH_INFO'] = '/test/closure2';
-
         $this->expectOutputString('POST Test!');
-        $this->application->dispatch(new Request());
+        $this->application->dispatch(
+            (new Request())
+                ->withUri(new Uri('/test/closure2'))
+                ->withMethod('POST')
+        );
     }
 
     public function testGetStringDispatcher()
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
-        $_SERVER['PATH_INFO'] = '/string/free/5';
-
         $this->expectOutputString(TestController::generateViewModelKeyValue('GET', 'free', '5'));
-        $this->application->dispatch(new Request());
+        $this->application->dispatch(
+            (new Request())
+                ->withUri(new Uri('/string/free/5'))
+                ->withMethod('GET')
+        );
     }
 
     public function testPostStringDispatcher()
     {
-        $_SERVER['REQUEST_METHOD'] = 'POST';
-        $_SERVER['PATH_INFO'] = '/string/free/5';
-
         $this->expectOutputString(TestController::generateViewModelKeyValue('POST', 'free', '5'));
-        $this->application->dispatch(new Request());
+        $this->application->dispatch(
+            (new Request())
+                ->withUri(new Uri('/string/free/5'))
+                ->withMethod('POST')
+        );
     }
 
     /**
@@ -223,11 +230,12 @@ class ApplicationTest extends TestCase
      */
     public function testGetJsonDispatcher()
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
-        $_SERVER['PATH_INFO'] = '/json/free/5';
-
         $this->expectOutputString(json_encode(TestController::generateJsonArray('GET', 'free', '5')));
-        $this->application->dispatch(new Request());
+        $this->application->dispatch(
+            (new Request())
+                ->withUri(new Uri('/json/free/5'))
+                ->withMethod('GET')
+        );
     }
 
     /**
@@ -235,48 +243,53 @@ class ApplicationTest extends TestCase
      */
     public function testPostJsonDispatcher()
     {
-        $_SERVER['REQUEST_METHOD'] = 'POST';
-        $_SERVER['PATH_INFO'] = '/json/free/5';
-
         $this->expectOutputString(json_encode(TestController::generateJsonArray('POST', 'free', '5')));
-        $this->application->dispatch(new Request());
+        $this->application->dispatch(
+            (new Request())
+                ->withUri(new Uri('/json/free/5'))
+                ->withMethod('POST')
+            );
     }
 
     public function testGetDummyDispatcher()
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
-        $_SERVER['PATH_INFO'] = '/dummy/free/5';
-
         $this->expectOutputString(TestController::generateViewModelKeyValue('GET', 'free', '5'));
-        $this->application->dispatch(new Request());
+        $this->application->dispatch(
+            (new Request())
+                ->withUri(new Uri('/dummy/free/5'))
+                ->withMethod('GET')
+        );
     }
 
     public function testPostDummyDispatcher()
     {
-        $_SERVER['REQUEST_METHOD'] = 'POST';
-        $_SERVER['PATH_INFO'] = '/dummy/free/5';
-
         $this->expectOutputString(TestController::generateViewModelKeyValue('POST', 'free', '5'));
-        $this->application->dispatch(new Request());
+        $this->application->dispatch(
+            (new Request())
+                ->withUri(new Uri('/dummy/free/5'))
+                ->withMethod('POST')
+        );
     }
 
 
     public function testControllerEventListener()
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
-        $_SERVER['PATH_INFO'] = '/test/event1';
-
         $this->expectOutputString('[before controller!]Controller![after controller!]');
-        $this->application->dispatch(new Request());
+        $this->application->dispatch(
+            (new Request())
+                ->withUri(new Uri('/test/event1'))
+                ->withMethod('GET')
+        );
     }
 
     public function testClosureEventListener()
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
-        $_SERVER['PATH_INFO'] = '/test/event2';
-
         $this->expectOutputString('[before closure!]Closure![after closure!]');
-        $this->application->dispatch(new Request());
+        $this->application->dispatch(
+            (new Request())
+                ->withUri(new Uri('/test/event2'))
+                ->withMethod('GET')
+        );
     }
 
 

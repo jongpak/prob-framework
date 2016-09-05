@@ -4,8 +4,8 @@ namespace Core\ControllerDispatcher;
 
 use Prob\Handler\ProcInterface;
 use Prob\Handler\ParameterMap;
+use Psr\Http\Message\RequestInterface;
 use Prob\Router\Dispatcher as RouterDispatcher;
-use Prob\Rewrite\Request;
 use Prob\Router\Matcher;
 use Prob\Router\Map;
 use Core\ViewModel;
@@ -23,7 +23,7 @@ class Dispatcher
     private $viewEngineConfig = [];
 
     /**
-     * @var Request
+     * @var RequestInterface
      */
     private $request;
 
@@ -37,7 +37,7 @@ class Dispatcher
         $this->viewEngineConfig = $config;
     }
 
-    public function setRequest(Request $request)
+    public function setRequest(RequestInterface $request)
     {
         $this->request = $request;
     }

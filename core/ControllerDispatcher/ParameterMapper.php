@@ -2,7 +2,7 @@
 
 namespace Core\ControllerDispatcher;
 
-use Prob\Rewrite\Request;
+use Psr\Http\Message\RequestInterface;
 use Prob\Handler\ParameterMap;
 use Prob\Handler\Parameter\Typed;
 use Prob\Handler\Parameter\Named;
@@ -16,7 +16,7 @@ class ParameterMapper
 {
 
     /**
-     * @var Request
+     * @var RequestInterface
      */
     private $request;
 
@@ -36,7 +36,7 @@ class ParameterMapper
     private $parameterMap;
 
 
-    public function setRequest(Request $request)
+    public function setRequest(RequestInterface $request)
     {
         $this->request = $request;
     }

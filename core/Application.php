@@ -2,11 +2,11 @@
 
 namespace Core;
 
-use Prob\Rewrite\Request;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 use JBZoo\Event\EventManager;
 use Core\ControllerDispatcher\Dispatcher;
+use Psr\Http\Message\RequestInterface;
 
 class Application
 {
@@ -90,7 +90,7 @@ class Application
     }
 
 
-    public function dispatch(Request $request)
+    public function dispatch(RequestInterface $request)
     {
         $dispatcher = new Dispatcher();
 
