@@ -10,7 +10,6 @@ use Prob\Router\Matcher;
 use Prob\Router\Map;
 use Core\ViewModel;
 use Core\Application;
-use Core\ViewResolver;
 use Core\ViewEngineInterface;
 use Core\ViewResolverInterface;
 
