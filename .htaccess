@@ -1,5 +1,5 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*)$ /prob/public/index.php/$1 [L]
+    RewriteRule ^(.*)$ public/index.php/$1 [L]
 </IfModule>
