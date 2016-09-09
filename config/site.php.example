@@ -2,7 +2,6 @@
 
 return [
     'url' => 'http://mysite.com/',
-    'database' => 'mysql',
 
     'displayErrors' => true,
     'errorReporters' => [ 'Html' ]

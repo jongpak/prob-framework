@@ -131,7 +131,7 @@ class Application
                     $this->dbConfig['entityPath'],
                     $this->dbConfig['devMode']
                     );
-        return EntityManager::create($this->dbConfig[$this->siteConfig['database']], $config);
+        return EntityManager::create($this->dbConfig['connections'][$this->dbConfig['defaultConnection']], $config);
     }
 
     /**

@@ -1,16 +1,20 @@
 <?php
 
 return [
-    'entityPath'      => [ __DIR__ . '/../app/Entity' ],
-    'devMode'         => true,
+    'defaultConnection' => 'mysql',
 
-    'mysql' => [
-        'driver'    => 'pdo_mysql',
-        'host'      => 'localhost',
-        'port'      => 3306,
-        'user'      => 'username',
-        'password'  => 'password',
-        'dbname'    => 'dbname',
-        'charset'   => 'utf8'
+    'entityPath'        => [ __DIR__ . '/../app/Entity' ],
+    'devMode'           => true,
+
+    'connections' => [
+        'mysql' => [
+            'driver'    => 'pdo_mysql',
+            'host'      => 'localhost',
+            'port'      => 3306,
+            'user'      => 'username',
+            'password'  => 'password',
+            'dbname'    => 'dbname',
+            'charset'   => 'utf8'
+        ]
     ]
 ];
