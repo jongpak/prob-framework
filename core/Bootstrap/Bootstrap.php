@@ -29,10 +29,6 @@ class Bootstrap
              */
             $bootstrap = new $bootstrapClassName();
             $bootstrap->boot($this->app);
-
-            if ($bootstrap instanceof SiteConfigLoader) {
-                $this->appUrl = $bootstrap->getSiteConfig()['url'];
-            }
         }
     }
 }

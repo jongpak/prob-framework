@@ -4,9 +4,8 @@ namespace App\Bootstrap;
 
 use Core\Application;
 use Core\Bootstrap\BootstrapInterface;
-use Core\Bootstrap\SiteConfigLoader;
 
-class ApplicationBootstrap implements BootstrapInterface, SiteConfigLoader
+class ApplicationBootstrap implements BootstrapInterface
 {
 
     public function boot(Application $app)
