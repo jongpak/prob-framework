@@ -1,8 +1,5 @@
 <?php
 
 return [
-    'url' => 'http://mysite.com/',
-
-    'displayErrors' => true,
-    'errorReporters' => [ 'Html' ]
+    'url' => '/',
 ];
