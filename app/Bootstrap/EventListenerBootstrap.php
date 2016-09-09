@@ -4,12 +4,10 @@ namespace App\Bootstrap;
 
 use Core\Bootstrap\BootstrapInterface;
 use Core\EventListenerRegister;
-use Core\Application;
 
 class EventListenerBootstrap implements BootstrapInterface
 {
-
-    public function boot(Application $app)
+    public function boot()
     {
         $register = new EventListenerRegister();
         $register->setEventListener($this->getListeners());

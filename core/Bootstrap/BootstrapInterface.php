@@ -2,10 +2,8 @@
 
 namespace Core\Bootstrap;
 
-use Core\Application;
-
 interface BootstrapInterface
 {
 
-    public function boot(Application $app);
+    public function boot();
 }

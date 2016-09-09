@@ -3,7 +3,6 @@
 namespace App\Bootstrap;
 
 use Core\Bootstrap\BootstrapInterface;
-use Core\Application;
 use Core\ControllerDispatcher\Dispatcher;
 use Zend\Diactoros\Uri;
 use Zend\Diactoros\ServerRequestFactory;
@@ -11,7 +10,7 @@ use Zend\Diactoros\ServerRequestFactory;
 class DispatcherBootstrap implements BootstrapInterface
 {
 
-    public function boot(Application $app)
+    public function boot()
     {
         $dispatcher = new Dispatcher();
 

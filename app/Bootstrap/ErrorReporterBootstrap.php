@@ -4,12 +4,10 @@ namespace App\Bootstrap;
 
 use Core\Bootstrap\BootstrapInterface;
 use Core\ErrorReporterRegister;
-use Core\Application;
 
 class ErrorReporterBootstrap implements BootstrapInterface
 {
-
-    public function boot(Application $app)
+    public function boot()
     {
         $register = new ErrorReporterRegister();
         $register->setConfig($this->getConfig());

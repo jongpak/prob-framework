@@ -8,9 +8,9 @@ use Core\Bootstrap\BootstrapInterface;
 class ApplicationBootstrap implements BootstrapInterface
 {
 
-    public function boot(Application $app)
+    public function boot()
     {
-        $app->setSiteConfig($this->getSiteConfig());
+        Application::getInstance()->setSiteConfig($this->getSiteConfig());
     }
 
     public function getSiteConfig()
