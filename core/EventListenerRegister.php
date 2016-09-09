@@ -8,7 +8,6 @@ use Prob\ArrayUtil\KeyGlue;
 
 class EventListenerRegister
 {
-
     private $eventListeners = [];
 
     public function setEventListener(array $eventListeners)

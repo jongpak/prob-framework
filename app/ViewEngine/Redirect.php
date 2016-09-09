@@ -6,7 +6,6 @@ use Core\ViewEngineInterface;
 
 class Redirect implements ViewEngineInterface
 {
-
     private $url = '';
 
     public function __construct($settings = [])

@@ -7,7 +7,6 @@ use App\ViewEngine\Redirect;
 
 class RedirectResolver implements ViewResolverInterface
 {
-
     private $settings = [];
 
     public function setViewEngineConfig(array $settings)

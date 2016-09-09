@@ -7,9 +7,7 @@ use Core\ErrorReporterInterface;
 
 class ErrorReporterRegister
 {
-
     private $config = [];
-
     private $errorReporterInstances = [];
 
     public function setConfig(array $config)

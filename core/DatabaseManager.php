@@ -7,7 +7,6 @@ use Doctrine\ORM\EntityManager;
 
 class DatabaseManager
 {
-
     private $config = [];
 
     private function __construct()

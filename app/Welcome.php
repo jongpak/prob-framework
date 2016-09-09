@@ -7,7 +7,6 @@ use App\Auth\AuthManager;
 
 class Welcome
 {
-
     public function index(ViewModel $viewModel)
     {
         $accountManager = AuthManager::getInstance()->getDefaultAccountManager();

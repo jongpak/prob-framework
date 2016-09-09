@@ -9,7 +9,6 @@ use App\Auth\LoginManager\SessionLoginManager;
 
 class AuthManagerTest extends TestCase
 {
-
     /**
      * @var AuthManager
      */

@@ -9,7 +9,6 @@ use Zend\Diactoros\ServerRequestFactory;
 
 class DispatcherBootstrap implements BootstrapInterface
 {
-
     public function boot()
     {
         $dispatcher = new Dispatcher();

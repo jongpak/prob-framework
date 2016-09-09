@@ -7,7 +7,6 @@ use Core\ControllerDispatcher;
 
 class RouterMapBuilder
 {
-
     private $routerConfig = [];
 
     public function setRouterConfig(array $config)

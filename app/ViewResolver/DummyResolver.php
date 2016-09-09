@@ -7,7 +7,6 @@ use App\ViewEngine\DummyView;
 
 class DummyResolver implements ViewResolverInterface
 {
-
     private $settings = [];
 
     public function setViewEngineConfig(array $settings)

@@ -15,7 +15,6 @@ use Core\ViewResolverInterface;
 
 class Dispatcher
 {
-
     /**
      * @var Map
      */

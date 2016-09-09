@@ -8,8 +8,8 @@ use \Exception;
 class Html implements ErrorReporterInterface
 {
     /**
-         * @var View
-         */
+     * @var View
+     */
     private $view;
 
     public function __construct($settings = [])

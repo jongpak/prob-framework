@@ -9,7 +9,6 @@ use App\Auth\Exception\AccountNotFound;
 
 class SessionLoginManagerTest extends TestCase
 {
-
     /**
      * @var SessionLoginManager
      */

@@ -4,7 +4,6 @@ namespace Core;
 
 interface ViewResolverInterface
 {
-
     public function setViewEngineConfig(array $settings);
 
     /**

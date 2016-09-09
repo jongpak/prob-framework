@@ -10,7 +10,6 @@ use \Twig_SimpleFunction;
 
 class Twig implements ViewEngineInterface
 {
-
     private $PUBLIC_PATH = 'public/';
 
     /**

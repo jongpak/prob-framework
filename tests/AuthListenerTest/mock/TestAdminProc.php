@@ -7,7 +7,6 @@ use Prob\Handler\ProcInterface;
 
 class TestAdminProc implements ProcInterface
 {
-
     public function __construct($procedure, $namespace = '')
     {
         // ...

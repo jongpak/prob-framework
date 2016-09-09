@@ -14,7 +14,6 @@ use Prob\Router\Matcher;
 
 class ParameterMapper
 {
-
     /**
      * @var ServerRequestInterface
      */

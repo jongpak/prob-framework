@@ -7,7 +7,6 @@ use App\Auth\AuthManager;
 
 class AuthBootstrap implements BootstrapInterface
 {
-
     public function boot()
     {
         $auth = AuthManager::getInstance();

@@ -4,7 +4,6 @@ namespace App\Auth;
 
 class AuthManager
 {
-
     private $config = [];
 
     private $accountManagerConfig = [];

@@ -7,7 +7,6 @@ use App\Auth\AccountManager\FileBaseAccountManager;
 
 class FileBaseAccountManagerTest extends TestCase
 {
-
     /**
      * @var FileBaseAccountManager
      */
