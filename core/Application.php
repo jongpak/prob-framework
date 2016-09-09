@@ -50,6 +50,12 @@ class Application
         return $this->siteConfig['url'] . $url;
     }
 
+    public function getPublicUrl($url = '')
+    {
+        $url = $url === '/' ? '' : $url;
+        return $this->siteConfig['publicPath'] . $url;
+    }
+
 
     /**
      * @return EventManager
