@@ -2,11 +2,7 @@
 
 namespace Core;
 
-use Doctrine\ORM\Tools\Setup;
-use Doctrine\ORM\EntityManager;
 use JBZoo\Event\EventManager;
-use Core\ControllerDispatcher\Dispatcher;
-use Psr\Http\Message\ServerRequestInterface;
 
 class Application
 {
@@ -54,20 +50,5 @@ class Application
     {
         $url = $url === '/' ? '' : $url;
         return $this->siteConfig['publicPath'] . $url;
-    }
-
-
-    /**
-     * @return EventManager
-     */
-    public function getEventManager()
-    {
-        static $instance = null;
-
-        if ($instance === null) {
-            $instance = new EventManager();
-        }
-
-        return $instance;
     }
 }

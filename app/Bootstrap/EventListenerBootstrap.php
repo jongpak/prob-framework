@@ -3,15 +3,13 @@
 namespace App\Bootstrap;
 
 use Core\Bootstrap\BootstrapInterface;
-use Core\EventListenerRegister;
+use Core\EventManager;
 
 class EventListenerBootstrap implements BootstrapInterface
 {
     public function boot()
     {
-        $register = new EventListenerRegister();
-        $register->setEventListener($this->getListeners());
-        $register->register();
+        EventManager::getInstance()->registerListener($this->getListeners());
     }
 
     private function getListeners()
