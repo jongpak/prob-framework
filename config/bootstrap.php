@@ -5,5 +5,6 @@ return [
     'App\\Bootstrap\\DatabaseBootstrap',
     'App\\Bootstrap\\ErrorReporterBootstrap',
     'App\\Bootstrap\\EventListenerBootstrap',
-    'App\\Bootstrap\\AuthBootstrap'
+    'App\\Bootstrap\\AuthBootstrap',
+    'App\\Bootstrap\\DispatcherBootstrap'
 ];

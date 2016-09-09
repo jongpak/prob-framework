@@ -10,11 +10,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class Application
 {
-    private $routerConfig = [];
     private $siteConfig = [];
-    private $viewEngineConfig = [];
-
-    private $viewResolvers = [];
 
     /**
      * Singleton: private constructor
@@ -40,34 +36,6 @@ class Application
     public function setSiteConfig(array $siteConfig)
     {
         $this->siteConfig = $siteConfig;
-    }
-
-    public function setViewEngineConfig(array $viewEngineConfig)
-    {
-        $this->viewEngineConfig = $viewEngineConfig;
-    }
-
-    public function setViewResolver(array $viewResolvers)
-    {
-        $this->viewResolvers = $viewResolvers;
-    }
-
-    public function setRouterConfig(array $routerConfig)
-    {
-        $this->routerConfig = $routerConfig;
-    }
-
-
-    public function dispatch(ServerRequestInterface $request)
-    {
-        $dispatcher = new Dispatcher();
-
-        $dispatcher->setRequest($request);
-        $dispatcher->setRouterConfig($this->routerConfig);
-        $dispatcher->setViewEngineConfig($this->viewEngineConfig);
-        $dispatcher->setViewResolver($this->viewResolvers);
-
-        $dispatcher->dispatch();
     }
 
 
