@@ -14,7 +14,6 @@ class Application
     private $siteConfig = [];
     private $errorReporterConfig = [];
     private $viewEngineConfig = [];
-    private $dbConfig = [];
 
     private $eventListeners = [];
     private $viewResolvers = [];
@@ -48,11 +47,6 @@ class Application
     public function setErrorReporterConfig(array $errorReporterConfig)
     {
         $this->errorReporterConfig = $errorReporterConfig;
-    }
-
-    public function setDbConfig(array $dbConfig)
-    {
-        $this->dbConfig = $dbConfig;
     }
 
     public function setViewEngineConfig(array $viewEngineConfig)
@@ -121,18 +115,6 @@ class Application
         return $this->siteConfig['url'] . $url;
     }
 
-
-    /**
-     * @return EntityManager
-     */
-    public function getEntityManager()
-    {
-        $config = Setup::createAnnotationMetadataConfiguration(
-                    $this->dbConfig['entityPath'],
-                    $this->dbConfig['devMode']
-                    );
-        return EntityManager::create($this->dbConfig['connections'][$this->dbConfig['defaultConnection']], $config);
-    }
 
     /**
      * @return EventManager
