@@ -16,9 +16,6 @@ class ApplicationBootstrap implements BootstrapInterface, SiteConfigLoader
         $app->setViewEngineConfig($this->getViewEngineConfig());
         $app->setViewResolver($this->getViewResolvers());
 
-        $app->setEventListener($this->getEventListener());
-        $app->registerEventListener();
-
         $app->setRouterConfig($this->getRouterConfig());
     }
 
@@ -35,11 +32,6 @@ class ApplicationBootstrap implements BootstrapInterface, SiteConfigLoader
     private function getViewResolvers()
     {
         return require __DIR__ . '/../../config/viewResolver.php';
-    }
-
-    private function getEventListener()
-    {
-        return require __DIR__ . '/../../config/event.php';
     }
 
     private function getRouterConfig()

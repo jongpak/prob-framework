@@ -14,7 +14,6 @@ class Application
     private $siteConfig = [];
     private $viewEngineConfig = [];
 
-    private $eventListeners = [];
     private $viewResolvers = [];
 
     /**
@@ -48,11 +47,6 @@ class Application
         $this->viewEngineConfig = $viewEngineConfig;
     }
 
-    public function setEventListener(array $eventListeners)
-    {
-        $this->eventListeners = $eventListeners;
-    }
-
     public function setViewResolver(array $viewResolvers)
     {
         $this->viewResolvers = $viewResolvers;
@@ -61,13 +55,6 @@ class Application
     public function setRouterConfig(array $routerConfig)
     {
         $this->routerConfig = $routerConfig;
-    }
-
-    public function registerEventListener()
-    {
-        $register = new EventListenerRegister();
-        $register->setEventListener($this->eventListeners);
-        $register->register();
     }
 
 

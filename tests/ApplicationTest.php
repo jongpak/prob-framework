@@ -33,9 +33,6 @@ class ApplicationTest extends TestCase
         $application->setViewEngineConfig($this->getViewEngineConfig());
         $application->setViewResolver($this->getViewResolvers());
 
-        $application->setEventListener($this->getEventListener());
-        $application->registerEventListener();
-
         $application->setRouterConfig($this->getRouteMap());
     }
 
@@ -43,25 +40,6 @@ class ApplicationTest extends TestCase
     {
         return [
             'url' => 'http://test.com/',
-        ];
-    }
-
-    private function getErrorReporterConfig()
-    {
-        return [
-            'displayErrors' => true,
-            'enableReporters' => [ 'Html' ],
-
-            'reporters' => [
-                'Html' => [
-                    'class' => 'App\\ErrorReporter\\Html',
-                    'view' => 'App\\ViewEngine\\Twig',
-                    'path' => '../view/error/',
-                    'file' => 'exception',
-                    'postfix' => '.twig',
-                    'settings' => []
-                ]
-            ]
         ];
     }
 
