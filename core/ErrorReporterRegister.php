@@ -8,24 +8,18 @@ use Core\ErrorReporterInterface;
 class ErrorReporterRegister
 {
 
-    private $errorReporterConfig = [];
-    private $enabledReporters = [];
+    private $config = [];
 
-    private $errorReporters = [];
+    private $errorReporterInstances = [];
 
-    public function setErrorReporterConfig(array $errorReporterConfig)
+    public function setConfig(array $config)
     {
-        $this->errorReporterConfig = $errorReporterConfig;
-    }
-
-    public function setEnabledReporters(array $reports)
-    {
-        $this->enabledReporters = $reports;
+        $this->config = $config;
     }
 
     public function register()
     {
-        $this->buildErrorReporters();
+        $this->constructErrorReporters();
         $this->registerErrorReporters();
     }
 
@@ -35,7 +29,7 @@ class ErrorReporterRegister
          * @var ErrorReporter $reporter
          */
         set_exception_handler(function ($exception) {
-            foreach ($this->errorReporters as $reporter) {
+            foreach ($this->errorReporterInstances as $reporter) {
                 $reporter->report($exception);
             }
         });
@@ -45,15 +39,15 @@ class ErrorReporterRegister
         });
     }
 
-    private function buildErrorReporters()
+    private function constructErrorReporters()
     {
-        $errorReporters = [];
+        $errorReporterInstances = [];
 
-        foreach ($this->enabledReporters as $reporter) {
-            $errorReporters[] = $this->getErrorReporterInstance($reporter);
+        foreach ($this->config['enableReporters'] as $reporterName) {
+            $errorReporterInstances[] = $this->getErrorReporterInstance($reporterName);
         }
 
-        $this->errorReporters = $errorReporters;
+        $this->errorReporterInstances = $errorReporterInstances;
     }
 
     /**
@@ -62,7 +56,7 @@ class ErrorReporterRegister
      */
     private function getErrorReporterInstance($reporterName)
     {
-        $class = $this->errorReporterConfig[$reporterName]['class'];
-        return new $class($this->errorReporterConfig[$reporterName]);
+        $class = $this->config['reporters'][$reporterName]['class'];
+        return new $class($this->config['reporters'][$reporterName]);
     }
 }

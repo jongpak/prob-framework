@@ -12,7 +12,6 @@ class Application
 {
     private $routerConfig = [];
     private $siteConfig = [];
-    private $errorReporterConfig = [];
     private $viewEngineConfig = [];
 
     private $eventListeners = [];
@@ -44,11 +43,6 @@ class Application
         $this->siteConfig = $siteConfig;
     }
 
-    public function setErrorReporterConfig(array $errorReporterConfig)
-    {
-        $this->errorReporterConfig = $errorReporterConfig;
-    }
-
     public function setViewEngineConfig(array $viewEngineConfig)
     {
         $this->viewEngineConfig = $viewEngineConfig;
@@ -62,20 +56,6 @@ class Application
     public function setViewResolver(array $viewResolvers)
     {
         $this->viewResolvers = $viewResolvers;
-    }
-
-    public function setDisplayError($isDisplay)
-    {
-        error_reporting(E_ALL);
-        ini_set('display_errors', $isDisplay);
-    }
-
-    public function registerErrorReporters()
-    {
-        $register = new ErrorReporterRegister();
-        $register->setErrorReporterConfig($this->errorReporterConfig);
-        $register->setEnabledReporters($this->siteConfig['errorReporters']);
-        $register->register();
     }
 
     public function setRouterConfig(array $routerConfig)

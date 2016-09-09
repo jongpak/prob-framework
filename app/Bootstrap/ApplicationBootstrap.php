@@ -12,13 +12,9 @@ class ApplicationBootstrap implements BootstrapInterface, SiteConfigLoader
     public function boot(Application $app)
     {
         $app->setSiteConfig($this->getSiteConfig());
-        $app->setErrorReporterConfig($this->getErrorReporterConfig());
 
         $app->setViewEngineConfig($this->getViewEngineConfig());
         $app->setViewResolver($this->getViewResolvers());
-
-        $app->setDisplayError($this->getSiteConfig()['displayErrors']);
-        $app->registerErrorReporters();
 
         $app->setEventListener($this->getEventListener());
         $app->registerEventListener();
@@ -29,11 +25,6 @@ class ApplicationBootstrap implements BootstrapInterface, SiteConfigLoader
     public function getSiteConfig()
     {
         return require __DIR__ . '/../../config/site.php';
-    }
-
-    private function getErrorReporterConfig()
-    {
-        return require __DIR__ . '/../../config/errorReporter.php';
     }
 
     private function getViewEngineConfig()
