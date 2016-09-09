@@ -1,12 +1,9 @@
 <?php
 
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
-use Core\Application;
+use Core\DatabaseManager;
 
-$app = Application::getInstance();
-$app->setSiteConfig(require 'site.php');
-$app->setDbConfig(require 'db.php');
-
-$entityManager = Application::getInstance()->getEntityManager();
+DatabaseManager::getInstance()->setConfig(require 'db.php');
+$entityManager = DatabaseManager::getInstance()->getEntityManager();
 
 return ConsoleRunner::createHelperSet($entityManager);
