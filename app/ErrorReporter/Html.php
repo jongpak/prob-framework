@@ -4,7 +4,6 @@ namespace App\ErrorReporter;
 
 use Core\ViewEngineInterface;
 use Core\ErrorReporterInterface;
-use \Exception;
 
 class Html implements ErrorReporterInterface
 {
@@ -15,6 +14,10 @@ class Html implements ErrorReporterInterface
         $this->settings = $settings;
     }
 
+    /*
+        $exception is not Exception type.
+        because $exception can be Throwable type in PHP 7
+     */
     public function report($exception)
     {
         $view = $this->constructViewInstance();
@@ -35,7 +38,7 @@ class Html implements ErrorReporterInterface
         return $view;
     }
 
-    private function setReportVariables(ViewEngineInterface $view, Exception $exception)
+    private function setReportVariables(ViewEngineInterface $view, $exception)
     {
         $view->set('message', $exception->getMessage());
         $view->set('file', $exception->getFile());
