@@ -2,38 +2,44 @@
 
 namespace App\ErrorReporter;
 
+use Core\ViewEngineInterface;
 use Core\ErrorReporterInterface;
 use \Exception;
 
 class Html implements ErrorReporterInterface
 {
-    /**
-     * @var View
-     */
-    private $view;
+    private $settings = [];
 
     public function __construct($settings = [])
     {
-        $this->buildView($settings);
-    }
-
-    private function buildView($settings)
-    {
-        $this->view = new $settings['view']($settings);
-        $this->view->file($settings['file']);
+        $this->settings = $settings;
     }
 
     public function report($exception)
     {
-        $this->setReportVariables($exception);
-        echo $this->view->render();
+        $view = $this->constructViewInstance();
+        $view->file($this->settings['file']);
+        $this->setReportVariables($view, $exception);
+
+        echo $view->render();
     }
 
-    private function setReportVariables($exception)
+    /**
+     * @return ViewEngineInterface
+     */
+    private function constructViewInstance()
     {
-        $this->view->set('message', $exception->getMessage());
-        $this->view->set('file', $exception->getFile());
-        $this->view->set('line', $exception->getLine());
-        $this->view->set('traces', $exception->getTrace());
+        $viewClassName = $this->settings['view'];
+        $view = new $viewClassName($this->settings);
+
+        return $view;
+    }
+
+    private function setReportVariables(ViewEngineInterface $view, Exception $exception)
+    {
+        $view->set('message', $exception->getMessage());
+        $view->set('file', $exception->getFile());
+        $view->set('line', $exception->getLine());
+        $view->set('traces', $exception->getTrace());
     }
 }
