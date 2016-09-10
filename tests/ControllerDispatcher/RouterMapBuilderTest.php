@@ -28,11 +28,11 @@ class RouterMapBuilderTest extends TestCase
 
         $map = $routerMapBuilder->build();
 
-        $this->assertEquals(2, count($map->getHandlers('GET')));
-        $this->assertEquals('/', $map->getHandlers('GET')[0]['urlPattern']);
-        $this->assertEquals('/test', $map->getHandlers('GET')[1]['urlPattern']);
+        $this->assertEquals(2, count($map->getHandlerByMethod('GET')));
+        $this->assertEquals('/', $map->getHandlerByMethod('GET')[0]->getUrlPattern());
+        $this->assertEquals('/test', $map->getHandlerByMethod('GET')[1]->getUrlPattern());
 
-        $this->assertEquals(1, count($map->getHandlers('POST')));
-        $this->assertEquals('/', $map->getHandlers('POST')[0]['urlPattern']);
+        $this->assertEquals(1, count($map->getHandlerByMethod('POST')));
+        $this->assertEquals('/', $map->getHandlerByMethod('POST')[0]->getUrlPattern());
     }
 }
