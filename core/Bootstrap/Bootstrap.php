@@ -9,9 +9,9 @@ class Bootstrap
 {
     private $bootstraps = [];
 
-    public function __construct()
+    public function __construct(array $bootstraps)
     {
-        $this->bootstraps = require __DIR__ . '/../../config/bootstrap.php';
+        $this->bootstraps = $bootstraps;
     }
 
     public function boot()
