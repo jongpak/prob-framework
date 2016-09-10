@@ -19,7 +19,7 @@ class EventListenerRegister
     {
         foreach ($this->getEventNames() as $eventName => $handler) {
             $proc = $this->getEventListenerProc($handler);
-            EventManager::getInstance()->getEventManager()->on($eventName, $proc);
+            EventManager::getEventManager()->on($eventName, $proc);
         }
     }
 

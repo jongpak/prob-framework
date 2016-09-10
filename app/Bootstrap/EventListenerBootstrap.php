@@ -9,7 +9,7 @@ class EventListenerBootstrap implements BootstrapInterface
 {
     public function boot()
     {
-        EventManager::getInstance()->registerListener($this->getListeners());
+        EventManager::registerListener($this->getListeners());
     }
 
     private function getListeners()

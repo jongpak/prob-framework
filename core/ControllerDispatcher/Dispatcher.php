@@ -135,7 +135,7 @@ class Dispatcher
 
         $parameterMap = $parameterMapper->getParameterMap();
 
-        EventManager::getInstance()->getEventManager()->trigger($eventName, [$parameterMap]);
+        EventManager::getEventManager()->trigger($eventName, [$parameterMap]);
     }
 
     private function renderView($controllerResult, ViewModel $viewModel)

@@ -6,27 +6,7 @@ use JBZoo\Event\EventManager as ZooEventManager;
 
 class EventManager
 {
-    private $config = [];
-
-    private function __construct()
-    {
-    }
-
-    /**
-     * @return self
-     */
-    public static function getInstance()
-    {
-        static $instance = null;
-
-        if ($instance === null) {
-            $instance = new self();
-        }
-
-        return $instance;
-    }
-
-    public function registerListener(array $eventListeners)
+    public static function registerListener(array $eventListeners)
     {
         $register = new EventListenerRegister();
         $register->setEventListener($eventListeners);
@@ -36,7 +16,7 @@ class EventManager
     /**
      * @return ZooEventManager
      */
-    public function getEventManager()
+    public static function getEventManager()
     {
         static $instance = null;
 
