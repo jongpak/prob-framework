@@ -22,17 +22,24 @@ class ApplicationTest extends TestCase
     private function getSiteConfig()
     {
         return [
-            'url' => 'http://test.com/',
+            'url' => '/prob/',
+            'publicPath' => '/prob/public/',
         ];
+    }
+
+    public function testRootUrl()
+    {
+        $this->assertEquals('/prob/', $this->application->url());
+        $this->assertEquals('/prob/', $this->application->url('/'));
     }
 
     public function testUrl()
     {
-        $siteUrl = $this->getSiteConfig()['url'];
-        $url = '/test/ok';
+        $this->assertEquals('/prob/test/ok', $this->application->url('test/ok'));
+    }
 
-        $expectUrl = $siteUrl.$url;
-
-        $this->assertEquals($expectUrl, $this->application->url($url));
+    public function testPublicUrl()
+    {
+        $this->assertEquals('/prob/public/style.css', $this->application->getPublicUrl('style.css'));
     }
 }
