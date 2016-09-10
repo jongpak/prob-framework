@@ -17,9 +17,7 @@ class Bootstrap
     public function boot()
     {
         foreach ($this->bootstraps as $bootstrapClassName) {
-            /**
-             * @var BootstrapInterface
-             */
+            /** @var BootstrapInterface */
             $bootstrap = new $bootstrapClassName();
             $bootstrap->boot();
         }
