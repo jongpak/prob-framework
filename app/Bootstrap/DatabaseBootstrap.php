@@ -7,13 +7,8 @@ use Core\DatabaseManager;
 
 class DatabaseBootstrap implements BootstrapInterface
 {
-    public function boot()
+    public function boot(array $env)
     {
-        DatabaseManager::setDefaultConfig($this->getConfig());
-    }
-
-    private function getConfig()
-    {
-        return require __DIR__ . '/../../config/db.php';
+        DatabaseManager::setDefaultConfig($env['db']);
     }
 }

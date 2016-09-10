@@ -7,13 +7,8 @@ use Core\Bootstrap\BootstrapInterface;
 
 class ApplicationBootstrap implements BootstrapInterface
 {
-    public function boot()
+    public function boot(array $env)
     {
-        Application::getInstance()->setSiteConfig($this->getSiteConfig());
-    }
-
-    public function getSiteConfig()
-    {
-        return require __DIR__ . '/../../config/site.php';
+        Application::getInstance()->setSiteConfig($env['site']);
     }
 }

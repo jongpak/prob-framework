@@ -12,14 +12,17 @@ class BootstrapTest extends TestCase
         require 'mock/BootTest2.php';
         require 'mock/BootTest3.php';
 
-        $this->expectOutputString('test1test2test3');
+        $this->expectOutputString('env1env2env3');
 
         $bootstrap = new Bootstrap([
             'App\\Bootstrap\\BootTest1',
             'App\\Bootstrap\\BootTest2',
             'App\\Bootstrap\\BootTest3',
         ]);
-
-        $bootstrap->boot();
+        $bootstrap->boot([
+            'test1' => 'env1',
+            'test2' => 'env2',
+            'test3' => 'env3',
+        ]);
     }
 }

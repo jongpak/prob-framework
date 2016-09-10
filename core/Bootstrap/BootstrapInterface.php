@@ -4,5 +4,5 @@ namespace Core\Bootstrap;
 
 interface BootstrapInterface
 {
-    public function boot();
+    public function boot(array $env);
 }

@@ -14,12 +14,12 @@ class Bootstrap
         $this->bootstraps = $bootstraps;
     }
 
-    public function boot()
+    public function boot(array $env)
     {
         foreach ($this->bootstraps as $bootstrapClassName) {
             /** @var BootstrapInterface */
             $bootstrap = new $bootstrapClassName();
-            $bootstrap->boot();
+            $bootstrap->boot($env);
         }
     }
 }

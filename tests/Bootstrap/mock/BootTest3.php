@@ -6,8 +6,8 @@ use Core\Bootstrap\BootstrapInterface;
 
 class BootTest3 implements BootstrapInterface
 {
-    public function boot()
+    public function boot(array $env)
     {
-        echo 'test3';
+        echo $env['test3'];
     }
 }

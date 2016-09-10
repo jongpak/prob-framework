@@ -7,17 +7,12 @@ use Core\ErrorReporter\ErrorReporterRegister;
 
 class ErrorReporterBootstrap implements BootstrapInterface
 {
-    public function boot()
+    public function boot(array $env)
     {
-        ini_set('display_errors', $this->getConfig()['displayErrors']);
+        ini_set('display_errors', $env['error']['displayErrors']);
 
         $register = new ErrorReporterRegister();
-        $register->setConfig($this->getConfig());
+        $register->setConfig($env['error']);
         $register->register();
-    }
-
-    private function getConfig()
-    {
-        return require __DIR__ . '/../../config/error.php';
     }
 }

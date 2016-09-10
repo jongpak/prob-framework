@@ -7,27 +7,11 @@ use App\Auth\AuthManager;
 
 class AuthBootstrap implements BootstrapInterface
 {
-    public function boot()
+    public function boot(array $env)
     {
         $auth = AuthManager::getInstance();
-
-        $auth->setConfig($this->getConfig());
-        $auth->setAccountManagerConfig($this->getAccountManagerConfig());
-        $auth->setLoginManagerConfig($this->getLoginManagerConfig());
-    }
-
-    private function getConfig()
-    {
-        return require __DIR__ . '/../Auth/config/config.php';
-    }
-
-    private function getAccountManagerConfig()
-    {
-        return require __DIR__ . '/../Auth/config/accountManager.php';
-    }
-
-    private function getLoginManagerConfig()
-    {
-        return require __DIR__ . '/../Auth/config/loginManager.php';
+        $auth->setConfig($env['auth']);
+        $auth->setAccountManagerConfig($env['accountManager']);
+        $auth->setLoginManagerConfig($env['loginManager']);
     }
 }
