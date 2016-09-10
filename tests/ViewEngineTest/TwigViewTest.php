@@ -33,8 +33,8 @@ class TwigViewTest extends TestCase
     {
         $application = Application::getInstance();
         $application->setSiteConfig([
-            'url' => 'http://test.com/',
-            'viewEngine' => 'Twig',
+            'url' => '/',
+            'publicPath' => '/public/',
         ]);
 
         $view = new Twig($this->getTwigSetting());
@@ -42,8 +42,8 @@ class TwigViewTest extends TestCase
 
         $this->expectOutputString(
             "<link rel=\"stylesheet\" type=\"text/css\" href=\"css_test\">\n" .
-            "http://test.com/public/asset_test\n" .
-            "http://test.com/url_test"
+            "/public/asset_test\n" .
+            "/url_test"
         );
         $view->render();
     }
