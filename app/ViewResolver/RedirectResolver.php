@@ -2,7 +2,7 @@
 
 namespace App\ViewResolver;
 
-use Core\ViewResolverInterface;
+use Core\View\ViewResolverInterface;
 use App\ViewEngine\Redirect;
 
 class RedirectResolver implements ViewResolverInterface

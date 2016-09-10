@@ -2,7 +2,7 @@
 
 namespace App\ViewEngine;
 
-use Core\ViewEngineInterface;
+use Core\View\ViewEngineInterface;
 
 class DummyView implements ViewEngineInterface
 {

@@ -2,7 +2,7 @@
 
 namespace App\ViewEngine;
 
-use Core\ViewEngineInterface;
+use Core\View\ViewEngineInterface;
 use Core\Application;
 use \Twig_Loader_Filesystem;
 use \Twig_Environment;
