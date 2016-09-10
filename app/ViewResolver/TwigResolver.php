@@ -3,7 +3,7 @@
 namespace App\ViewResolver;
 
 use Core\View\ViewResolverInterface;
-use App\ViewEngine\Twig;
+use App\ViewEngine\TwigView;
 
 class TwigResolver implements ViewResolverInterface
 {
@@ -17,7 +17,7 @@ class TwigResolver implements ViewResolverInterface
     public function resolve($viewData)
     {
         if (is_string($viewData)) {
-            $view = new Twig($this->settings);
+            $view = new TwigView($this->settings);
             $view->file($viewData);
 
             return $view;

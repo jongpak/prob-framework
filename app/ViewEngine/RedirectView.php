@@ -4,9 +4,9 @@ namespace App\ViewEngine;
 
 use Core\View\ViewEngineInterface;
 
-class Json implements ViewEngineInterface
+class RedirectView implements ViewEngineInterface
 {
-    private $data = null;
+    private $url = '';
 
     public function __construct($settings = [])
     {
@@ -23,19 +23,18 @@ class Json implements ViewEngineInterface
         return [];
     }
 
-    public function file($data)
+    public function file($url)
     {
-        $this->data = $data;
+        $this->url = $url;
     }
 
     public function getFile()
     {
-        return $this->data;
+        return $this->url;
     }
 
     public function render()
     {
-        header('Content-Type: application/json');
-        echo json_encode($this->data);
+        header('location: ' . $this->url);
     }
 }

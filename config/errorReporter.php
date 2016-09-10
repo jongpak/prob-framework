@@ -7,7 +7,7 @@ return [
     'reporters' => [
         'Html' => [
             'class' => 'App\\ErrorReporter\\Html',
-            'view' => 'App\\ViewEngine\\Twig',
+            'view' => 'App\\ViewEngine\\TwigView',
             'path' => '../view/error/',
             'file' => 'exception',
             'postfix' => '.twig',

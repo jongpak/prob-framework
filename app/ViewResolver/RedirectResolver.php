@@ -3,7 +3,7 @@
 namespace App\ViewResolver;
 
 use Core\View\ViewResolverInterface;
-use App\ViewEngine\Redirect;
+use App\ViewEngine\RedirectView;
 
 class RedirectResolver implements ViewResolverInterface
 {
@@ -24,7 +24,7 @@ class RedirectResolver implements ViewResolverInterface
             return;
         }
 
-        $view = new Redirect($this->settings);
+        $view = new RedirectView($this->settings);
         $view->file(trim($url[1]));
 
         return $view;

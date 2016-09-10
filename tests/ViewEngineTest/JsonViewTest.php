@@ -3,7 +3,7 @@
 namespace Core;
 
 use PHPUnit\Framework\TestCase;
-use App\ViewEngine\Json;
+use App\ViewEngine\JsonView;
 
 class JsonViewTest extends TestCase
 {
@@ -19,7 +19,7 @@ class JsonViewTest extends TestCase
             ['ok']
         ];
 
-        $view = new Json();
+        $view = new JsonView();
         $view->file($array);
         $view->set('one', 1);
         $view->set('two', 2);
@@ -39,7 +39,7 @@ class JsonViewTest extends TestCase
         $object->var1 = 'test';
         $object->var2 = ['ok'];
 
-        $view = new Json();
+        $view = new JsonView();
         $view->file($object);
         $view->set('one', 1);
         $view->set('two', 2);

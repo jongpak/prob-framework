@@ -3,7 +3,7 @@
 namespace Core;
 
 use PHPUnit\Framework\TestCase;
-use App\ViewEngine\Redirect;
+use App\ViewEngine\RedirectView;
 
 class RedirectViewTest extends TestCase
 {
@@ -14,7 +14,7 @@ class RedirectViewTest extends TestCase
     {
         $url = 'test/url';
 
-        $view = new Redirect();
+        $view = new RedirectView();
         $view->file($url);
         $view->set('one', 1);
         $view->set('two', 2);

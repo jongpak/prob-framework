@@ -13,7 +13,7 @@ class HtmlErrorReporterTest extends TestCase
     {
         return [
             'class' => 'App\\ErrorReporter\\Html',
-            'view' => 'App\\ViewEngine\\Twig',
+            'view' => 'App\\ViewEngine\\TwigView',
             'path' => __DIR__ . '/mock',
             'file' => 'error',
             'postfix' => '.twig',
