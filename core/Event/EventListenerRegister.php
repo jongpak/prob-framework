@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace Core\Event;
 
 use Prob\Handler\ProcFactory;
 use Prob\Handler\ParameterMap;

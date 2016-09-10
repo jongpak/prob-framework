@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace Core\Event;
 
 use PHPUnit\Framework\TestCase;
 use Prob\Handler\ParameterMap;
