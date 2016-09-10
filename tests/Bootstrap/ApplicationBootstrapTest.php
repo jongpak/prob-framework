@@ -1,9 +1,10 @@
 <?php
 
-namespace Core\Bootstrap;
+namespace App\Bootstrap\Test;
 
 use PHPUnit\Framework\TestCase;
 use Core\Application;
+use Core\Bootstrap\Bootstrap;
 
 class ApplicationBootstrapTeest extends TestCase
 {
