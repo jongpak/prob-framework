@@ -9,8 +9,7 @@ class DatabaseBootstrap implements BootstrapInterface
 {
     public function boot()
     {
-        $dbManager = DatabaseManager::getInstance();
-        $dbManager->setConfig($this->getConfig());
+        DatabaseManager::setDefaultConfig($this->getConfig());
     }
 
     private function getConfig()

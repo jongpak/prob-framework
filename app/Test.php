@@ -10,16 +10,6 @@ use Doctrine\ORM\EntityManager;
 
 class Test
 {
-    /**
-     * @var EntityManager
-     */
-    private $entityManager;
-
-    public function __construct()
-    {
-        $this->entityManager = DatabaseManager::getInstance()->getEntityManager();
-    }
-
     public function echoTest()
     {
         echo 'Hello Test!';
@@ -32,7 +22,7 @@ class Test
 
     public function dbTest()
     {
-        $posts = $this->entityManager->getRepository(Post::class)->findAll();
+        $posts = DatabaseManager::getDefaultEntityManager()->getRepository(Post::class)->findAll();
         return $posts;
     }
 
