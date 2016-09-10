@@ -18,6 +18,6 @@ class ErrorReporterBootstrap implements BootstrapInterface
 
     private function getConfig()
     {
-        return require __DIR__ . '/../../config/errorReporter.php';
+        return require __DIR__ . '/../../config/error.php';
     }
 }
