@@ -14,6 +14,10 @@ class RedirectResolverTest extends TestCase
         $resolver->setViewEngineConfig([]);
 
         $this->assertEquals(RedirectView::class, get_class($resolver->resolve('redirect: url')));
+
+        // [Issue #23] pattern => /^redirect:(.*)/
+        $this->assertEquals(null, $resolver->resolve('???redirect: url'));
+
         $this->assertEquals(null, $resolver->resolve('test'));
         $this->assertEquals(null, $resolver->resolve(''));
         $this->assertEquals(null, $resolver->resolve(1));

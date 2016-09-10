@@ -20,7 +20,7 @@ class RedirectResolver implements ViewResolverInterface
             return;
         }
 
-        if (preg_match('/redirect:(.*)/', $viewData, $url) === 0) {
+        if (preg_match('/^redirect:(.*)/', $viewData, $url) === 0) {
             return;
         }
 
