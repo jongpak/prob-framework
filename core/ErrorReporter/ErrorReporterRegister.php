@@ -1,9 +1,8 @@
 <?php
 
-namespace Core;
+namespace Core\ErrorReporter;
 
 use \ErrorException;
-use Core\ErrorReporterInterface;
 
 class ErrorReporterRegister
 {

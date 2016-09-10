@@ -3,7 +3,7 @@
 namespace App\ErrorReporter;
 
 use Core\ViewEngineInterface;
-use Core\ErrorReporterInterface;
+use Core\ErrorReporter\ErrorReporterInterface;
 
 class Html implements ErrorReporterInterface
 {

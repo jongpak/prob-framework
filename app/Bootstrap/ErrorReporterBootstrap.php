@@ -3,7 +3,7 @@
 namespace App\Bootstrap;
 
 use Core\Bootstrap\BootstrapInterface;
-use Core\ErrorReporterRegister;
+use Core\ErrorReporter\ErrorReporterRegister;
 
 class ErrorReporterBootstrap implements BootstrapInterface
 {
