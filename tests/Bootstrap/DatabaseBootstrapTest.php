@@ -7,7 +7,7 @@ use Core\Bootstrap\Bootstrap;
 use Core\DatabaseManager;
 use Doctrine\ORM\EntityManager;
 
-class DatabaseBootstrapTeest extends TestCase
+class DatabaseBootstrapTest extends TestCase
 {
     public function testBoot()
     {

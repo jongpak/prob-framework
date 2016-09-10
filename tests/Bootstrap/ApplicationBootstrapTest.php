@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Core\Application;
 use Core\Bootstrap\Bootstrap;
 
-class ApplicationBootstrapTeest extends TestCase
+class ApplicationBootstrapTest extends TestCase
 {
 
     public function testBoot()
