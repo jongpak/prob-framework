@@ -6,10 +6,7 @@ use App\EventListener\Auth\Validator;
 return [
     'Controller' => [
         '*.*' => [
-            'before' => function (ProcInterface $proc) {
-                $validator = new Validator(require '../app/EventListener/Auth/config/controllerPermission.php');
-                $validator->validate($proc);
-            }
+            'before' => 'App\\EventListener\\Auth\\ValidatorListener.validate'
         ],
         'Test.event' => [
             'before' => function () {
