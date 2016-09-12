@@ -18,8 +18,15 @@ class EventListenerRegister
     public function register()
     {
         foreach ($this->getEventNames() as $eventName => $handler) {
-            $proc = $this->getEventListenerProc($handler);
-            EventManager::getEventManager()->on($eventName, $proc);
+            if (is_array($handler)) {
+                foreach ($handler as $handlerItem) {
+                    $proc = $this->getEventListenerProc($handlerItem);
+                    EventManager::getEventManager()->on($eventName, $proc);
+                }
+            } else {
+                $proc = $this->getEventListenerProc($handler);
+                EventManager::getEventManager()->on($eventName, $proc);
+            }
         }
     }
 

@@ -17,6 +17,14 @@ class EventListenerRegisterTest extends TestCase
             'event.two' => function ($str2) {
                 echo $str2;
             },
+            'event.array' => [
+                function () {
+                    echo 'hello';
+                },
+                function () {
+                    echo 'world';
+                }
+            ]
         ];
 
         $register = new EventListenerRegister();
@@ -27,8 +35,11 @@ class EventListenerRegisterTest extends TestCase
         $param->bindBy(new Named('str1'), 'test1');
         $param->bindBy(new Named('str2'), 'test2');
 
-        $this->expectOutputString('test1test2');
+        $this->expectOutputString('test1/test2/helloworld');
         EventManager::getEventManager()->trigger('event.one', [$param]);
+        echo '/';
         EventManager::getEventManager()->trigger('event.two', [$param]);
+        echo '/';
+        EventManager::getEventManager()->trigger('event.array', [$param]);
     }
 }
