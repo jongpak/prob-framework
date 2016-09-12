@@ -27,10 +27,9 @@ class EventListenerRegister
     {
         $glue = new KeyGlue();
         $glue->setArray($this->eventListeners);
-        $glue->setWithValue(true);
         $glue->setGlueCharacter('.');
 
-        return $glue->glue();
+        return $glue->glueKeyAndContainValue();
     }
 
     private function getEventListenerProc($handler)
