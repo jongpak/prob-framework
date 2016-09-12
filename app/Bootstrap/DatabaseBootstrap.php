@@ -9,6 +9,6 @@ class DatabaseBootstrap implements BootstrapInterface
 {
     public function boot(array $env)
     {
-        DatabaseManager::setDefaultConfig($env['db']);
+        DatabaseManager::setConfig($env['db']);
     }
 }

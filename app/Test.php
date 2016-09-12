@@ -22,7 +22,7 @@ class Test
 
     public function dbTest()
     {
-        $posts = DatabaseManager::getDefaultEntityManager()->getRepository(Post::class)->findAll();
+        $posts = DatabaseManager::getEntityManager()->getRepository(Post::class)->findAll();
         return $posts;
     }
 
