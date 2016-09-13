@@ -4,11 +4,16 @@ namespace App\Bootstrap\Test;
 
 use PHPUnit\Framework\TestCase;
 use Core\Bootstrap\Bootstrap;
-use Core\DatabaseManager;
+use Core\MockDatabaseManager;
 use Doctrine\ORM\EntityManager;
 
 class DatabaseBootstrapTest extends TestCase
 {
+    public function setUp()
+    {
+        require_once __DIR__ .'/../mock/MockDatabaseManager.php';
+    }
+
     public function testBoot()
     {
         $bootstrap = new Bootstrap([
@@ -25,6 +30,6 @@ class DatabaseBootstrapTest extends TestCase
             ]
         ]);
 
-        $this->assertEquals(EntityManager::class, get_class(DatabaseManager::getEntityManager()));
+        $this->assertEquals(EntityManager::class, get_class(MockDatabaseManager::getEntityManager()));
     }
 }

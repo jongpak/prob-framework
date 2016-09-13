@@ -10,7 +10,7 @@ use \RuntimeException;
 
 class DatabaseManager
 {
-    private static $config = [];
+    protected static $config = [];
 
     public static function setConfig(array $config)
     {

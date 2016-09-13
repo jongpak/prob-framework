@@ -3,14 +3,19 @@
 namespace Core;
 
 use PHPUnit\Framework\TestCase;
-use Core\DatabaseManager;
+use Core\MockDatabaseManager;
 use Doctrine\ORM\EntityManager;
 
 class DatabaseManagerTest extends TestCase
 {
+    public function setUp()
+    {
+        require_once 'mock/MockDatabaseManager.php';
+    }
+
     public function testGetDefaultEntityManager()
     {
-        DatabaseManager::setConfig([
+        MockDatabaseManager::setConfig([
             'defaultConnection' => 'test',
             'entityPath'        => [ null ],
             'devMode'           => true,
@@ -21,12 +26,12 @@ class DatabaseManagerTest extends TestCase
             ]
         ]);
 
-        $this->assertEquals(EntityManager::class, get_class(DatabaseManager::getEntityManager()));
+        $this->assertEquals(EntityManager::class, get_class(MockDatabaseManager::getEntityManager()));
     }
 
     public function testGetUserEntityManager()
     {
-        $dbManager = new DatabaseManager;
+        $dbManager = new MockDatabaseManager;
         $dbManager->setConfig([
             'defaultConnection' => 'test',
             'entityPath'        => [ null ],
