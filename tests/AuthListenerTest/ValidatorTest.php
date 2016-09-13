@@ -21,39 +21,36 @@ class ValidatorTest extends TestCase
     {
         include_once 'mock/TestAdminProc.php';
 
-        $authManager = AuthManager::getInstance();
-
-        $authManager->setConfig([
+        AuthManager::setConfig([
             'defaultAllow' => true,
             'defaultAccountManager' => 'FileBaseAccountManager',
-            'defaultLoginManager' => 'SessionLoginManager'
-        ]);
+            'defaultLoginManager' => 'SessionLoginManager',
 
-        $authManager->setAccountManagerConfig([
-            'FileBaseAccountManager' => [
-                'class' => 'App\\Auth\\AccountManager\\FileBaseAccountManager',
-                'settings' => [
-                    'accounts' => [
-                        'admin' => [
-                            'password' => 'admin',
-                            'role' => ['Admin']
-                        ],
-                        'test' => [
-                            'password' => 'test',
-                            'role' => ['Member']
+            'accountManagers' => [
+                'FileBaseAccountManager' => [
+                    'class' => 'App\\Auth\\AccountManager\\FileBaseAccountManager',
+                    'settings' => [
+                        'accounts' => [
+                            'admin' => [
+                                'password' => 'admin',
+                                'role' => ['Admin']
+                            ],
+                            'test' => [
+                                'password' => 'test',
+                                'role' => ['Member']
+                            ]
                         ]
                     ]
                 ]
-            ]
-        ]);
-        $authManager->setLoginManagerConfig([
-            'SessionLoginManager' => [
-                'class' => 'App\\Auth\\LoginManager\\SessionLoginManager',
-                'settings' => []
-            ]
-        ]);
+            ],
 
-        $this->authManager = $authManager;
+            'loginManagers' => [
+                'SessionLoginManager' => [
+                    'class' => 'App\\Auth\\LoginManager\\SessionLoginManager',
+                    'settings' => []
+                ]
+            ]
+        ]);
     }
 
     /**
@@ -61,7 +58,7 @@ class ValidatorTest extends TestCase
      */
     public function testValidator1()
     {
-        $this->authManager->getDefaultLoginManager()->logout();
+        AuthManager::getLoginManager()->logout();
 
         $validator = new Validator([
             'Test.admin' => [
@@ -79,7 +76,7 @@ class ValidatorTest extends TestCase
      */
     public function testValidator2()
     {
-        $this->authManager->getDefaultLoginManager()->login('admin', 'admin');
+        AuthManager::getLoginManager()->login('admin', 'admin');
 
         $validator = new Validator([
             'Test.admin' => [
@@ -95,7 +92,7 @@ class ValidatorTest extends TestCase
      */
     public function testValidator3()
     {
-        $this->authManager->getDefaultLoginManager()->login('test', 'test');
+        AuthManager::getLoginManager()->login('test', 'test');
 
         $validator = new Validator([
             'Test.admin' => [
@@ -112,7 +109,7 @@ class ValidatorTest extends TestCase
      */
     public function testValidator4()
     {
-        $this->authManager->getDefaultLoginManager()->login('test', 'test');
+        AuthManager::getLoginManager()->login('test', 'test');
 
         $validator = new Validator([
             'Test.admin' => [
@@ -128,7 +125,7 @@ class ValidatorTest extends TestCase
      */
     public function testValidator5()
     {
-        $this->authManager->getDefaultLoginManager()->login('test', 'test');
+        AuthManager::getLoginManager()->login('test', 'test');
 
         $validator = new Validator([
             'Test.admin' => [
@@ -145,7 +142,7 @@ class ValidatorTest extends TestCase
      */
     public function testValidator6()
     {
-        $this->authManager->getDefaultLoginManager()->login('test', 'test');
+        AuthManager::getLoginManager()->login('test', 'test');
 
         $validator = new Validator([
             'Test.admin' => [
@@ -161,9 +158,9 @@ class ValidatorTest extends TestCase
      */
     public function testValidatorDefaultAllowTrue()
     {
-        $this->authManager->getDefaultLoginManager()->login('test', 'test');
+        AuthManager::getLoginManager()->login('test', 'test');
 
-        $this->authManager->setConfig([
+        AuthManager::setConfig([
             'defaultAllow' => true,
             'defaultAccountManager' => 'FileBaseAccountManager',
             'defaultLoginManager' => 'SessionLoginManager'
@@ -178,9 +175,9 @@ class ValidatorTest extends TestCase
      */
     public function testValidatorDefaultAllowFalse()
     {
-        $this->authManager->getDefaultLoginManager()->login('test', 'test');
+        AuthManager::getLoginManager()->login('test', 'test');
 
-        $this->authManager->setConfig([
+        AuthManager::setConfig([
             'defaultAllow' => false,
             'defaultAccountManager' => 'FileBaseAccountManager',
             'defaultLoginManager' => 'SessionLoginManager'

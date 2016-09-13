@@ -20,7 +20,7 @@ class SessionLoginManager implements LoginManagerInterface
             session_start();
         }
 
-        $this->accountManager = AuthManager::getInstance()->getDefaultAccountManager();
+        $this->accountManager = AuthManager::getAccountManager();
     }
 
     public function login($accountId, $password)

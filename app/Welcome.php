@@ -9,8 +9,8 @@ class Welcome
 {
     public function index(ViewModel $viewModel)
     {
-        $accountManager = AuthManager::getInstance()->getDefaultAccountManager();
-        $loginManager = AuthManager::getInstance()->getDefaultLoginManager();
+        $accountManager = AuthManager::getAccountManager();
+        $loginManager = AuthManager::getLoginManager();
 
         $loggedAccountId = $loginManager->getLoggedAccountId();
 

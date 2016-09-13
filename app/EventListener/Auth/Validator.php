@@ -11,16 +11,6 @@ use App\EventListener\Auth\Exception\PermissionDenied;
 
 class Validator
 {
-    /**
-     * @var AccountManagerInterface
-     */
-    private $accountManager;
-
-    /**
-     * @var LoginManagerInterface
-     */
-    private $loginManager;
-
     private $controllerPermission = [];
 
     /**
@@ -30,9 +20,6 @@ class Validator
 
     public function __construct(array $controllerPermission)
     {
-        $this->accountManager = AuthManager::getInstance()->getDefaultAccountManager();
-        $this->loginManager = AuthManager::getInstance()->getDefaultLoginManager();
-
         $this->controllerPermission = $controllerPermission;
     }
 
@@ -50,7 +37,7 @@ class Validator
     private function isAllowPermission()
     {
         if ($this->isExistControllerPermissionConfig() === false) {
-            return AuthManager::getInstance()->isDefaultAllow();
+            return AuthManager::isDefaultAllow();
         }
 
         return $this->isAllowRole();
@@ -67,7 +54,7 @@ class Validator
             return false;
         }
 
-        $accountRoles = $this->accountManager->getRole($this->loginManager->getLoggedAccountId()) ?: [];
+        $accountRoles = AuthManager::getAccountManager()->getRole(AuthManager::getLoginManager()->getLoggedAccountId()) ?: [];
         $allowRoles = $this->controllerPermission[$this->controller->getName()]['role'];
 
         foreach ($accountRoles as $role) {

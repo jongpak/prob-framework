@@ -9,47 +9,39 @@ use App\Auth\Exception\AccountNotFound;
 
 class SessionLoginManagerTest extends TestCase
 {
-    /**
-     * @var SessionLoginManager
-     */
-    private $loginManager;
-
     public function setUp()
     {
-        $authManager = AuthManager::getInstance();
-
-        $authManager->setConfig([
+        AuthManager::setConfig([
             'defaultAllow' => true,
             'defaultAccountManager' => 'FileBaseAccountManager',
-            'defaultLoginManager' => 'SessionLoginManager'
-        ]);
+            'defaultLoginManager' => 'SessionLoginManager',
 
-        $authManager->setAccountManagerConfig([
-            'FileBaseAccountManager' => [
-                'class' => 'App\\Auth\\AccountManager\\FileBaseAccountManager',
-                'settings' => [
-                    'accounts' => [
-                        'admin' => [
-                            'password' => 'admin',
-                            'role' => [ 'Admin' ]
-                        ],
+            'accountManagers' => [
+                'FileBaseAccountManager' => [
+                    'class' => 'App\\Auth\\AccountManager\\FileBaseAccountManager',
+                    'settings' => [
+                        'accounts' => [
+                            'admin' => [
+                                'password' => 'admin',
+                                'role' => [ 'Admin' ]
+                            ],
 
-                        'test' => [
-                            'password' => 'test',
-                            'role' => [ 'Member' ]
+                            'test' => [
+                                'password' => 'test',
+                                'role' => [ 'Member' ]
+                            ]
                         ]
                     ]
                 ]
-            ]
-        ]);
-        $authManager->setLoginManagerConfig([
-            'SessionLoginManager' => [
-                'class' => 'App\\Auth\\LoginManager\\SessionLoginManager',
-                'settings' => []
-            ]
-        ]);
+            ],
 
-        $this->loginManager = new SessionLoginManager();
+            'loginManagers' => [
+                'SessionLoginManager' => [
+                    'class' => 'App\\Auth\\LoginManager\\SessionLoginManager',
+                    'settings' => []
+                ]
+            ]
+        ]);
     }
 
     /**
@@ -57,10 +49,10 @@ class SessionLoginManagerTest extends TestCase
      */
     public function testLogin()
     {
-        $this->loginManager->login('admin', 'admin');
+        AuthManager::getLoginManager()->login('admin', 'admin');
 
-        $this->assertEquals(true, $this->loginManager->isLogged());
-        $this->assertEquals('admin', $this->loginManager->getLoggedAccountId());
+        $this->assertEquals(true, AuthManager::getLoginManager()->isLogged());
+        $this->assertEquals('admin', AuthManager::getLoginManager()->getLoggedAccountId());
     }
 
     /**
@@ -70,7 +62,7 @@ class SessionLoginManagerTest extends TestCase
     {
         $this->expectException(AccountNotFound::class);
 
-        $this->loginManager->login('admin', '???');
+        AuthManager::getLoginManager()->login('admin', '???');
     }
 
     /**
@@ -78,10 +70,10 @@ class SessionLoginManagerTest extends TestCase
      */
     public function testLogout()
     {
-        $this->loginManager->login('admin', 'admin');
-        $this->loginManager->logout();
+        AuthManager::getLoginManager()->login('admin', 'admin');
+        AuthManager::getLoginManager()->logout();
 
-        $this->assertEquals(false, $this->loginManager->isLogged());
-        $this->assertEquals(null, $this->loginManager->getLoggedAccountId());
+        $this->assertEquals(false, AuthManager::getLoginManager()->isLogged());
+        $this->assertEquals(null, AuthManager::getLoginManager()->getLoggedAccountId());
     }
 }

@@ -10,22 +10,6 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class Auth
 {
-    /**
-     * @var AccountManagerInterface
-     */
-    private $accountManager;
-
-    /**
-     * @var LoginManagerInterface
-     */
-    private $loginManager;
-
-    public function __construct()
-    {
-        $this->accountManager = AuthManager::getInstance()->getDefaultAccountManager();
-        $this->loginManager = AuthManager::getInstance()->getDefaultLoginManager();
-    }
-
     public function viewLoginForm()
     {
         return 'auth/login';
@@ -33,13 +17,13 @@ class Auth
 
     public function doLogin(ServerRequestInterface $request)
     {
-        $this->loginManager->login($request->getParsedBody()['account_id'], $request->getParsedBody()['password']);
+        AuthManager::getLoginManager()->login($request->getParsedBody()['account_id'], $request->getParsedBody()['password']);
         return 'redirect: ' . Application::getInstance()->url();
     }
 
     public function doLogout()
     {
-        $this->loginManager->logout();
+        AuthManager::getLoginManager()->logout();
         return 'redirect: ' . Application::getInstance()->url();
     }
 }

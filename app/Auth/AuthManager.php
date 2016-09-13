@@ -4,60 +4,27 @@ namespace App\Auth;
 
 class AuthManager
 {
-    private $config = [];
+    private static $config = [];
 
-    private $accountManagerConfig = [];
-    private $loginManagerConfig = [];
-
-    private function __construct()
+    public static function setConfig(array $config)
     {
+        self::$config = $config;
     }
 
-    /**
-     * @return self
-     */
-    public static function getInstance()
+    public static function isDefaultAllow()
     {
-        static $instance = null;
-
-        if ($instance === null) {
-            $instance = new self();
-        }
-
-        return $instance;
-    }
-
-
-    public function setConfig(array $config)
-    {
-        $this->config = $config;
-    }
-
-    public function setAccountManagerConfig(array $config)
-    {
-        $this->accountManagerConfig = $config;
-    }
-
-    public function setLoginManagerConfig(array $config)
-    {
-        $this->loginManagerConfig = $config;
-    }
-
-
-    public function isDefaultAllow()
-    {
-        return $this->config['defaultAllow'];
+        return self::$config['defaultAllow'];
     }
 
     /**
      * @return AccountManagerInterface
      */
-    public function getDefaultAccountManager()
+    public static function getAccountManager($accountManagerName = null)
     {
-        $defaultAccountManagerConfig = $this->accountManagerConfig[$this->config['defaultAccountManager']];
+        $accountManagerName = $accountManagerName ?: self::$config['defaultAccountManager'];
 
-        $className = $defaultAccountManagerConfig['class'];
-        $settings = $defaultAccountManagerConfig['settings'];
+        $className = self::$config['accountManagers'][$accountManagerName]['class'];
+        $settings = self::$config['accountManagers'][$accountManagerName]['settings'];
 
         return new $className($settings);
     }
@@ -65,12 +32,12 @@ class AuthManager
     /**
      * @return LoginManagerInterface
      */
-    public function getDefaultLoginManager()
+    public static function getLoginManager($loginManagerName = null)
     {
-        $defaultLoginManagerConfig = $this->loginManagerConfig[$this->config['defaultLoginManager']];
+        $loginManagerName = $loginManagerName ?: self::$config['defaultLoginManager'];
 
-        $className = $defaultLoginManagerConfig['class'];
-        $settings = $defaultLoginManagerConfig['settings'];
+        $className = self::$config['loginManagers'][$loginManagerName]['class'];
+        $settings = self::$config['loginManagers'][$loginManagerName]['settings'];
 
         return new $className($settings);
     }

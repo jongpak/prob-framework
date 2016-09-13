@@ -9,48 +9,35 @@ use App\Auth\LoginManager\SessionLoginManager;
 
 class AuthManagerTest extends TestCase
 {
-    /**
-     * @var AuthManager
-     */
-    private $authManager;
-
     public function setUp()
     {
-        $authManager = AuthManager::getInstance();
-
-        $authManager->setConfig([
+        AuthManager::setConfig([
             'defaultAllow' => true,
             'defaultAccountManager' => 'FileBaseAccountManager',
-            'defaultLoginManager' => 'SessionLoginManager'
-        ]);
+            'defaultLoginManager' => 'SessionLoginManager',
 
-        $authManager->setAccountManagerConfig([
-            'FileBaseAccountManager' => [
-                'class' => 'App\\Auth\\AccountManager\\FileBaseAccountManager',
-                'settings' => [
-                    'accounts' => []
+            'accountManagers' => [
+                'FileBaseAccountManager' => [
+                    'class' => 'App\\Auth\\AccountManager\\FileBaseAccountManager',
+                    'settings' => [
+                        'accounts' => []
+                    ]
+                ]
+            ],
+
+            'loginManagers' => [
+                'SessionLoginManager' => [
+                    'class' => 'App\\Auth\\LoginManager\\SessionLoginManager',
+                    'settings' => []
                 ]
             ]
         ]);
-        $authManager->setLoginManagerConfig([
-            'SessionLoginManager' => [
-                'class' => 'App\\Auth\\LoginManager\\SessionLoginManager',
-                'settings' => []
-            ]
-        ]);
-
-        $this->authManager = $authManager;
     }
 
-
-    public function testGetInstance()
-    {
-        $this->assertEquals(AuthManager::class, get_class($this->authManager));
-    }
 
     public function testGetDefaultAccountManager()
     {
-        $this->assertEquals(FileBaseAccountManager::class, get_class($this->authManager->getDefaultAccountManager()));
+        $this->assertEquals(FileBaseAccountManager::class, get_class(AuthManager::getAccountManager()));
     }
 
     /**
@@ -58,6 +45,6 @@ class AuthManagerTest extends TestCase
      */
     public function testGetDefaultLoginManager()
     {
-        $this->assertEquals(SessionLoginManager::class, get_class($this->authManager->getDefaultLoginManager()));
+        $this->assertEquals(SessionLoginManager::class, get_class(AuthManager::getLoginManager()));
     }
 }

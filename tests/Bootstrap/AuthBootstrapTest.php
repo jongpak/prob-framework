@@ -23,26 +23,26 @@ class AuthBootstrapTest extends TestCase
             'auth' => [
                 'defaultAllow' => true,
                 'defaultAccountManager' => 'DummyAccountManager',
-                'defaultLoginManager' => 'DummyLoginManager'
-            ],
-            'accountManager' => [
-                'DummyAccountManager' => [
-                    'class' => 'App\\Auth\\AccountManager\\Test\\DummyAccountManager',
-                    'settings' => []
+                'defaultLoginManager' => 'DummyLoginManager',
+
+                'accountManagers' => [
+                    'DummyAccountManager' => [
+                        'class' => 'App\\Auth\\AccountManager\\Test\\DummyAccountManager',
+                        'settings' => []
+                    ]
+                ],
+
+                'loginManagers' => [
+                    'DummyLoginManager' => [
+                        'class' => 'App\\Auth\\LoginManager\\Test\\DummyLoginManager',
+                        'settings' => []
+                    ]
                 ]
-            ],
-            'loginManager' => [
-                'DummyLoginManager' => [
-                    'class' => 'App\\Auth\\LoginManager\\Test\\DummyLoginManager',
-                    'settings' => []
-                ]
-            ],
+            ]
         ]);
 
-        $authManager = AuthManager::getInstance();
-
-        $this->assertEquals(true, $authManager->isDefaultAllow());
-        $this->assertEquals(DummyAccountManager::class, get_class($authManager->getDefaultAccountManager()));
-        $this->assertEquals(DummyLoginManager::class, get_class($authManager->getDefaultLoginManager()));
+        $this->assertEquals(true, AuthManager::isDefaultAllow());
+        $this->assertEquals(DummyAccountManager::class, get_class(AuthManager::getAccountManager()));
+        $this->assertEquals(DummyLoginManager::class, get_class(AuthManager::getLoginManager()));
     }
 }
