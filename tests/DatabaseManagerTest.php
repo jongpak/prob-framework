@@ -10,7 +10,7 @@ class DatabaseManagerTest extends TestCase
 {
     public function testGetDefaultEntityManager()
     {
-        DatabaseManager::setDefaultConfig([
+        DatabaseManager::setConfig([
             'defaultConnection' => 'test',
             'entityPath'        => [ null ],
             'devMode'           => true,
@@ -21,7 +21,7 @@ class DatabaseManagerTest extends TestCase
             ]
         ]);
 
-        $this->assertEquals(EntityManager::class, get_class(DatabaseManager::getDefaultEntityManager()));
+        $this->assertEquals(EntityManager::class, get_class(DatabaseManager::getEntityManager()));
     }
 
     public function testGetUserEntityManager()

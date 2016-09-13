@@ -20,11 +20,11 @@ class DatabaseBootstrapTest extends TestCase
                 'entityPath'        => [ null ],
                 'devMode'           => true,
                 'connections' => [
-                    'test' => [ 'driver'    => 'pdo_mysql' ]
+                    'test' => [ 'driver' => 'pdo_mysql' ]
                 ]
             ]
         ]);
 
-        $this->assertEquals(EntityManager::class, get_class(DatabaseManager::getDefaultEntityManager()));
+        $this->assertEquals(EntityManager::class, get_class(DatabaseManager::getEntityManager()));
     }
 }
