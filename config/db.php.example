@@ -4,6 +4,12 @@ return [
     'defaultConnection' => 'mysql',
 
     'entityPath'        => [ __DIR__ . '/../app/Entity' ],
+
+    /**
+     * !! README !!
+     * If devMode is true, display detail connection error message contains id, pw and etc.
+     * but devMode is false, display simple connection error message like 'connection error'.
+     */
     'devMode'           => true,
 
     'connections' => [

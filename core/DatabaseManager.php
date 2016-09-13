@@ -5,6 +5,9 @@ namespace Core;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
+use \Exception;
+use \RuntimeException;
+
 class DatabaseManager
 {
     private static $config = [];
@@ -21,10 +24,19 @@ class DatabaseManager
     {
         $connectionName = $connectionName ?: self::$config['defaultConnection'];
 
-        $config = Setup::createAnnotationMetadataConfiguration(
-            self::$config['entityPath'],
-            self::$config['devMode']
-        );
-        return EntityManager::create(self::$config['connections'][$connectionName], $config);
+        try {
+            $config = Setup::createAnnotationMetadataConfiguration(
+                self::$config['entityPath'],
+                self::$config['devMode']
+            );
+            $entityManager = EntityManager::create(self::$config['connections'][$connectionName], $config);
+            $entityManager->getConnection()->connect();
+
+            return $entityManager;
+        } catch (Exception $e) {
+            throw self::$config['devMode']
+                ? new RuntimeException('Error raised when trying to connect database')
+                : $e;
+        }
     }
 }
