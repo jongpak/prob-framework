@@ -9,6 +9,6 @@ class ApplicationBootstrap implements BootstrapInterface
 {
     public function boot(array $env)
     {
-        Application::getInstance()->setSiteConfig($env['site']);
+        Application::setConfig($env['site']);
     }
 }

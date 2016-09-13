@@ -6,17 +6,9 @@ use PHPUnit\Framework\TestCase;
 
 class ApplicationTest extends TestCase
 {
-    /**
-     * @var Application
-     */
-    private $application;
-
     public function setUp()
     {
-        $application = Application::getInstance();
-        $application->setSiteConfig($this->getSiteConfig());
-
-        $this->application = $application;
+        Application::setConfig($this->getSiteConfig());
     }
 
     private function getSiteConfig()
@@ -29,17 +21,17 @@ class ApplicationTest extends TestCase
 
     public function testRootUrl()
     {
-        $this->assertEquals('/prob/', $this->application->url());
-        $this->assertEquals('/prob/', $this->application->url('/'));
+        $this->assertEquals('/prob/', Application::getUrl());
+        $this->assertEquals('/prob/', Application::getUrl('/'));
     }
 
     public function testUrl()
     {
-        $this->assertEquals('/prob/test/ok', $this->application->url('test/ok'));
+        $this->assertEquals('/prob/test/ok', Application::getUrl('test/ok'));
     }
 
     public function testPublicUrl()
     {
-        $this->assertEquals('/prob/public/style.css', $this->application->getPublicUrl('style.css'));
+        $this->assertEquals('/prob/public/style.css', Application::getPublicUrl('style.css'));
     }
 }

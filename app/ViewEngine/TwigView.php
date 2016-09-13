@@ -102,11 +102,11 @@ class TwigView implements ViewEngineInterface
 
     public function assetFunction($file)
     {
-        return Application::getInstance()->getPublicUrl($file);
+        return Application::getPublicUrl($file);
     }
 
     public function urlFunction($url = '')
     {
-        return Application::getInstance()->url($url);
+        return Application::getUrl($url);
     }
 }

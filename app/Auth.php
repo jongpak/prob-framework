@@ -18,12 +18,12 @@ class Auth
     public function doLogin(ServerRequestInterface $request)
     {
         AuthManager::getLoginManager()->login($request->getParsedBody()['account_id'], $request->getParsedBody()['password']);
-        return 'redirect: ' . Application::getInstance()->url();
+        return 'redirect: ' . Application::getUrl();
     }
 
     public function doLogout()
     {
         AuthManager::getLoginManager()->logout();
-        return 'redirect: ' . Application::getInstance()->url();
+        return 'redirect: ' . Application::getUrl();
     }
 }

@@ -6,49 +6,27 @@ use JBZoo\Event\EventManager;
 
 class Application
 {
-    private $siteConfig = [];
+    private static $config = [];
 
-    /**
-     * Singleton: private constructor
-     */
-    private function __construct()
+    public static function setConfig(array $config)
     {
+        self::$config = $config;
     }
-
-    /**
-     * @return Application
-     */
-    public static function getInstance()
-    {
-        static $instance = null;
-
-        if ($instance === null) {
-            $instance = new self();
-        }
-
-        return $instance;
-    }
-
-    public function setSiteConfig(array $siteConfig)
-    {
-        $this->siteConfig = $siteConfig;
-    }
-
 
     /**
      * Return url path with site url
      * @param  string $url sub url
      * @return string
      */
-    public function url($url = '')
+    public static function getUrl($url = '')
     {
         $url = $url === '/' ? '' : $url;
-        return $this->siteConfig['url'] . $url;
+        return self::$config['url'] . $url;
     }
 
-    public function getPublicUrl($url = '')
+    public static function getPublicUrl($url = '')
     {
         $url = $url === '/' ? '' : $url;
-        return $this->siteConfig['publicPath'] . $url;
+        return self::$config['publicPath'] . $url;
     }
 }

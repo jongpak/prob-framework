@@ -28,7 +28,7 @@ class Test
 
     public function goMain()
     {
-        return 'redirect: ' . Application::getInstance()->url();
+        return 'redirect: ' . Application::getUrl();
     }
 
     public function event()

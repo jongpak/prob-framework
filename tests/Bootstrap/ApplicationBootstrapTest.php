@@ -21,7 +21,7 @@ class ApplicationBootstrapTest extends TestCase
             ]
         ]);
 
-        $this->assertEquals('/test/prob/', Application::getInstance()->url());
-        $this->assertEquals('/test/prob/public/', Application::getInstance()->getPublicUrl());
+        $this->assertEquals('/test/prob/', Application::getUrl());
+        $this->assertEquals('/test/prob/public/', Application::getPublicUrl());
     }
 }

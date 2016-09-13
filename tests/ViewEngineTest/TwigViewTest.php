@@ -30,8 +30,7 @@ class TwigViewTest extends TestCase
 
     public function testCustomFunctionTest()
     {
-        $application = Application::getInstance();
-        $application->setSiteConfig([
+        Application::setConfig([
             'url' => '/',
             'publicPath' => '/public/',
         ]);
