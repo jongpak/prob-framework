@@ -7,6 +7,7 @@ use App\Entity\Post;
 use Core\Application;
 use Core\DatabaseManager;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class Test
 {
@@ -20,9 +21,9 @@ class Test
         echo 'Hello ' . $name . '!';
     }
 
-    public function dbTest()
+    public function dbTest(EntityManagerInterface $entityManager)
     {
-        $posts = DatabaseManager::getEntityManager()->getRepository(Post::class)->findAll();
+        $posts = $entityManager->getRepository(Post::class)->findAll();
         return $posts;
     }
 

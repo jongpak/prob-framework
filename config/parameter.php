@@ -22,4 +22,10 @@ return [
             return \App\Auth\AuthManager::getLoginManager();
         })
     ],
+    [
+        'key' => new Typed(\Doctrine\ORM\EntityManagerInterface::class),
+        'value' => ParameterWire::post(function() {
+            return \Core\DatabaseManager::getEntityManager();
+        })
+    ],
 ];
