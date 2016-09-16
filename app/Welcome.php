@@ -2,16 +2,18 @@
 
 namespace App\Controller;
 
+use App\Auth\AccountManagerInterface;
+use App\Auth\LoginManagerInterface;
 use Core\ViewModel;
 use App\Auth\AuthManager;
 
 class Welcome
 {
-    public function index(ViewModel $viewModel)
+    public function index(
+        AccountManagerInterface $accountManager,
+        LoginManagerInterface $loginManager,
+        ViewModel $viewModel)
     {
-        $accountManager = AuthManager::getAccountManager();
-        $loginManager = AuthManager::getLoginManager();
-
         $loggedAccountId = $loginManager->getLoggedAccountId();
 
         $viewModel->set('time', date('r'));

@@ -15,15 +15,15 @@ class Auth
         return 'auth/login';
     }
 
-    public function doLogin($parsedBody)
+    public function doLogin(LoginManagerInterface $loginManager, $parsedBody)
     {
-        AuthManager::getLoginManager()->login($parsedBody['account_id'], $parsedBody['password']);
+        $loginManager->login($parsedBody['account_id'], $parsedBody['password']);
         return 'redirect: ' . Application::getUrl();
     }
 
-    public function doLogout()
+    public function doLogout(LoginManagerInterface $loginManager)
     {
-        AuthManager::getLoginManager()->logout();
+        $loginManager->logout();
         return 'redirect: ' . Application::getUrl();
     }
 }
