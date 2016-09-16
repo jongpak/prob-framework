@@ -22,5 +22,7 @@ class ParameterWire
         foreach (self::$parameters as $v) {
             $map->bindBy($v['key'], $v['value']);
         }
+
+        return $map;
     }
 }

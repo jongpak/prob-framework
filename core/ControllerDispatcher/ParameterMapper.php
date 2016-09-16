@@ -2,6 +2,7 @@
 
 namespace Core\ControllerDispatcher;
 
+use Core\ParameterWire;
 use Psr\Http\Message\ServerRequestInterface;
 use Prob\Handler\ParameterMap;
 use Prob\Handler\Parameter\Typed;
@@ -65,7 +66,7 @@ class ParameterMapper
 
         $this->bindProc();
 
-        return $this->parameterMap;
+        return ParameterWire::injectParameter($this->parameterMap);
     }
 
     private function bindRequest()
