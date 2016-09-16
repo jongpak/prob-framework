@@ -9,4 +9,5 @@ return [
     'router' => require 'router.php',
     'error' => require 'error.php',
     'event' => require 'event.php',
+    'parameter' => require 'parameter.php',
 ];
