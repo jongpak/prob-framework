@@ -15,9 +15,9 @@ class Auth
         return 'auth/login';
     }
 
-    public function doLogin(ServerRequestInterface $request)
+    public function doLogin($parsedBody)
     {
-        AuthManager::getLoginManager()->login($request->getParsedBody()['account_id'], $request->getParsedBody()['password']);
+        AuthManager::getLoginManager()->login($parsedBody['account_id'], $parsedBody['password']);
         return 'redirect: ' . Application::getUrl();
     }
 
