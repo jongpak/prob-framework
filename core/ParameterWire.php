@@ -20,9 +20,15 @@ class ParameterWire
     public static function injectParameter(ParameterMap $map)
     {
         foreach (self::$parameters as $v) {
-            $map->bindBy($v['key'], $v['value']);
+            $value = $v['value'] instanceof LazyWiringParameter ? $v['value']->exec() : $v['value'];
+            $map->bindBy($v['key'], $value);
         }
 
         return $map;
+    }
+
+    public static function post(callable $parameter)
+    {
+        return new LazyWiringParameter($parameter);
     }
 }

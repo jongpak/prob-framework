@@ -22,4 +22,20 @@ class ParameterWireTest extends TestCase
 
         $this->assertEquals('hello!', $proc->execWithParameterMap($map));
     }
+
+    public function testLazyWiring()
+    {
+        $map = new ParameterMap();
+
+        ParameterWire::appendParameter(new Named('test'), ParameterWire::post(function() {
+            return 'lazy!';
+        }));
+        ParameterWire::injectParameter($map);
+
+        $proc = new ClosureProc(function($test) {
+            return $test;
+        });
+
+        $this->assertEquals('lazy!', $proc->execWithParameterMap($map));
+    }
 }
