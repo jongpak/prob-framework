@@ -7,11 +7,10 @@ use Core\ParameterWire;
 
 class ParameterWiringBootstrap implements BootstrapInterface
 {
-
     public function boot(array $env)
     {
-        foreach ($env['parameter'] as $key => $value) {
-            ParameterWire::appendParameter($key, $value);
+        foreach ($env['parameter'] as $v) {
+            ParameterWire::appendParameter($v['key'], $v['value']);
         }
     }
 }
