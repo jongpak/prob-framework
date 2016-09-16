@@ -20,13 +20,19 @@ class Application
      */
     public static function getUrl($url = '')
     {
-        $url = $url === '/' ? '' : $url;
-        return self::$config['url'] . $url;
+        return self::getPrefixUrl(self::$config['url'], $url);
     }
 
     public static function getPublicUrl($url = '')
     {
-        $url = $url === '/' ? '' : $url;
-        return self::$config['publicPath'] . $url;
+        return self::getPrefixUrl(self::$config['publicPath'], $url);
+    }
+
+    private static function getPrefixUrl($prefix, $path)
+    {
+        $prefix = $prefix . (substr($prefix, -1) !== '/' ? '/' : '');
+        $path = substr($path, 0, 1) === '/' ? substr($path, 1) : $path;
+
+        return $prefix . $path;
     }
 }
