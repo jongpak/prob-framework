@@ -11,6 +11,10 @@ return [
             'settings' => [
                 'accounts' => require 'accounts.php'
             ]
+        ],
+        'DatabaseAccountManager' => [
+            'class' => 'App\\Auth\\AccountManager\\DatabaseAccountManager',
+            'settings' => []
         ]
     ],
 
