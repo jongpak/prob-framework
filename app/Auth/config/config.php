@@ -4,6 +4,7 @@ return [
     'defaultAllow' => true,
     'defaultAccountManager' => 'FileBaseAccountManager',
     'defaultLoginManager' => 'SessionLoginManager',
+    'defaultPermissionManager' => 'FileBasePermissionManager',
 
     'accountManagers' => [
         'FileBaseAccountManager' => [
@@ -22,6 +23,15 @@ return [
         'SessionLoginManager' => [
             'class' => 'App\\Auth\\LoginManager\\SessionLoginManager',
             'settings' => []
+        ]
+    ],
+
+    'permissionManagers' => [
+        'FileBasePermissionManager' => [
+            'class' => 'App\\Auth\\PermissionManager\\FileBasePermissionManager',
+            'settings' => [
+                'permissions' => require 'permission.php'
+            ]
         ]
     ]
 ];

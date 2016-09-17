@@ -32,6 +32,14 @@ class AuthManager
         return self::getManagerInstance('login', $loginManagerName);
     }
 
+    /**
+     * @return PermissionManager
+     */
+    public static function getPermissionManager($loginManagerName = null)
+    {
+        return self::getManagerInstance('permission', $loginManagerName);
+    }
+
     private static function getManagerInstance($managerType, $managerName = null)
     {
         $managerInstanceName = $managerName ?: self::$config['default' . ucfirst($managerType) . 'Manager'];

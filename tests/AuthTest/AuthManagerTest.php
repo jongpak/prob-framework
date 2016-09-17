@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use App\Auth\AuthManager;
 use App\Auth\AccountManager\FileBaseAccountManager;
 use App\Auth\LoginManager\SessionLoginManager;
+use App\Auth\PermissionManager\FileBasePermissionManager;
 
 class AuthManagerTest extends TestCase
 {
@@ -15,6 +16,7 @@ class AuthManagerTest extends TestCase
             'defaultAllow' => true,
             'defaultAccountManager' => 'FileBaseAccountManager',
             'defaultLoginManager' => 'SessionLoginManager',
+            'defaultPermissionManager' => 'FileBasePermissionManager',
 
             'accountManagers' => [
                 'FileBaseAccountManager' => [
@@ -30,7 +32,16 @@ class AuthManagerTest extends TestCase
                     'class' => 'App\\Auth\\LoginManager\\SessionLoginManager',
                     'settings' => []
                 ]
-            ]
+            ],
+
+            'permissionManagers' => [
+                'FileBasePermissionManager' => [
+                    'class' => 'App\\Auth\\PermissionManager\\FileBasePermissionManager',
+                    'settings' => [
+                        'permissions' => []
+                    ]
+                ]
+            ],
         ]);
     }
 
@@ -46,5 +57,10 @@ class AuthManagerTest extends TestCase
     public function testGetDefaultLoginManager()
     {
         $this->assertEquals(SessionLoginManager::class, get_class(AuthManager::getLoginManager()));
+    }
+
+    public function testGetDefaultPermissionManager()
+    {
+        $this->assertEquals(FileBasePermissionManager::class, get_class(AuthManager::getPermissionManager()));
     }
 }
