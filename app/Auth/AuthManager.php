@@ -21,12 +21,7 @@ class AuthManager
      */
     public static function getAccountManager($accountManagerName = null)
     {
-        $accountManagerName = $accountManagerName ?: self::$config['defaultAccountManager'];
-
-        $className = self::$config['accountManagers'][$accountManagerName]['class'];
-        $settings = self::$config['accountManagers'][$accountManagerName]['settings'];
-
-        return new $className($settings);
+        return self::getManagerInstance('account', $accountManagerName);
     }
 
     /**
@@ -34,10 +29,15 @@ class AuthManager
      */
     public static function getLoginManager($loginManagerName = null)
     {
-        $loginManagerName = $loginManagerName ?: self::$config['defaultLoginManager'];
+        return self::getManagerInstance('login', $loginManagerName);
+    }
 
-        $className = self::$config['loginManagers'][$loginManagerName]['class'];
-        $settings = self::$config['loginManagers'][$loginManagerName]['settings'];
+    private static function getManagerInstance($managerType, $managerName = null)
+    {
+        $managerInstanceName = $managerName ?: self::$config['default' . ucfirst($managerType) . 'Manager'];
+
+        $className = self::$config[$managerType . 'Managers'][$managerInstanceName]['class'];
+        $settings = self::$config[$managerType . 'Managers'][$managerInstanceName]['settings'];
 
         return new $className($settings);
     }
