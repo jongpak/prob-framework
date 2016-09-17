@@ -16,8 +16,8 @@ class FileBasePermissionManager extends PermissionManager
     /**
      * @return array|null
      */
-    public function getRolesByAction($action)
+    public function getRolesByOperation($operation)
     {
-        return isset($this->permission[$action]) ? $this->permission[$action] : null;
+        return isset($this->permission[$operation]) ? $this->permission[$operation] : null;
     }
 }

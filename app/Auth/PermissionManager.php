@@ -11,22 +11,22 @@ abstract class PermissionManager
     /**
      * @return array|null
      */
-    abstract public function getRolesByAction($action);
+    abstract public function getRolesByOperation($operation);
 
     /**
      * @return bool
      */
-    public function hasAllowedRole($accountId, $action)
+    public function hasAllowedRole($accountId, $operation)
     {
-        $actionAllowedRoles = $this->getPermissionItemByAction($action);
+        $operationAllowedRoles = $this->getRolesByOperation($operation);
         $accountRoles = AuthManager::getAccountManager()->getRole($accountId) ?: [];
 
-        if ($actionAllowedRoles === null) {
+        if ($operationAllowedRoles === null) {
             return AuthManager::isDefaultAllow();
         }
 
         foreach ($accountRoles as $role) {
-            if (in_array($role, $actionAllowedRoles) === true) {
+            if (in_array($role, $operationAllowedRoles) === true) {
                 return true;
             }
         }
