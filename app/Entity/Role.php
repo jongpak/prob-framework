@@ -31,4 +31,9 @@ class Role
     {
         $this->users = new ArrayCollection();
     }
+
+    public function getName()
+    {
+        return $this->name;
+    }
 }

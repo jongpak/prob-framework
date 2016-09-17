@@ -37,9 +37,17 @@ class DatabaseAccountManager implements AccountManagerInterface
             return null;
         }
 
-        return DatabaseManager::getEntityManager()
-                ->getRepository(User::class)
-                ->findOneBy(['accountId' => $accountId])
-                ->getRoles();
+        $roles = DatabaseManager::getEntityManager()
+                    ->getRepository(User::class)
+                    ->findOneBy(['accountId' => $accountId])
+                    ->getRoles();
+
+        $roleArray = [];
+
+        foreach ($roles as $item) {
+            $roleArray[] = $item->getName();
+        }
+
+        return $roleArray;
     }
 }
