@@ -21,10 +21,16 @@ class ValidatorTest extends TestCase
     {
         include_once 'mock/TestAdminProc.php';
 
-        AuthManager::setConfig([
-            'defaultAllow' => true,
+        AuthManager::setConfig($this->getAuthConfig());
+    }
+
+    private function getAuthConfig($defaultAllow = true, array $permission = [])
+    {
+        return [
+            'defaultAllow' => $defaultAllow,
             'defaultAccountManager' => 'FileBaseAccountManager',
             'defaultLoginManager' => 'SessionLoginManager',
+            'defaultPermissionManager' => 'FileBasePermissionManager',
 
             'accountManagers' => [
                 'FileBaseAccountManager' => [
@@ -49,8 +55,17 @@ class ValidatorTest extends TestCase
                     'class' => 'App\\Auth\\LoginManager\\SessionLoginManager',
                     'settings' => []
                 ]
-            ]
-        ]);
+            ],
+
+            'permissionManagers' => [
+                'FileBasePermissionManager' => [
+                    'class' => 'App\\Auth\\PermissionManager\\FileBasePermissionManager',
+                    'settings' => [
+                        'permissions' => $permission
+                    ]
+                ]
+            ],
+        ];
     }
 
     /**
@@ -59,16 +74,12 @@ class ValidatorTest extends TestCase
     public function testValidator1()
     {
         AuthManager::getLoginManager()->logout();
-
-        $validator = new Validator([
-            'Test.admin' => [
-                'role' => ['Admin']
-            ]
-        ]);
+        AuthManager::setConfig($this->getAuthConfig(true, [
+            'Test.admin' => ['Admin']
+        ]));
 
         $this->expectException(PermissionDenied::class);
-
-        $validator->validate(new TestAdminProc(null));
+        (new ValidatorListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager());
     }
 
     /**
@@ -77,14 +88,11 @@ class ValidatorTest extends TestCase
     public function testValidator2()
     {
         AuthManager::getLoginManager()->login('admin', 'admin');
+        AuthManager::setConfig($this->getAuthConfig(true, [
+            'Test.admin' => ['Admin']
+        ]));
 
-        $validator = new Validator([
-            'Test.admin' => [
-                'role' => ['Admin']
-            ]
-        ]);
-
-        $this->assertEquals(true, $validator->validate(new TestAdminProc(null)));
+        $this->assertEquals(true, (new ValidatorListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager()));
     }
 
     /**
@@ -93,15 +101,12 @@ class ValidatorTest extends TestCase
     public function testValidator3()
     {
         AuthManager::getLoginManager()->login('test', 'test');
-
-        $validator = new Validator([
-            'Test.admin' => [
-                'role' => ['Admin']
-            ]
-        ]);
+        AuthManager::setConfig($this->getAuthConfig(true, [
+            'Test.admin' => ['Admin']
+        ]));
 
         $this->expectException(PermissionDenied::class);
-        $validator->validate(new TestAdminProc(null));
+        (new ValidatorListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager());
     }
 
     /**
@@ -110,14 +115,11 @@ class ValidatorTest extends TestCase
     public function testValidator4()
     {
         AuthManager::getLoginManager()->login('test', 'test');
+        AuthManager::setConfig($this->getAuthConfig(true, [
+            'Test.admin' => ['Admin', 'Member']
+        ]));
 
-        $validator = new Validator([
-            'Test.admin' => [
-                'role' => ['Admin', 'Member']
-            ]
-        ]);
-
-        $this->assertEquals(true, $validator->validate(new TestAdminProc(null)));
+        $this->assertEquals(true, (new ValidatorListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager()));
     }
 
     /**
@@ -126,15 +128,12 @@ class ValidatorTest extends TestCase
     public function testValidator5()
     {
         AuthManager::getLoginManager()->login('test', 'test');
-
-        $validator = new Validator([
-            'Test.admin' => [
-                'role' => []
-            ]
-        ]);
+        AuthManager::setConfig($this->getAuthConfig(true, [
+            'Test.admin' => []
+        ]));
 
         $this->expectException(PermissionDenied::class);
-        $this->assertEquals(true, $validator->validate(new TestAdminProc(null)));
+        (new ValidatorListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager());
     }
 
     /**
@@ -143,14 +142,12 @@ class ValidatorTest extends TestCase
     public function testValidator6()
     {
         AuthManager::getLoginManager()->login('test', 'test');
-
-        $validator = new Validator([
-            'Test.admin' => [
-            ]
-        ]);
+        AuthManager::setConfig($this->getAuthConfig(true, [
+            'Test.admin' => []
+        ]));
 
         $this->expectException(PermissionDenied::class);
-        $this->assertEquals(true, $validator->validate(new TestAdminProc(null)));
+        $this->assertEquals(true, (new ValidatorListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager()));
     }
 
     /**
@@ -159,15 +156,9 @@ class ValidatorTest extends TestCase
     public function testValidatorDefaultAllowTrue()
     {
         AuthManager::getLoginManager()->login('test', 'test');
+        AuthManager::setConfig($this->getAuthConfig(true, []));
 
-        AuthManager::setConfig([
-            'defaultAllow' => true,
-            'defaultAccountManager' => 'FileBaseAccountManager',
-            'defaultLoginManager' => 'SessionLoginManager'
-        ]);
-        $validator = new Validator([]);
-
-        $this->assertEquals(true, $validator->validate(new TestAdminProc(null)));
+        $this->assertEquals(true, (new ValidatorListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager()));
     }
 
     /**
@@ -176,15 +167,9 @@ class ValidatorTest extends TestCase
     public function testValidatorDefaultAllowFalse()
     {
         AuthManager::getLoginManager()->login('test', 'test');
-
-        AuthManager::setConfig([
-            'defaultAllow' => false,
-            'defaultAccountManager' => 'FileBaseAccountManager',
-            'defaultLoginManager' => 'SessionLoginManager'
-        ]);
-        $validator = new Validator([]);
+        AuthManager::setConfig($this->getAuthConfig(false, []));
 
         $this->expectException(PermissionDenied::class);
-        $validator->validate(new TestAdminProc(null));
+        (new ValidatorListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager());
     }
 }
