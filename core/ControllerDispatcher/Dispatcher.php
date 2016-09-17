@@ -25,9 +25,19 @@ class Dispatcher
     private $viewResolvers = [];
 
     /**
+     * @var ViewModel
+     */
+    private $viewModel;
+
+    /**
      * @var ServerRequestInterface
      */
     private $request;
+
+    public function __construct()
+    {
+        $this->viewModel = new ViewModel();
+    }
 
     public function setRouterConfig(array $routerConfig)
     {
@@ -53,11 +63,10 @@ class Dispatcher
     {
         $this->buildRouterMap();
 
-        $viewModel = new ViewModel();
-        $parameterMap = $this->getParameterMap($viewModel);
+        $parameterMap = $this->getParameterMap();
 
         $result = $this->execute($parameterMap);
-        $this->renderView($result, $viewModel);
+        $this->renderView($result);
     }
 
     private function buildRouterMap()
@@ -69,15 +78,14 @@ class Dispatcher
     }
 
     /**
-     * @param  ViewModel $viewModel [description]
      * @return ParameterMap
      */
-    private function getParameterMap(ViewModel $viewModel)
+    private function getParameterMap()
     {
         $parameterMapper = new ParameterMapper();
 
         $parameterMapper->setRequest($this->request);
-        $parameterMapper->setViewModel($viewModel);
+        $parameterMapper->setViewModel($this->viewModel);
         $parameterMapper->setRouterMap($this->routerMap);
 
         return $parameterMapper->getParameterMap();
@@ -129,20 +137,14 @@ class Dispatcher
 
     private function triggerEvent($eventName)
     {
-        $parameterMapper = new ParameterMapper();
-        $parameterMapper->setRequest($this->request);
-        $parameterMapper->setRouterMap($this->routerMap);
-
-        $parameterMap = $parameterMapper->getParameterMap();
-
-        EventManager::getEventManager()->trigger($eventName, [$parameterMap]);
+        EventManager::getEventManager()->trigger($eventName, [$this->getParameterMap()]);
     }
 
-    private function renderView($controllerResult, ViewModel $viewModel)
+    private function renderView($controllerResult)
     {
         $view = $this->resolveView($controllerResult);
 
-        foreach ($viewModel->getVariables() as $key => $value) {
+        foreach ($this->viewModel->getVariables() as $key => $value) {
             $view->set($key, $value);
         }
 
