@@ -32,6 +32,10 @@ return [
             'settings' => [
                 'permissions' => require 'permission.php'
             ]
+        ],
+        'DatabasePermissionManager' => [
+            'class' => 'App\\Auth\\PermissionManager\\DatabasePermissionManager',
+            'settings' => []
         ]
     ]
 ];
