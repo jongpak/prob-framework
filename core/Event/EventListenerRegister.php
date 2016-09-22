@@ -4,6 +4,8 @@ namespace Core\Event;
 
 use Prob\Handler\ProcFactory;
 use Prob\Handler\ParameterMap;
+use Prob\Handler\ProcInterface;
+use Prob\Handler\Proc\MethodProc;
 use Prob\ArrayUtil\KeyGlue;
 
 class EventListenerRegister
@@ -48,6 +50,9 @@ class EventListenerRegister
         return function (ParameterMap $parameterMap) use ($handler) {
             /** @var ProcInterface */
             $proc = ProcFactory::getProc($handler);
+            if ($proc instanceof MethodProc) {
+                $proc->execConstructorWithParameterMap($parameterMap);
+            }
             $proc->execWithParameterMap($parameterMap);
         };
     }
