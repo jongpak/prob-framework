@@ -8,7 +8,7 @@ return [
         'Html' => [
             'class' => 'App\\ErrorReporter\\Html',
             'view' => 'App\\ViewEngine\\TwigView',
-            'path' => '../view/error/',
+            'path' => __DIR__ . '/../view/error/',
             'file' => 'exception',
             'postfix' => '.twig',
             'settings' => []
