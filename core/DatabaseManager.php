@@ -11,6 +11,7 @@ use \RuntimeException;
 class DatabaseManager
 {
     protected static $config = [];
+    private static $entityManagers = [];
 
     public static function setConfig(array $config)
     {
@@ -24,6 +25,10 @@ class DatabaseManager
     {
         $connectionName = $connectionName ?: self::$config['defaultConnection'];
 
+        if (isset(self::$entityManagers[$connectionName])) {
+            return self::$entityManagers[$connectionName];
+        }
+
         try {
             $config = Setup::createAnnotationMetadataConfiguration(
                 self::$config['entityPath'],
@@ -31,6 +36,8 @@ class DatabaseManager
             );
             $entityManager = EntityManager::create(self::$config['connections'][$connectionName], $config);
             $entityManager->getConnection()->connect();
+
+            self::$entityManagers[$connectionName] = $entityManager;
 
             return $entityManager;
         } catch (Exception $e) {
