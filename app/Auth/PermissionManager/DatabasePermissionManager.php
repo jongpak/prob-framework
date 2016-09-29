@@ -17,7 +17,7 @@ class DatabasePermissionManager extends PermissionManager
      */
     public function getRolesByOperation($operation)
     {
-        $roleArray = [];
+        $permissionRole = [];
 
         /** @var Permission */
         $permission = EntityFinder::findOneBy(Permission::class, ['operation' => $operation]);
@@ -27,9 +27,9 @@ class DatabasePermissionManager extends PermissionManager
         }
 
         foreach ($permission->getRoles() as $item) {
-            $roleArray[] = $item->getName();
+            $permissionRole[] = $item->getName();
         }
 
-        return $roleArray;
+        return $permissionRole;
     }
 }

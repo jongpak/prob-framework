@@ -33,13 +33,13 @@ class DatabaseAccountManager implements AccountManagerInterface
         }
 
         $roles = $this->getUserEntity($accountId)->getRoles();
-        $roleArray = [];
+        $accountRole = [];
 
         foreach ($roles as $item) {
-            $roleArray[] = $item->getName();
+            $accountRole[] = $item->getName();
         }
 
-        return $roleArray;
+        return $accountRole;
     }
 
     /**
