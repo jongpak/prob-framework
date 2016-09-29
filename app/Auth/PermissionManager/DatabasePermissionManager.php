@@ -4,7 +4,7 @@ namespace App\Auth\PermissionManager;
 
 use App\Auth\PermissionManager;
 use App\Entity\Permission;
-use Core\DatabaseManager;
+use Core\Utils\EntityFinder;
 
 class DatabasePermissionManager extends PermissionManager
 {
@@ -20,9 +20,7 @@ class DatabasePermissionManager extends PermissionManager
         $roleArray = [];
 
         /** @var Permission */
-        $permission = DatabaseManager::getEntityManager()
-                        ->getRepository(Permission::class)
-                        ->findOneBy(['operation' => $operation]);
+        $permission = EntityFinder::findOneBy(Permission::class, ['operation' => $operation]);
 
         if ($permission === null) {
             return null;
