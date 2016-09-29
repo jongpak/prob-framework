@@ -2,12 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Post;
-
 use Core\Application;
-use Core\DatabaseManager;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
+use Core\Utils\EntityFinder;
+use App\Entity\Post;
 
 class Test
 {
@@ -21,10 +18,9 @@ class Test
         echo 'Hello ' . $name . '!';
     }
 
-    public function dbTest(EntityManagerInterface $entityManager)
+    public function dbTest()
     {
-        $posts = $entityManager->getRepository(Post::class)->findAll();
-        return $posts;
+        return EntityFinder::findAll(Post::class);
     }
 
     public function goMain()
