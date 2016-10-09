@@ -105,7 +105,6 @@ class ParameterMapper
         $this->parameterMap->bindBy(new Typed(ViewModel::class), $this->viewModel);
     }
 
-
     private function resolveUrl()
     {
         $matcher = new Matcher($this->routerMap);

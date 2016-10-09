@@ -16,14 +16,10 @@ class DispatcherTest extends TestCase
             'namespace' => null,
 
             '/test' => function () {
-                echo 'test!!';
+                return 'test!!';
             }
         ]);
-        $dispatcher->setViewResolver([
-            'App\\ViewResolver\\DummyResolver'
-        ]);
 
-        $this->expectOutputString('test!!');
-        $dispatcher->dispatch();
+        $this->assertEquals('test!!', $dispatcher->dispatch());
     }
 }

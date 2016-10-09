@@ -9,9 +9,6 @@ use Prob\Router\Dispatcher as RouterDispatcher;
 use Prob\Router\Matcher;
 use Prob\Router\Map;
 use Core\ViewModel;
-use Core\Event\EventManager;
-use Core\ViewEngineInterface;
-use Core\ViewResolverInterface;
 
 class Dispatcher
 {
@@ -20,9 +17,6 @@ class Dispatcher
      */
     private $routerMap;
     private $routerConfig = [];
-    private $viewEngineConfig = [];
-
-    private $viewResolvers = [];
 
     /**
      * @var ViewModel
@@ -44,29 +38,33 @@ class Dispatcher
         $this->routerConfig = $routerConfig;
     }
 
-    public function setViewEngineConfig(array $config)
-    {
-        $this->viewEngineConfig = $config;
-    }
-
-    public function setViewResolver(array $viewResolvers)
-    {
-        $this->viewResolvers = $viewResolvers;
-    }
-
     public function setRequest(ServerRequestInterface $request)
     {
         $this->request = $request;
     }
 
+    public function getViewModel()
+    {
+        return $this->viewModel;
+    }
+
     public function dispatch()
     {
         $this->buildRouterMap();
-
         $parameterMap = $this->getParameterMap();
+        $dispatcher = new RouterDispatcher($this->routerMap);
 
-        $result = $this->execute($parameterMap);
-        $this->renderView($result);
+        /**
+         * TODO 클로저와 일반함수 형태에서도 컨트롤러 이벤트가 작동하도록 수정해야함.
+         */
+
+        ControllerEvent::triggerEvent($this->getController()->getName(), 'before', [$parameterMap]);
+
+        $result = $dispatcher->dispatch($this->request, $parameterMap);
+
+        ControllerEvent::triggerEvent($this->getController()->getName(), 'after', [$parameterMap]);
+
+        return $result;
     }
 
     private function buildRouterMap()
@@ -91,86 +89,12 @@ class Dispatcher
         return $parameterMapper->getParameterMap();
     }
 
-
-    private function execute(ParameterMap $parameterMap)
-    {
-        $dispatcher = new RouterDispatcher($this->routerMap);
-
-        /**
-         * TODO 클로저와 일반함수 형태에서도 컨트롤러 이벤트가 작동하도록 수정해야함.
-         */
-
-        if ($this->getMatchedHandler()) {
-            $this->triggerEvent($this->getEventName('before'));
-        }
-
-        $result = $dispatcher->dispatch($this->request, $parameterMap);
-
-        if ($this->getMatchedHandler()) {
-            $this->triggerEvent($this->getEventName('after'));
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param  string $action 'before' || 'after'
-     * @return string event name
-     */
-    private function getEventName($action)
-    {
-        return sprintf(
-            'Controller.%s.%s',
-            $this->getMatchedHandler()->getName(),
-            $action
-        );
-    }
-
     /**
      * @return ProcInterface
      */
-    private function getMatchedHandler()
+    private function getController()
     {
         $matcher = new Matcher($this->routerMap);
         return $matcher->match($this->request)['handler'];
-    }
-
-    private function triggerEvent($eventName)
-    {
-        EventManager::getEventManager()->trigger($eventName, [$this->getParameterMap()]);
-    }
-
-    private function renderView($controllerResult)
-    {
-        $view = $this->resolveView($controllerResult);
-
-        foreach ($this->viewModel->getVariables() as $key => $value) {
-            $view->set($key, $value);
-        }
-
-        $view->render();
-    }
-
-    /**
-     * @param  mixed $controllerResult
-     * @return ViewEngineInterface
-     */
-    private function resolveView($controllerResult)
-    {
-        foreach ($this->viewResolvers as $name => $resolverClassName) {
-            /** @var ViewResolverInterface */
-            $resolver = new $resolverClassName();
-            $resolver->setViewEngineConfig(
-                isset($this->viewEngineConfig[$name])
-                    ? $this->viewEngineConfig[$name]
-                    : []
-            );
-
-            $view = $resolver->resolve($controllerResult);
-
-            if ($view !== null) {
-                return $view;
-            }
-        }
     }
 }
