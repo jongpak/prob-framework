@@ -13,7 +13,7 @@ class TwigView implements ViewEngineInterface
     /**
      * @var Twig_Environment
      */
-    private $twig;
+    protected $twig;
 
     /**
      * Twig template file

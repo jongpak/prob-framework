@@ -7,7 +7,7 @@ use App\ViewEngine\TwigView;
 
 class TwigResolver implements ViewResolverInterface
 {
-    private $settings = [];
+    protected $settings = [];
 
     public function setViewEngineConfig(array $settings)
     {
