@@ -17,14 +17,42 @@ class ParameterWire
         ];
     }
 
+    public static function appendParameterCallback(LazyWiringParameterCallback $callback)
+    {
+        self::$parameters[] = $callback;
+    }
+
     public static function injectParameter(ParameterMap $map)
     {
-        foreach (self::$parameters as $v) {
+        $buildedParameters = self::makeParameter();
+
+        foreach ($buildedParameters as $v) {
             $value = $v['value'] instanceof LazyWiringParameter ? $v['value']->exec() : $v['value'];
             $map->bindBy($v['key'], $value);
         }
 
         return $map;
+    }
+
+    private static function makeParameter()
+    {
+        $buildedParameters = [];
+
+        foreach (self::$parameters as $v) {
+            if ($v instanceof LazyWiringParameterCallback) {
+                $buildedParameters = array_merge($buildedParameters, $v->exec());
+                continue;
+            }
+
+            $buildedParameters[] = $v;
+        }
+
+        return $buildedParameters;
+    }
+
+    public static function postCallback(callable $func)
+    {
+        return new LazyWiringParameterCallback($func);
     }
 
     public static function post(callable $parameter)

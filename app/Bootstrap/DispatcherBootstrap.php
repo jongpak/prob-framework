@@ -5,11 +5,14 @@ namespace App\Bootstrap;
 use Core\Bootstrap\BootstrapInterface;
 use Core\ControllerDispatcher\Dispatcher;
 use Core\ControllerDispatcher\ViewRenderer;
-use Core\ControllerDispatcher\ParameterMapper;
+use Core\ControllerDispatcher\RequestMatcher;
 use Core\ControllerDispatcher\RouterMapBuilder;
+use Core\ParameterWire;
 use Core\ViewModel;
 use Zend\Diactoros\Uri;
 use Zend\Diactoros\ServerRequestFactory;
+use Prob\Handler\ParameterMap;
+use Prob\Handler\Parameter\Typed;
 
 class DispatcherBootstrap implements BootstrapInterface
 {
@@ -28,6 +31,9 @@ class DispatcherBootstrap implements BootstrapInterface
     public function boot(array $env)
     {
         $this->env = $env;
+
+        RequestMatcher::setRequest($this->getServerRequest());
+        RequestMatcher::setRouterMap($this->getRouterMap());
 
         $dispatcher = $this->getDispatcher();
         $viewRenderer = $this->getViewRenderer();
@@ -59,13 +65,9 @@ class DispatcherBootstrap implements BootstrapInterface
 
     private function getParameterMap()
     {
-        $parameterMapper = new ParameterMapper();
-
-        $parameterMapper->setRequest($this->getServerRequest());
-        $parameterMapper->setViewModel($this->viewModel);
-        $parameterMapper->setRouterMap($this->getRouterMap());
-
-        return $parameterMapper->getParameterMap();
+        $parameterMap = new ParameterMap();
+        $parameterMap->bindBy(new Typed(ViewModel::class), $this->viewModel);
+        return ParameterWire::injectParameter($parameterMap);
     }
 
     private function getServerRequest()

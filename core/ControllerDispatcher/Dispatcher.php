@@ -61,18 +61,9 @@ class Dispatcher
     private function triggerEvent($operation)
     {
         ControllerEvent::triggerEvent(
-            $this->getController()->getName(),
+            RequestMatcher::getControllerProc()->getName(),
             $operation,
             [$this->parameterMap]
         );
-    }
-
-    /**
-     * @return ProcInterface
-     */
-    private function getController()
-    {
-        $matcher = new Matcher($this->routerMap);
-        return $matcher->match($this->request)['handler'];
     }
 }
