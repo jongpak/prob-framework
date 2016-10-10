@@ -9,6 +9,11 @@ class RouterMapBuilder
 {
     private $routerConfig = [];
 
+    public function __construct(array $config = [])
+    {
+        $this->setRouterConfig($config);
+    }
+
     public function setRouterConfig(array $config)
     {
         $this->routerConfig = $config;

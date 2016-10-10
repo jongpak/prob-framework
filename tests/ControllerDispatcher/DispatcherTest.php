@@ -3,7 +3,6 @@
 namespace Core\ControllerDispatcher;
 
 use PHPUnit\Framework\TestCase;
-use Core\ControllerDispatcher\Dispatcher;
 use Zend\Diactoros\ServerRequest;
 
 class DispatcherTest extends TestCase
@@ -12,13 +11,13 @@ class DispatcherTest extends TestCase
     {
         $dispatcher = new Dispatcher();
         $dispatcher->setRequest(new ServerRequest([], [], '/test'));
-        $dispatcher->setRouterConfig([
+        $dispatcher->setRouterMap((new RouterMapBuilder([
             'namespace' => null,
 
             '/test' => function () {
                 return 'test!!';
             }
-        ]);
+        ]))->build());
 
         $this->assertEquals('test!!', $dispatcher->dispatch());
     }

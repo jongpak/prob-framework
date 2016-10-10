@@ -8,7 +8,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Prob\Router\Dispatcher as RouterDispatcher;
 use Prob\Router\Matcher;
 use Prob\Router\Map;
-use Core\ViewModel;
 
 class Dispatcher
 {
@@ -16,26 +15,20 @@ class Dispatcher
      * @var Map
      */
     private $routerMap;
-    private $routerConfig = [];
 
     /**
-     * @var ViewModel
+     * @var ParameterMap
      */
-    private $viewModel;
+    private $parameterMap;
 
     /**
      * @var ServerRequestInterface
      */
     private $request;
 
-    public function __construct()
+    public function setRouterMap(Map $routerMap)
     {
-        $this->viewModel = new ViewModel();
-    }
-
-    public function setRouterConfig(array $routerConfig)
-    {
-        $this->routerConfig = $routerConfig;
+        $this->routerMap = $routerMap;
     }
 
     public function setRequest(ServerRequestInterface $request)
@@ -43,50 +36,35 @@ class Dispatcher
         $this->request = $request;
     }
 
-    public function getViewModel()
+    public function setParameterMap(ParameterMap $parameterMap)
     {
-        return $this->viewModel;
+        $this->parameterMap = $parameterMap;
     }
 
     public function dispatch()
     {
-        $this->buildRouterMap();
-        $parameterMap = $this->getParameterMap();
         $dispatcher = new RouterDispatcher($this->routerMap);
 
         /**
          * TODO 클로저와 일반함수 형태에서도 컨트롤러 이벤트가 작동하도록 수정해야함.
          */
 
-        ControllerEvent::triggerEvent($this->getController()->getName(), 'before', [$parameterMap]);
+        $this->triggerEvent('before');
 
-        $result = $dispatcher->dispatch($this->request, $parameterMap);
+        $result = $dispatcher->dispatch($this->request, $this->parameterMap);
 
-        ControllerEvent::triggerEvent($this->getController()->getName(), 'after', [$parameterMap]);
+        $this->triggerEvent('after');
 
         return $result;
     }
 
-    private function buildRouterMap()
+    private function triggerEvent($operation)
     {
-        $builder = new RouterMapBuilder();
-        $builder->setRouterConfig($this->routerConfig);
-
-        $this->routerMap = $builder->build();
-    }
-
-    /**
-     * @return ParameterMap
-     */
-    private function getParameterMap()
-    {
-        $parameterMapper = new ParameterMapper();
-
-        $parameterMapper->setRequest($this->request);
-        $parameterMapper->setViewModel($this->viewModel);
-        $parameterMapper->setRouterMap($this->routerMap);
-
-        return $parameterMapper->getParameterMap();
+        ControllerEvent::triggerEvent(
+            $this->getController()->getName(),
+            $operation,
+            [$this->parameterMap]
+        );
     }
 
     /**
