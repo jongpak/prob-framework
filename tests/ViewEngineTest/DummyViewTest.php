@@ -17,6 +17,6 @@ class DummyViewTest extends TestCase
         $this->assertEquals([], $view->getVariables());
         $this->assertEquals(null, $view->getFile());
         $this->expectOutputString(null);
-        $view->render();
+        $this->assertEquals(null, $view->render());
     }
 }

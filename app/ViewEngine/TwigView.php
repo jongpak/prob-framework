@@ -67,7 +67,7 @@ class TwigView implements ViewEngineInterface
 
     public function render()
     {
-        echo $this->twig->render($this->templateFilename, $this->var);
+        return $this->twig->render($this->templateFilename, $this->var);
     }
 
     private function addCssFunction()

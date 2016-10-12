@@ -26,8 +26,7 @@ class JsonViewTest extends TestCase
 
         $this->assertEquals([], $view->getVariables());
         $this->assertEquals($array, $view->getFile());
-        $this->expectOutputString(json_encode($array));
-        $view->render();
+        $this->assertEquals(json_encode($array), $view->render());
     }
 
     /**
@@ -46,7 +45,6 @@ class JsonViewTest extends TestCase
 
         $this->assertEquals([], $view->getVariables());
         $this->assertEquals($object, $view->getFile());
-        $this->expectOutputString(json_encode($object));
-        $view->render();
+        $this->assertEquals(json_encode($object), $view->render());
     }
 }

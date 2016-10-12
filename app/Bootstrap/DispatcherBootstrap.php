@@ -38,7 +38,7 @@ class DispatcherBootstrap implements BootstrapInterface
         $dispatcher = $this->getDispatcher();
         $viewRenderer = $this->getViewRenderer();
 
-        $viewRenderer->renderView($dispatcher->dispatch());
+        echo $viewRenderer->renderView($dispatcher->dispatch());
     }
 
     private function getDispatcher()

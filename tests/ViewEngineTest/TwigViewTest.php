@@ -24,8 +24,7 @@ class TwigViewTest extends TestCase
 
         $this->assertEquals(['key' => 'ok'], $view->getVariables());
         $this->assertEquals('test.twig', $view->getFile());
-        $this->expectOutputString('ok');
-        $view->render();
+        $this->assertEquals('ok', $view->render());
     }
 
     public function testCustomFunctionTest()
@@ -38,11 +37,10 @@ class TwigViewTest extends TestCase
         $view = new TwigView($this->getTwigSetting());
         $view->file('testCustomFunction');
 
-        $this->expectOutputString(
+        $this->assertEquals(
             "<link rel=\"stylesheet\" type=\"text/css\" href=\"css_test\">\n" .
             "/public/asset_test\n" .
-            "/url_test"
-        );
-        $view->render();
+            "/url_test",
+                $view->render());
     }
 }

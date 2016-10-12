@@ -36,6 +36,6 @@ class JsonView implements ViewEngineInterface
     public function render()
     {
         header('Content-Type: application/json');
-        echo json_encode($this->data);
+        return json_encode($this->data);
     }
 }

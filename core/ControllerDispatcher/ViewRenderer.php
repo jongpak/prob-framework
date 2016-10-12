@@ -40,7 +40,7 @@ class ViewRenderer
             $view->set($key, $value);
         }
 
-        $view->render();
+        return $view->render();
     }
 
     /**
