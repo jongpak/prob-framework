@@ -24,10 +24,8 @@ class HtmlErrorReporterTest extends TestCase
     public function testHtmlReport()
     {
         $reporter = new Html($this->getReporterSetting());
-
         $exception = new ErrorException('message', 0, E_ERROR, 'test.php', 56);
 
-        $this->expectOutputString("message\ntest.php\n56");
-        $reporter->report($exception);
+        $this->assertEquals("message\ntest.php\n56", $reporter->report($exception));
     }
 }

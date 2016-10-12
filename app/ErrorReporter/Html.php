@@ -4,6 +4,9 @@ namespace App\ErrorReporter;
 
 use Core\View\ViewEngineInterface;
 use Core\ErrorReporter\ErrorReporterInterface;
+use App\ViewResolver\ResponseResolver;
+use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Diactoros\Response\EmptyResponse;
 
 class Html implements ErrorReporterInterface
 {
@@ -24,7 +27,11 @@ class Html implements ErrorReporterInterface
         $view->file($this->settings['file']);
         $this->setReportVariables($view, $exception);
 
-        echo $view->render();
+        ResponseResolver::getResponseProxyInstance()->setResponse(
+            new EmptyResponse(500)
+        );
+
+        return $view->render();
     }
 
     /**

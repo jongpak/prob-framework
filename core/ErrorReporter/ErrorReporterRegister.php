@@ -3,6 +3,7 @@
 namespace Core\ErrorReporter;
 
 use \ErrorException;
+use App\ViewResolver\ResponseResolver;
 
 class ErrorReporterRegister
 {
@@ -27,7 +28,11 @@ class ErrorReporterRegister
          */
         set_exception_handler(function ($exception) {
             foreach ($this->errorReporterInstances as $reporter) {
-                $reporter->report($exception);
+                $reportResult = $reporter->report($exception);
+
+                (new ResponseResolver)->resolve(null);
+
+                echo $reportResult;
             }
         });
 
