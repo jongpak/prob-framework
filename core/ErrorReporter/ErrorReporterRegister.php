@@ -4,6 +4,7 @@ namespace Core\ErrorReporter;
 
 use \ErrorException;
 use App\ViewResolver\ResponseResolver;
+use Zend\Diactoros\Response\EmptyResponse;
 
 class ErrorReporterRegister
 {
@@ -30,7 +31,7 @@ class ErrorReporterRegister
             foreach ($this->errorReporterInstances as $reporter) {
                 $reportResult = $reporter->report($exception);
 
-                (new ResponseResolver)->resolve(null);
+                $this->initHttpResponseHeader();
 
                 echo $reportResult;
             }
@@ -39,6 +40,19 @@ class ErrorReporterRegister
         set_error_handler(function ($errno, $errstr, $errfile, $errline, array $errcontext) {
             throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
         });
+    }
+
+    private function initHttpResponseHeader()
+    {
+        $responseResolver = new ResponseResolver();
+
+        if ($responseResolver->getResponseProxyInstance()->getResponse() === null) {
+            $responseResolver
+                ->getResponseProxyInstance()
+                ->setResponse(new EmptyResponse(500));
+        }
+
+        $responseResolver->resolve(null);
     }
 
     private function constructErrorReporters()
