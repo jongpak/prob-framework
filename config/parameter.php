@@ -11,8 +11,10 @@ use Zend\Diactoros\ServerRequestFactory;
 use App\Auth\AuthManager;
 use App\Auth\LoginManagerInterface;
 use App\Auth\AccountManagerInterface;
+use App\ViewResolver\ResponseResolver;
 use Doctrine\ORM\EntityManagerInterface;
 use Core\DatabaseManager;
+use Core\Utils\ResponseProxy;
 
 return [
     [
@@ -20,6 +22,10 @@ return [
         'value' => ParameterWire::post(function () {
             return RequestMatcher::getRequest();
         })
+    ],
+    [
+        'key' => new Typed(ResponseProxy::class),
+        'value' => ResponseResolver::getResponseProxyInstance()
     ],
     [
         'key' => new Named('urlPattern'),
