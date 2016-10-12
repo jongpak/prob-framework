@@ -2,7 +2,6 @@
 
 namespace Core\ErrorReporter;
 
-use \Exception;
 use \ErrorException;
 use App\ViewResolver\ResponseResolver;
 use Zend\Diactoros\Response\EmptyResponse;
@@ -43,7 +42,7 @@ class ErrorReporterRegister
         });
     }
 
-    private function initHttpResponseHeader(Exception $exception)
+    private function initHttpResponseHeader($exception)
     {
         $responseResolver = new ResponseResolver();
 
@@ -56,7 +55,7 @@ class ErrorReporterRegister
         $responseResolver->resolve(null);
     }
 
-    private function getHttpErrorResponse(Exception $exception)
+    private function getHttpErrorResponse($exception)
     {
         $errorCode = 500;
 
