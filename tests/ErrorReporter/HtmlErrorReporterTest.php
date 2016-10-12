@@ -1,9 +1,8 @@
 <?php
 
-namespace Core;
+namespace App\ErrorReporter;
 
 use PHPUnit\Framework\TestCase;
-use App\ErrorReporter\Html;
 use \ErrorException;
 
 class HtmlErrorReporterTest extends TestCase
