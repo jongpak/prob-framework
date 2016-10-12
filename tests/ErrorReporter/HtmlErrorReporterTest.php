@@ -8,13 +8,12 @@ use \ErrorException;
 
 class HtmlErrorReporterTest extends TestCase
 {
-
     public function getReporterSetting()
     {
         return [
             'class' => 'App\\ErrorReporter\\Html',
             'view' => 'App\\ViewEngine\\TwigView',
-            'path' => __DIR__ . '/mock',
+            'path' => __DIR__ . '/../mock',
             'file' => 'error',
             'postfix' => '.twig',
             'settings' => []
