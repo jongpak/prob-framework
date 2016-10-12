@@ -1,4 +1,5 @@
 <?php
+
 use App\Auth\Exception\AccountNotFound;
 use App\EventListener\Auth\Exception\PermissionDenied;
 
