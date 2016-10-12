@@ -1,4 +1,6 @@
 <?php
+use App\Auth\Exception\AccountNotFound;
+use App\EventListener\Auth\Exception\PermissionDenied;
 
 return [
     'displayErrors' => true,
@@ -13,5 +15,10 @@ return [
             'postfix' => '.twig',
             'settings' => []
         ]
+    ],
+
+    'errorCodes' => [
+        AccountNotFound::class => 403,
+        PermissionDenied::class => 403,
     ]
 ];
