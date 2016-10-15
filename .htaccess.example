@@ -1,5 +1,6 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    RewriteBase ** YOUR_WEB_SITE_URL **
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^(.*)$ public/index.php/$1 [L]
 </IfModule>
