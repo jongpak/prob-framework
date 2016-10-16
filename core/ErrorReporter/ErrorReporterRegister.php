@@ -24,10 +24,10 @@ class ErrorReporterRegister
 
     private function registerErrorReporters()
     {
-        /**
-         * @var ErrorReporter $reporter
-         */
         set_exception_handler(function ($exception) {
+            /**
+             * @var ErrorReporterInterface $reporter
+             */
             foreach ($this->errorReporterInstances as $reporter) {
                 $reportResult = $reporter->report($exception);
 
