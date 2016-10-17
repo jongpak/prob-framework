@@ -15,6 +15,7 @@ class HtmlErrorReporterTest extends TestCase
             'path' => __DIR__ . '/../mock',
             'file' => 'error',
             'postfix' => '.twig',
+            'displayStackTrace' => true,
             'settings' => []
         ];
     }
