@@ -14,6 +14,7 @@ return [
             'path' => __DIR__ . '/../view/error/',
             'file' => 'exception',
             'postfix' => '.twig',
+            'displayStackTrace' => false,
             'settings' => []
         ]
     ],

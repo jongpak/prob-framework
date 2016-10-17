@@ -44,5 +44,7 @@ class Html implements ErrorReporterInterface
         $view->set('file', $exception->getFile());
         $view->set('line', $exception->getLine());
         $view->set('traces', $exception->getTrace());
+
+        $view->set('displayStackTrace', $this->settings['displayStackTrace']);
     }
 }
