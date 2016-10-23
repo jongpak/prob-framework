@@ -4,6 +4,7 @@ namespace Core\ControllerDispatcher;
 
 use Prob\Handler\ProcInterface;
 use Prob\Handler\ParameterMap;
+use Prob\Router\Exception\RoutePathNotFound;
 use Psr\Http\Message\ServerRequestInterface;
 use Prob\Router\Dispatcher as RouterDispatcher;
 use Prob\Router\Matcher;
@@ -60,10 +61,23 @@ class Dispatcher
 
     private function triggerEvent($operation)
     {
+        $this->validateRoutePath();
+
         ControllerEvent::triggerEvent(
             RequestMatcher::getControllerProc()->getName(),
             $operation,
             [$this->parameterMap]
         );
+    }
+
+    private function validateRoutePath() {
+        if(RequestMatcher::getControllerProc() === null) {
+            throw new RoutePathNotFound(
+                sprintf('Route path not found: %s (%s)',
+                    $this->request->getUri()->getPath(),
+                    $this->request->getMethod()
+                )
+            );
+        }
     }
 }
