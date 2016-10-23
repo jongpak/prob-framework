@@ -50,12 +50,12 @@ class ParameterWire
         return $buildedParameters;
     }
 
-    public static function postCallback(callable $func)
+    public static function lazyCallback(callable $func)
     {
         return new LazyWiringParameterCallback($func);
     }
 
-    public static function post(callable $parameter)
+    public static function lazy(callable $parameter)
     {
         return new LazyWiringParameter($parameter);
     }
