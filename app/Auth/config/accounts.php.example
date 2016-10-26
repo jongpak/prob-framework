@@ -9,5 +9,7 @@ return [
     'test' => [
         'password' => 'test',
         'role' => [ 'Member' ]
-    ]
+    ],
+
+    // Add your accounts!
 ];
