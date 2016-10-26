@@ -37,7 +37,7 @@ config/db.php
 ```
 
 accounts.php
-```
+```php
 return [
     // ...
 
