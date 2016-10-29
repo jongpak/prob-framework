@@ -8,7 +8,7 @@ class FileBaseAccountManager implements AccountManagerInterface
 {
     private $accounts = [];
 
-    public function __construct($settings = [])
+    public function __construct(array $settings = [])
     {
         $this->accounts = $settings['accounts'];
     }

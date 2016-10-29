@@ -4,7 +4,7 @@ namespace App\Auth;
 
 interface LoginManagerInterface
 {
-    public function __construct($settings = []);
+    public function __construct(array $settings = []);
 
     public function login($accountId, $password);
     public function logout();

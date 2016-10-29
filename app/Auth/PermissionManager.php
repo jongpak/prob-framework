@@ -6,7 +6,7 @@ use Prob\Handler\ProcInterface;
 
 abstract class PermissionManager
 {
-    abstract public function __construct($settings = []);
+    abstract public function __construct(array $settings = []);
 
     /**
      * @return array|null

@@ -8,7 +8,7 @@ use Core\Utils\EntityFinder;
 
 class DatabasePermissionManager extends PermissionManager
 {
-    public function __construct($settings = [])
+    public function __construct(array $settings = [])
     {
     }
 

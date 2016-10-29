@@ -4,7 +4,7 @@ namespace App\Auth;
 
 interface AccountManagerInterface
 {
-    public function __construct($settings = []);
+    public function __construct(array $settings = []);
 
     /**
      * @param  string  $accountId

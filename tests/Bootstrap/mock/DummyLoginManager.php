@@ -14,7 +14,7 @@ class DummyLoginManager implements LoginManagerInterface
      */
     private $accountManager;
 
-    public function __construct($settings = [])
+    public function __construct(array $settings = [])
     {
     }
 

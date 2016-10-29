@@ -6,7 +6,7 @@ use App\Auth\AccountManagerInterface;
 
 class DummyAccountManager implements AccountManagerInterface
 {
-    public function __construct($settings = [])
+    public function __construct(array $settings = [])
     {
     }
 

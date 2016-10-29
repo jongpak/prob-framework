@@ -8,7 +8,7 @@ class FileBasePermissionManager extends PermissionManager
 {
     private $permission;
 
-    public function __construct($settings = [])
+    public function __construct(array $settings = [])
     {
         $this->permission = $settings['permissions'];
     }

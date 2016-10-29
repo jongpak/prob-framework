@@ -14,7 +14,7 @@ class SessionLoginManager implements LoginManagerInterface
      */
     private $accountManager;
 
-    public function __construct($settings = [])
+    public function __construct(array $settings = [])
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
