@@ -27,7 +27,7 @@ class ParameterWireTest extends TestCase
     {
         $map = new ParameterMap();
 
-        ParameterWire::appendParameter(new Named('test'), ParameterWire::post(function() {
+        ParameterWire::appendParameter(new Named('test'), ParameterWire::lazy(function() {
             return 'lazy!';
         }));
         ParameterWire::injectParameter($map);
