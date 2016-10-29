@@ -52,7 +52,7 @@ return [
 
 ### Making directories
 ```
-> mkdir data/attachment
+> mkdir data
 ```
 
 
