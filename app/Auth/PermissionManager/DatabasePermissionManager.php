@@ -2,11 +2,11 @@
 
 namespace App\Auth\PermissionManager;
 
-use App\Auth\PermissionManager;
+use App\Auth\PermissionManagerAbstract;
 use App\Entity\Permission;
 use Core\Utils\EntityFinder;
 
-class DatabasePermissionManager extends PermissionManager
+class DatabasePermissionManager extends PermissionManagerAbstract
 {
     public function __construct(array $settings = [])
     {

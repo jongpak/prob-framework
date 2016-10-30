@@ -2,9 +2,9 @@
 
 namespace App\Auth\PermissionManager;
 
-use App\Auth\PermissionManager;
+use App\Auth\PermissionManagerAbstract;
 
-class FileBasePermissionManager extends PermissionManager
+class FileBasePermissionManager extends PermissionManagerAbstract
 {
     private $permission;
 

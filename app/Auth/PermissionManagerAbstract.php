@@ -2,7 +2,7 @@
 
 namespace App\Auth;
 
-abstract class PermissionManager
+abstract class PermissionManagerAbstract
 {
     abstract public function __construct(array $settings = []);
 
