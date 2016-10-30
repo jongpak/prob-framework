@@ -3,7 +3,6 @@
 namespace App\Auth;
 
 use PHPUnit\Framework\TestCase;
-use App\Auth\AuthManager;
 use App\Auth\AccountManager\FileBaseAccountManager;
 use App\Auth\LoginManager\SessionLoginManager;
 use App\Auth\PermissionManager\FileBasePermissionManager;
