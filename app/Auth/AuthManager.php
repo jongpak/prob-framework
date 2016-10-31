@@ -33,7 +33,7 @@ class AuthManager
     }
 
     /**
-     * @return PermissionManager
+     * @return PermissionManagerAbstract
      */
     public static function getPermissionManager($loginManagerName = null)
     {
