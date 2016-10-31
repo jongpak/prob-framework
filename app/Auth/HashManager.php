@@ -7,6 +7,10 @@ class HashManager
     private static $providers = [];
     private static $defaultProviderName;
 
+    /**
+     * @param string $providerName
+     * @return HashProviderInterface
+     */
     public static function getProvider($providerName = '') {
         $providerName = $providerName ?: self::$defaultProviderName;
 
