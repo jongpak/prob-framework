@@ -7,7 +7,8 @@ class HashManager
     private static $providers = [];
     private static $defaultProviderName;
 
-    public static function setConfig(array $config) {
+    public static function setConfig(array $config)
+    {
         self::setProvider($config['hashProviders']);
         self::setDefaultProviderName($config['defaultHashProvider']);
     }
@@ -16,7 +17,8 @@ class HashManager
      * @param string $providerName
      * @return HashProviderInterface
      */
-    public static function getProvider($providerName = '') {
+    public static function getProvider($providerName = '')
+    {
         $providerName = $providerName ?: self::$defaultProviderName;
 
         $provider = self::$providers[$providerName];
@@ -25,11 +27,13 @@ class HashManager
         return new $provider['class']($settings);
     }
 
-    public static function setProvider(array $providers) {
+    public static function setProvider(array $providers)
+    {
         self::$providers = $providers;
     }
 
-    public static function setDefaultProviderName($providerName) {
+    public static function setDefaultProviderName($providerName)
+    {
         self::$defaultProviderName = $providerName;
     }
 }
