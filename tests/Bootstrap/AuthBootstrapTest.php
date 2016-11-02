@@ -38,6 +38,17 @@ class AuthBootstrapTest extends TestCase
                         'settings' => []
                     ]
                 ]
+            ],
+
+            'hashProvider' => [
+                'defaultHashProvider' => 'BCryptHashProvider',
+
+                'hashProviders' => [
+                    'BCryptHashProvider' => [
+                        'class' => 'App\\Auth\\HashProvider\\BCryptHashProvider',
+                        'settings' => []
+                    ]
+                ]
             ]
         ]);
 
