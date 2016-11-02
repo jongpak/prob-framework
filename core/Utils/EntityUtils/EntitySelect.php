@@ -52,20 +52,24 @@ class EntitySelect
     public function criteria(array $criteria)
     {
         $this->criteria = $criteria;
+        return $this;
     }
 
     public function orderBy(array $orderBy)
     {
         $this->orderBy = $orderBy;
+        return $this;
     }
 
     public function offsetStart($offsetStart)
     {
         $this->offsetStart = $offsetStart;
+        return $this;
     }
 
     public function offsetLength($offsetLength)
     {
         $this->offsetLength = $offsetLength;
+        return $this;
     }
 }
