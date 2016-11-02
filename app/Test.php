@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use Core\Application;
-use Core\Utils\EntityFinder;
 use App\Entity\Post;
+use Core\Utils\EntityUtils\EntitySelect;
 
 class Test
 {
@@ -20,7 +20,7 @@ class Test
 
     public function dbTest()
     {
-        return EntityFinder::findAll(Post::class);
+        return EntitySelect::select(Post::class)->findAll();
     }
 
     public function goMain()
