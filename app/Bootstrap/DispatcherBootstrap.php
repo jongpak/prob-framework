@@ -8,6 +8,7 @@ use Core\ControllerDispatcher\ViewRenderer;
 use Core\ControllerDispatcher\RequestMatcher;
 use Core\ControllerDispatcher\RouterMapBuilder;
 use Core\ParameterWire;
+use Core\Utils\ArrayUtils;
 use Core\ViewModel;
 use Zend\Diactoros\Uri;
 use Zend\Diactoros\ServerRequestFactory;
@@ -38,7 +39,32 @@ class DispatcherBootstrap implements BootstrapInterface
         $dispatcher = $this->getDispatcher();
         $viewRenderer = $this->getViewRenderer();
 
-        echo $viewRenderer->renderView($dispatcher->dispatch());
+        $controllerResult = $this->getControllerResult($viewRenderer, $dispatcher->dispatch());
+
+        echo $viewRenderer->renderView($controllerResult);
+    }
+
+    private function getControllerResult(ViewRenderer $viewRenderer, $controllerResult)
+    {
+        $viewClassName = get_class($viewRenderer->resolveView($controllerResult));
+
+        if(array_search($viewClassName, $this->env['viewPrefix']['applyView']) === false) {
+            return $controllerResult;
+        }
+
+        return $this->getViewPrefix() . $controllerResult;
+    }
+
+    private function getViewPrefix()
+    {
+        $prefix = $this->env['viewPrefix']['controller'];
+        $defaultPrefix = $this->env['viewPrefix']['default'];
+
+        $controllerName = RequestMatcher::getControllerProc()->getName();
+
+        $result = ArrayUtils::find(array_keys($prefix), $controllerName);
+
+        return $result ? $prefix[$result] : $defaultPrefix;
     }
 
     private function getDispatcher()

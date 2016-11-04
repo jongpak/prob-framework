@@ -20,6 +20,6 @@ class Welcome
         $viewModel->set('accountId', $loggedAccountId);
         $viewModel->set('accountRole', $accountManager->getRole($loggedAccountId));
 
-        return 'default/welcome';
+        return 'welcome';
     }
 }

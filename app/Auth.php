@@ -12,7 +12,7 @@ class Auth
 {
     public function viewLoginForm()
     {
-        return 'auth/login';
+        return 'login';
     }
 
     public function doLogin(LoginManagerInterface $loginManager, $parsedBody)

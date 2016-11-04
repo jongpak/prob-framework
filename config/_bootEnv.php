@@ -7,6 +7,7 @@ return [
     'db' => require 'db.php',
     'viewEngine' => require 'viewEngine.php',
     'viewResolver' => require 'viewResolver.php',
+    'viewPrefix' => require 'viewPrefix.php',
     'router' => require 'router.php',
     'error' => require 'error.php',
     'event' => require 'event.php',
