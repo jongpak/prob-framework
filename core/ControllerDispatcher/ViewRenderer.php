@@ -50,7 +50,7 @@ class ViewRenderer
     public function resolveView($controllerResult)
     {
         foreach ($this->viewResolvers as $name => $resolverClassName) {
-            /** @var ViewResolverInterface */
+            /** @var ViewResolverInterface $resolver */
             $resolver = new $resolverClassName();
             $resolver->setViewEngineConfig(
                 isset($this->viewEngineConfig[$name])

@@ -2,6 +2,7 @@
 
 namespace Core\ControllerDispatcher;
 
+use Prob\Handler\ProcInterface;
 use Prob\Router\Map;
 use Prob\Router\Matcher;
 use Psr\Http\Message\ServerRequestInterface;
@@ -43,6 +44,9 @@ class RequestMatcher
         return self::getControllerMatchingResult()['urlPattern'];
     }
 
+    /**
+     * @return ProcInterface
+     */
     public static function getControllerProc()
     {
         return self::getControllerMatchingResult()['handler'];
