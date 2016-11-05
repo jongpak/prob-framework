@@ -42,8 +42,8 @@ class DatabaseManager
             return $entityManager;
         } catch (Exception $e) {
             throw self::$config['devMode']
-                ? new RuntimeException('Error raised when trying to connect database')
-                : $e;
+                ? $e
+                : new RuntimeException('Error raised when trying to connect database');
         }
     }
 }
