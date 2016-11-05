@@ -63,5 +63,5 @@ return [
 
 ### Creating table schema
 ```
-> php .\vendor\doctrine\orm\bin\doctrine.php orm:schema-tool:create
+> php ./vendor/doctrine/orm/bin/doctrine.php orm:schema-tool:create
 ```
