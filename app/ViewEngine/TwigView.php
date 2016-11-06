@@ -43,6 +43,7 @@ class TwigView implements ViewEngineInterface
         $this->addCssFunction();
         $this->addAssetFunction();
         $this->addUrlFunction();
+        $this->addFileFunction();
     }
 
     public function set($key, $value)
@@ -95,6 +96,14 @@ class TwigView implements ViewEngineInterface
         ));
     }
 
+    private function addFileFunction()
+    {
+        $this->twig->addFunction(new Twig_SimpleFunction(
+            'file',
+            [$this, 'fileFunction']
+        ));
+    }
+
     public function cssFunction($url)
     {
         return sprintf('<link rel="stylesheet" type="text/css" href="%s">', $url);
@@ -108,5 +117,16 @@ class TwigView implements ViewEngineInterface
     public function urlFunction($url = '')
     {
         return Application::getUrl($url);
+    }
+
+    public function fileFunction($file)
+    {
+        $pos = strrpos($this->getFile(), '/');
+
+        if($pos === false) {
+            return $file . $this->settings['postfix'];
+        }
+
+        return substr($this->getFile(), 0, $pos) . '/' . $file . $this->settings['postfix'];
     }
 }

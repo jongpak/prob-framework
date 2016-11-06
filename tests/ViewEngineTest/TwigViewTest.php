@@ -40,7 +40,8 @@ class TwigViewTest extends TestCase
         $this->assertEquals(
             "<link rel=\"stylesheet\" type=\"text/css\" href=\"css_test\">\n" .
             "/public/asset_test\n" .
-            "/url_test",
+            "/url_test\n" .
+            "test.twig",
                 $view->render());
     }
 }
