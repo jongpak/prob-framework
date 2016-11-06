@@ -40,10 +40,7 @@ class TwigView implements ViewEngineInterface
 
         $this->settings = $settings;
 
-        $this->addCssFunction();
-        $this->addAssetFunction();
-        $this->addUrlFunction();
-        $this->addFileFunction();
+        $this->initCustomFunction();
     }
 
     public function set($key, $value)
@@ -69,6 +66,13 @@ class TwigView implements ViewEngineInterface
     public function render()
     {
         return $this->twig->render($this->templateFilename, $this->var);
+    }
+
+    private function initCustomFunction() {
+        $this->addCssFunction();
+        $this->addAssetFunction();
+        $this->addUrlFunction();
+        $this->addFileFunction();
     }
 
     private function addCssFunction()
