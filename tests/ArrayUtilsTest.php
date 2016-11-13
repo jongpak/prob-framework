@@ -17,5 +17,9 @@ class ArrayUtilsTest extends TestCase
         $this->assertEquals('test', ArrayUtils::find($arr, 'test'));
         $this->assertEquals('test.*', ArrayUtils::find($arr, 'test.some'));
         $this->assertEquals('test.*.*', ArrayUtils::find($arr, 'test.some.other'));
+
+        $this->assertEquals(false, ArrayUtils::find($arr, 'not'));
+        $this->assertEquals(false, ArrayUtils::find($arr, 'not.*'));
+        $this->assertEquals(false, ArrayUtils::find($arr, '*.not'));
     }
 }
