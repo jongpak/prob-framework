@@ -1,6 +1,7 @@
 <?php
 
-use Core\Utils\Parameter\ParameterTyped;
+namespace Core\Utils\Parameter;
+
 use PHPUnit\Framework\TestCase;
 use Prob\Handler\Parameter\Typed;
 

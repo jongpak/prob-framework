@@ -1,10 +1,8 @@
 <?php
 
+namespace Core\Utils\Parameter;
+
 use Core\LazyWiringParameterCallback;
-use Core\Utils\Parameter\Parameter;
-use Core\Utils\Parameter\ParameterNamed;
-use Core\Utils\Parameter\ParameterTyped;
-use Core\Utils\Parameter\ParameterTypedAndNamed;
 use PHPUnit\Framework\TestCase;
 
 class ParameterTest extends TestCase
