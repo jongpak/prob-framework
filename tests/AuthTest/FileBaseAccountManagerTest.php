@@ -14,7 +14,7 @@ class FileBaseAccountManagerTest extends TestCase
 
     public function setUp()
     {
-        $this->accountManeger = new FileBaseAccountManager([
+        $this->accountManager = new FileBaseAccountManager([
             'accounts' => [
                 'admin' => [
                     'password' => 'admin',
@@ -24,6 +24,11 @@ class FileBaseAccountManagerTest extends TestCase
                 'test' => [
                     'password' => 'test',
                     'role' => [ 'Member' ]
+                ],
+
+                'test2' => [
+                    'password' => 'test',
+                    'role' => [ 'Admin', 'Member' ]
                 ]
             ]
         ]);
@@ -31,26 +36,27 @@ class FileBaseAccountManagerTest extends TestCase
 
     public function testIsExistAccountId()
     {
-        $this->assertEquals(true, $this->accountManeger->isExistAccountId('admin'));
-        $this->assertEquals(true, $this->accountManeger->isExistAccountId('test'));
-        $this->assertEquals(false, $this->accountManeger->isExistAccountId('noAccount'));
+        $this->assertEquals(true, $this->accountManager->isExistAccountId('admin'));
+        $this->assertEquals(true, $this->accountManager->isExistAccountId('test'));
+        $this->assertEquals(false, $this->accountManager->isExistAccountId('noAccount'));
     }
 
     public function testIsEqualPassword()
     {
-        $this->assertEquals(true, $this->accountManeger->isEqualPassword('admin', 'admin'));
-        $this->assertEquals(false, $this->accountManeger->isEqualPassword('admin', '???'));
+        $this->assertEquals(true, $this->accountManager->isEqualPassword('admin', 'admin'));
+        $this->assertEquals(false, $this->accountManager->isEqualPassword('admin', '???'));
 
-        $this->assertEquals(true, $this->accountManeger->isEqualPassword('test', 'test'));
-        $this->assertEquals(false, $this->accountManeger->isEqualPassword('test', '???'));
+        $this->assertEquals(true, $this->accountManager->isEqualPassword('test', 'test'));
+        $this->assertEquals(false, $this->accountManager->isEqualPassword('test', '???'));
 
-        $this->assertEquals(false, $this->accountManeger->isEqualPassword('noAccount', '???'));
+        $this->assertEquals(false, $this->accountManager->isEqualPassword('noAccount', '???'));
     }
 
     public function testGetRole()
     {
-        $this->assertEquals(['Admin'], $this->accountManeger->getRole('admin'));
-        $this->assertEquals(['Member'], $this->accountManeger->getRole('test'));
-        $this->assertEquals(null, $this->accountManeger->getRole('noAccount'));
+        $this->assertEquals(['Admin'], $this->accountManager->getRole('admin'));
+        $this->assertEquals(['Member'], $this->accountManager->getRole('test'));
+        $this->assertEquals(['Admin', 'Member'], $this->accountManager->getRole('test2'));
+        $this->assertEquals(null, $this->accountManager->getRole('noAccount'));
     }
 }
