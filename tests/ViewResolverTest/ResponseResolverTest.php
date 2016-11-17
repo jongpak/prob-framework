@@ -36,4 +36,12 @@ class ResponseResolverTest extends TestCase
         ], headers_list());
        */
     }
+
+    public function testNotResponseResolve()
+    {
+        $resolver = new ResponseResolver();
+        $resolver->setViewEngineConfig([]);
+
+        $this->assertEquals(null, $resolver->resolve(null));
+    }
 }
