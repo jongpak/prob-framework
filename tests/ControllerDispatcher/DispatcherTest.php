@@ -63,6 +63,9 @@ class DispatcherTest extends TestCase
             '/test' => function () { }
         ]))->build();
 
+        RequestMatcher::setRequest($request);
+        RequestMatcher::setRouterMap($routerMap);
+
         $dispatcher = new Dispatcher();
         $dispatcher->setRequest($request);
         $dispatcher->setRouterMap($routerMap);
