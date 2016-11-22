@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class ArrayUtilsTest extends TestCase
 {
-    public function testFind()
+    public function testFind1()
     {
         $arr = [
             'test.*.*',
@@ -22,6 +22,29 @@ class ArrayUtilsTest extends TestCase
 
         $this->assertEquals('test\\one.*', ArrayUtils::find($arr, 'test\\one.some'));
         $this->assertEquals('test\\two.*', ArrayUtils::find($arr, 'test\\two.other'));
+
+        $this->assertEquals(false, ArrayUtils::find($arr, 'not'));
+        $this->assertEquals(false, ArrayUtils::find($arr, 'not.*'));
+        $this->assertEquals(false, ArrayUtils::find($arr, '*.not'));
+    }
+
+    public function testFind2()
+    {
+        $arr = [
+            'test',
+            'test.some',
+            'test.some.other',
+            'test\\one.some',
+            'test\\two.other'
+        ];
+
+        $this->assertEquals('test', ArrayUtils::find($arr, 'test'));
+        $this->assertEquals('test.some', ArrayUtils::find($arr, 'test.*'));
+        $this->assertEquals('test.some.other', ArrayUtils::find($arr, 'test.*.*'));
+
+        $this->assertEquals('test\\one.some', ArrayUtils::find($arr, 'test\\one.*'));
+        $this->assertEquals('test\\two.other', ArrayUtils::find($arr, 'test\\two.*'));
+
         $this->assertEquals(false, ArrayUtils::find($arr, 'not'));
         $this->assertEquals(false, ArrayUtils::find($arr, 'not.*'));
         $this->assertEquals(false, ArrayUtils::find($arr, '*.not'));
