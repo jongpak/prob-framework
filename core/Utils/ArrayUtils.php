@@ -2,11 +2,24 @@
 
 namespace Core\Utils;
 
+use InvalidArgumentException;
+
 class ArrayUtils
 {
+    /**
+     * @param array $arr
+     * @param $str
+     * @return string|false return matching pattern
+     */
     public static function find(array $arr, $str)
     {
-        foreach ($arr as $item) {
+        foreach ($arr as $key => $value) {
+            $item = is_int($key) ? $value : $key;
+
+            if(is_string($item) === false) {
+                throw new InvalidArgumentException('Given array contain not string key');
+            }
+
             if(self::isMatchedString($item, $str)) {
                 return $item;
             }

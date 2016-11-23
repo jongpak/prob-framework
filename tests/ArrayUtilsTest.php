@@ -2,6 +2,7 @@
 
 namespace Core\Utils;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class ArrayUtilsTest extends TestCase
@@ -14,6 +15,7 @@ class ArrayUtilsTest extends TestCase
             'test',
             'test\\one.*',
             'test\\two.*',
+            'test\\three.*',
             'abc*',
             'test*abc',
         ];
@@ -58,5 +60,47 @@ class ArrayUtilsTest extends TestCase
         $this->assertEquals(false, ArrayUtils::find($arr, 'not'));
         $this->assertEquals(false, ArrayUtils::find($arr, 'not.*'));
         $this->assertEquals(false, ArrayUtils::find($arr, '*.not'));
+    }
+
+    public function testValueArray1()
+    {
+        $arr = [
+            'test.1' => [ 'test' ]
+        ];
+
+        $this->assertEquals('test.1', ArrayUtils::find($arr, 'test.*'));
+    }
+
+    public function testValueArray2()
+    {
+        $arr = [
+            'test.*' => [ 'test' ]
+        ];
+
+        $this->assertEquals('test.*', ArrayUtils::find($arr, 'test.1'));
+    }
+
+    public function testNotStringKey1()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        ArrayUtils::find([ [ ] ], 'some');
+    }
+
+    public function testNotStringKey2()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        ArrayUtils::find([ true ], 'some');
+    }
+
+    public function testNotStringKey3()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        ArrayUtils::find([ 5 ], 'some');
+    }
+
+    public function testNotStringKey4()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        ArrayUtils::find([ new \stdClass() ], 'some');
     }
 }
