@@ -11,6 +11,7 @@
 > cp .htaccess.example .htaccess
 > cp config/site.php.example config/site.php
 > cp config/db.php.example config/db.php
+> cp app/Auth/config/config.php.example app/Auth/config/config.php
 > cp app/Auth/config/accounts.php.example app/Auth/config/accounts.php
 ```
 
@@ -34,6 +35,15 @@ config/db.php
 'password'  => 'password',
 'dbname'    => 'dbname',
 'charset'   => 'utf8'
+```
+
+app/Auth/config/config.php
+```php
+'defaultAllow' => true,
+'defaultAccountManager' => 'FileBaseAccountManager',
+'defaultLoginManager' => 'SessionLoginManager',
+'defaultPermissionManager' => 'FileBasePermissionManager',
+// ...
 ```
 
 app/Auth/config/accounts.php
