@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'Test.admin' => [ 'Admin' ]
+    'Admin\\*' => [ 'Admin' ],
+    'Test.admin' => [ 'Admin' ],
 ];

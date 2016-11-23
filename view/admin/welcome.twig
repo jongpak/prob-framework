@@ -1,0 +1,23 @@
+{% extends file('layout') %}
+
+{% block body %}
+<h2>Overview</h2>
+<table>
+    <tr>
+        <th>Absolute path</th>
+        <td>{{ absolutePath }}</td>
+    </tr>
+    <tr>
+        <th>PHP version</th>
+        <td>{{ phpVersion }}</td>
+    </tr>
+    <tr>
+        <th>Operating System</th>
+        <td>{{ os }}</td>
+    </tr>
+    <tr>
+        <th>SAPI</th>
+        <td>{{ sapi }}</td>
+    </tr>
+</table>
+{% endblock %}

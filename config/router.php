@@ -11,6 +11,8 @@ return [
     ],
     '/auth/logout' => 'Auth.doLogout',
 
+    '/admin' => 'Admin\\Welcome.index',
+
     '/test' => 'Test.echoTest',
     '/test/json' => 'Test.jsonTest',
     '/test/db' => 'Test.dbTest',

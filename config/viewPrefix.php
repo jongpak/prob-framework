@@ -9,5 +9,6 @@ return [
 
     'controller' => [
         'Auth.*' => 'auth/',
+        'Admin\\*' => 'admin/',
     ],
 ];

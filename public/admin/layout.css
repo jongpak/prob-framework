@@ -1,0 +1,90 @@
+html, body {
+    margin: 0;
+}
+
+header div#top {
+    background: rgb(75, 100, 125);
+    padding: 10px 25px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 18pt;
+    font-weight: normal;
+    color: white;
+}
+
+header h1 a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+header nav {
+    float: left;
+    width: 225px;
+    padding: 25px;
+}
+
+header nav:after {
+    content: ' ';
+    display: block;
+    position: fixed;
+    z-index: -2;
+    top: 0;
+    left: 0;
+    width: 275px;
+    height: 100%;
+    background: rgb(240, 240, 240);
+}
+
+header nav h2 {
+    margin: 35px 0 0 0;
+    font-size: 14pt;
+    font-weight: normal;
+    color: rgb(50, 75, 100);
+    border-bottom: 1px solid rgb(200, 200, 200);
+}
+
+header nav h2:first-child {
+    margin-top: 0;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0 5px;
+}
+
+header nav li {
+    margin-bottom: 10px;
+    border-left: 5px solid rgb(200, 200, 200);
+    padding-left: 5px;
+}
+
+header nav li:hover {
+    font-weight: bold;
+    border-left-color: rgb(150, 150, 150);
+}
+
+section#body {
+    padding: 25px 300px;
+}
+
+section#body h2 {
+    margin: 0 0 10px 0;
+    font-size: 18pt;
+    color: rgb(50, 75, 100);
+}
+
+section#body table {
+    border-collapse: collapse;
+}
+
+section#body table th, section#body table td {
+    border: 1px solid rgb(200, 200, 200);
+    padding: 5px 10px;
+}
+
+section#body table th {
+    background: rgb(245, 245, 245);
+    text-align: left;
+}
