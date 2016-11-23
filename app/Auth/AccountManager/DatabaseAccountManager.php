@@ -5,7 +5,7 @@ namespace App\Auth\AccountManager;
 use App\Auth\AccountManagerInterface;
 use App\Auth\HashManager;
 use App\Entity\User;
-use Core\Utils\EntityFinder;
+use Core\Utils\EntityUtils\EntitySelect;
 
 class DatabaseAccountManager implements AccountManagerInterface
 {
@@ -49,6 +49,8 @@ class DatabaseAccountManager implements AccountManagerInterface
      */
     public function getUserEntity($accountId)
     {
-        return EntityFinder::findOneBy(User::class, ['accountId' => $accountId]);
+        return EntitySelect::select(User::class)
+            ->criteria(['accountId' => $accountId])
+            ->findOne();
     }
 }
