@@ -13,12 +13,14 @@ class ArrayUtilsTest extends TestCase
             'test.*',
             'test',
             'test\\one.*',
-            'test\\two.*'
+            'test\\two.*',
+            'abc*',
         ];
 
         $this->assertEquals('test', ArrayUtils::find($arr, 'test'));
         $this->assertEquals('test.*', ArrayUtils::find($arr, 'test.some'));
         $this->assertEquals('test.*.*', ArrayUtils::find($arr, 'test.some.other'));
+        $this->assertEquals('abc*', ArrayUtils::find($arr, 'abc123'));
 
         $this->assertEquals('test\\one.*', ArrayUtils::find($arr, 'test\\one.some'));
         $this->assertEquals('test\\two.*', ArrayUtils::find($arr, 'test\\two.other'));
@@ -35,12 +37,14 @@ class ArrayUtilsTest extends TestCase
             'test.some',
             'test.some.other',
             'test\\one.some',
-            'test\\two.other'
+            'test\\two.other',
+            'abc123',
         ];
 
         $this->assertEquals('test', ArrayUtils::find($arr, 'test'));
         $this->assertEquals('test.some', ArrayUtils::find($arr, 'test.*'));
         $this->assertEquals('test.some.other', ArrayUtils::find($arr, 'test.*.*'));
+        $this->assertEquals('abc123', ArrayUtils::find($arr, 'abc*'));
 
         $this->assertEquals('test\\one.some', ArrayUtils::find($arr, 'test\\one.*'));
         $this->assertEquals('test\\two.other', ArrayUtils::find($arr, 'test\\two.*'));
