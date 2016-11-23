@@ -3,6 +3,7 @@
 namespace App\Auth\AccountManager;
 
 use App\Auth\AccountManagerInterface;
+use App\Auth\HashManager;
 use App\Entity\User;
 use Core\Utils\EntityFinder;
 
@@ -23,7 +24,7 @@ class DatabaseAccountManager implements AccountManagerInterface
             return false;
         }
 
-        return $this->getUserEntity($accountId)->getPassword() === $password;
+        return HashManager::getProvider()->isEqualValueAndHash($password, $this->getUserEntity($accountId)->getPassword());
     }
 
     public function getRole($accountId)
