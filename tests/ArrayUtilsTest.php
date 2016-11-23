@@ -103,4 +103,10 @@ class ArrayUtilsTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         ArrayUtils::find([ new \stdClass() ], 'some');
     }
+
+    public function testEmpty()
+    {
+        $this->assertEquals(false, ArrayUtils::find([], ''));
+        $this->assertEquals(false, ArrayUtils::find([], 'test'));
+    }
 }
