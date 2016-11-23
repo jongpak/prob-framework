@@ -5,7 +5,9 @@ namespace App\Auth\PermissionManager;
 use App\Auth\PermissionManagerAbstract;
 use App\Entity\Permission;
 use App\Entity\Role;
+use Core\Utils\ArrayUtils;
 use Core\Utils\EntityUtils\EntitySelect;
+use Doctrine\Common\Collections\Collection;
 
 class DatabasePermissionManager extends PermissionManagerAbstract
 {
@@ -18,22 +20,42 @@ class DatabasePermissionManager extends PermissionManagerAbstract
      */
     public function getRolesByOperation($operation)
     {
-        $permissionRole = [];
+        $allPermission = $this->getAllPermission() ?: [];
+        $operationKey = ArrayUtils::find($allPermission, $operation);
 
-        /** @var Permission $permission */
-        $permission = EntitySelect::select(Permission::class)
-            ->criteria(['operation' => $operation])
-            ->findOne();
-
-        if ($permission === null) {
+        if($operationKey === false) {
             return null;
         }
 
-        /** @var Role $item */
-        foreach ($permission->getRoles() as $item) {
-            $permissionRole[] = $item->getName();
+        return $allPermission[$operationKey];
+    }
+
+    private function getAllPermission()
+    {
+        $permissionRole = [];
+        $permissions = EntitySelect::select(Permission::class)->findAll();
+
+        if ($permissions === null) {
+            return null;
+        }
+
+        /** @var Permission $permission */
+        foreach ($permissions as $permission) {
+            $permissionRole[$permission->getOperation()] = $this->getRoles($permission->getRoles());
         }
 
         return $permissionRole;
+    }
+
+    private function getRoles(Collection $roleCollection)
+    {
+        $roles = [];
+
+        /** @var Role $role */
+        foreach ($roleCollection as $role) {
+            $roles[] = $role->getName();
+        }
+
+        return $roles;
     }
 }

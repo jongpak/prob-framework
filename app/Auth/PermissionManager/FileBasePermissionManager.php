@@ -3,6 +3,7 @@
 namespace App\Auth\PermissionManager;
 
 use App\Auth\PermissionManagerAbstract;
+use Core\Utils\ArrayUtils;
 
 class FileBasePermissionManager extends PermissionManagerAbstract
 {
@@ -18,6 +19,12 @@ class FileBasePermissionManager extends PermissionManagerAbstract
      */
     public function getRolesByOperation($operation)
     {
-        return isset($this->permission[$operation]) ? $this->permission[$operation] : null;
+        $operationKey = ArrayUtils::find($this->permission, $operation);
+
+        if($operationKey === false) {
+            return null;
+        }
+
+        return $this->permission[$operationKey];
     }
 }
