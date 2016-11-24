@@ -1,7 +1,19 @@
 {% extends file('layout') %}
 
 {% block body %}
-<h2>Overview</h2>
+<h2>Site</h2>
+<table>
+    <tr>
+        <th>Site url</th>
+        <td>{{ siteUrl }}</td>
+    </tr>
+    <tr>
+        <th>Site public resource url</th>
+        <td>{{ sitePublicUrl }}</td>
+    </tr>
+</table>
+
+<h2>Server</h2>
 <table>
     <tr>
         <th>Absolute path</th>
