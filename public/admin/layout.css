@@ -60,9 +60,14 @@ header nav li {
     padding-left: 5px;
 }
 
-header nav li:hover {
+header nav li:hover, header nav li.on {
     font-weight: bold;
     border-left-color: rgb(150, 150, 150);
+}
+
+header nav li a {
+    color: inherit;
+    text-decoration: inherit;
 }
 
 section#body {
@@ -70,9 +75,13 @@ section#body {
 }
 
 section#body h2 {
-    margin: 0 0 10px 0;
+    margin: 25px 0 10px 0;
     font-size: 18pt;
     color: rgb(50, 75, 100);
+}
+
+section#body h2:first-child {
+    margin-top: 0;
 }
 
 section#body table {

@@ -15,11 +15,11 @@
     <nav>
         <h2>Core configures</h2>
         <ul>
-            <li>Site url</li>
-            <li>Route paths</li>
-            <li>Events</li>
-            <li>View engines</li>
-            <li>Parameter injections</li>
+            <li class="{{ nav == '/admin' ? 'on' : '' }}"><a href="{{ url('/admin') }}">Site / Server</a></li>
+            <li class="{{ nav == '/admin/route' ? 'on' : '' }}"><a href="{{ url('/admin/route') }}">Route paths</a></li>
+            <li class="{{ nav == '/admin/event' ? 'on' : '' }}"><a href="{{ url('/admin/event') }}">Events</a></li>
+            <li class="{{ nav == '/admin/view' ? 'on' : '' }}"><a href="{{ url('/admin/view') }}">View engines</a></li>
+            <li class="{{ nav == '/admin/parameter' ? 'on' : '' }}"><a href="{{ url('/admin/parameter') }}">Parameter injections</a></li>
         </ul>
 
         <h2>Component configures</h2>

@@ -6,9 +6,15 @@ use Core\Application;
 use Core\ViewModel;
 
 class Welcome {
+    public function __construct(ViewModel $view, $urlPattern)
+    {
+        $view->set('nav', $urlPattern);
+    }
+
     public function index(ViewModel $view) {
         $view->set('siteUrl', Application::getUrl());
         $view->set('sitePublicUrl', Application::getPublicUrl());
+
         $view->set('absolutePath', realpath(__DIR__ . '/../../'));
         $view->set('phpVersion', PHP_VERSION);
         $view->set('os', PHP_OS);
