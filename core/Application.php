@@ -2,8 +2,6 @@
 
 namespace Core;
 
-use JBZoo\Event\EventManager;
-
 class Application
 {
     private static $config = [];
