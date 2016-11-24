@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Auth\AccountManagerInterface;
 use App\Auth\LoginManagerInterface;
 use Core\ViewModel;
-use App\Auth\AuthManager;
 
 class Welcome
 {
