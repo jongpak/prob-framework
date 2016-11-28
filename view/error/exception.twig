@@ -24,8 +24,10 @@
         background: rgb(240, 240, 240);
     }
 
-    p.file {
+    div.error p.file,
+    div.error p.errorName {
         font-weight: bold;
+        padding-bottom: 0px;
     }
 
     div.trace {
@@ -36,6 +38,7 @@
 
     div.trace table {
         border-collapse: collapse;
+        margin-top: 20px;
         width: 100%;
     }
 
@@ -77,6 +80,7 @@
 
     {% if displayStackTrace == true %}
     <p class="file">File: {{ file }}:{{ line }}</p>
+    <p class="errorName">Exception: {{ errorName }}</p>
     <div class="trace">
     <table>
         <tr>
