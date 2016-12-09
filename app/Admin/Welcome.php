@@ -22,4 +22,14 @@ class Welcome {
 
         return 'server';
     }
+
+    public function viewRoutePaths(ViewModel $view) {
+        $routePaths = AdminService::getRoutePaths();
+        unset($routePaths['namespace']);
+
+        $view->set('namespace', AdminService::getRoutePaths()['namespace']);
+        $view->set('routePaths', $routePaths);
+
+        return 'route';
+    }
 }

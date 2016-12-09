@@ -1,0 +1,36 @@
+{% extends file('layout') %}
+
+{% block body %}
+<h2>Route paths</h2>
+<p><strong>Namespace:</strong> {{ namespace }}</p>
+
+<table>
+    <tr>
+        <th>URL</th>
+        <th>Method</th>
+        <th>Controller</th>
+    </tr>
+    {% for path, controllers in routePaths %}
+        {# only GET controller #}
+        {% if controllers is not iterable %}
+            <tr>
+                <th>{{ path }}</th>
+                <td>GET</td>
+                <td>{{ controllers }}</td>
+            </tr>
+
+        {# has one more controllers #}
+        {% else %}
+            {% for method, controller in controllers %}
+            <tr>
+                {% if loop.first %}
+                <th rowspan="{{ loop.length }}">{{ path }}</th>
+                {% endif %}
+                <td>{{ method }}</td>
+                <td>{{ controller }}</td>
+            </tr>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+</table>
+{% endblock %}

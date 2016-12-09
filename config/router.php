@@ -12,6 +12,7 @@ return [
     '/auth/logout' => 'Auth.doLogout',
 
     '/admin' => 'Admin\\Welcome.index',
+    '/admin/route' => 'Admin\\Welcome.viewRoutePaths',
 
     '/test' => 'Test.echoTest',
     '/test/json' => 'Test.jsonTest',
