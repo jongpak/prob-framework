@@ -16,7 +16,7 @@ class ErrorReporterService
         $this->config = $config;
     }
 
-    public function register()
+    public function registerReport()
     {
         $this->constructErrorReporters();
         $this->registerErrorReporters();

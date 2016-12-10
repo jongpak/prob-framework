@@ -13,6 +13,6 @@ class ErrorReporterBootstrap implements BootstrapInterface
 
         $errorService = new ErrorReporterService();
         $errorService->setConfig($env['error']);
-        $errorService->register();
+        $errorService->registerReport();
     }
 }
