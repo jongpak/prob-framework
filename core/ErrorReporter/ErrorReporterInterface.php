@@ -2,7 +2,9 @@
 
 namespace Core\ErrorReporter;
 
-use \Exception;
+use Error;
+use Exception;
+use Throwable;
 
 interface ErrorReporterInterface
 {

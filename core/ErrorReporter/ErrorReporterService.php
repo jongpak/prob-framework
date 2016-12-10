@@ -54,7 +54,7 @@ class ErrorReporterService
 
                 $this->initHttpResponseHeader($exception);
 
-                if($this->config['displayErrors'] === true) {
+                if ($this->config['displayErrors'] === true) {
                     echo $reportResult;
                 }
             }
