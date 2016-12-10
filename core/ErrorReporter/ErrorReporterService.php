@@ -82,8 +82,8 @@ class ErrorReporterService
     {
         $errorCode = 500;
 
-        foreach ($this->config['errorCodes'] as $registedException => $code) {
-            if ($registedException === get_class($exception)) {
+        foreach ($this->config['errorCodes'] as $registeredException => $code) {
+            if ($registeredException === get_class($exception)) {
                 $errorCode = $code;
                 break;
             }
