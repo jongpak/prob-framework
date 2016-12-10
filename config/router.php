@@ -13,6 +13,7 @@ return [
 
     '/admin' => 'Admin\\Welcome.index',
     '/admin/route' => 'Admin\\Welcome.viewRoutePaths',
+    '/admin/event' => 'Admin\\Welcome.viewEvents',
 
     '/test' => 'Test.echoTest',
     '/test/json' => 'Test.jsonTest',

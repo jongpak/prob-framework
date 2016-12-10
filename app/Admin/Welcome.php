@@ -3,7 +3,9 @@
 namespace App\Controller\Admin;
 
 use Core\Application;
+use Core\Utils\ArrayUtils;
 use Core\ViewModel;
+use Prob\ArrayUtil\KeyGlue;
 
 class Welcome {
     public function __construct(ViewModel $view, $urlPattern)
@@ -31,5 +33,23 @@ class Welcome {
         $view->set('routePaths', $routePaths);
 
         return 'route';
+    }
+
+    public function viewEvents(ViewModel $view) {
+        $glue = new KeyGlue();
+        $glue->setGlueCharacter(' / ');
+        $glue->setArray(AdminService::getEventHandlers());
+
+        $events = $glue->glueKeyAndContainValue();
+
+        foreach($events as $k => $v) {
+            if(is_string($events[$k]) == false) {
+                $events[$k] = '{ Closure function }';
+            }
+        }
+
+        $view->set('events', $events);
+
+        return 'event';
     }
 }

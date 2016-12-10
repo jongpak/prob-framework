@@ -1,0 +1,17 @@
+{% extends file('layout') %}
+
+{% block body %}
+<h2>Events</h2>
+<table>
+    <tr>
+        <th>Event name</th>
+        <th>Handler</th>
+    </tr>
+    {% for event, handler in events %}
+    <tr>
+        <th>{{ event }}</th>
+        <td>{{ handler }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -19,4 +19,9 @@ class AdminService {
     {
         return self::getEnvironment('router');
     }
+
+    public static function getEventHandlers()
+    {
+        return self::getEnvironment('event');
+    }
 }
