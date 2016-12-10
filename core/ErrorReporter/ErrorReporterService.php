@@ -22,6 +22,27 @@ class ErrorReporterService
         $this->registerErrorReporters();
     }
 
+    private function constructErrorReporters()
+    {
+        $errorReporterInstances = [];
+
+        foreach ($this->config['enableReporters'] as $reporterName) {
+            $errorReporterInstances[] = $this->getErrorReporterInstance($reporterName);
+        }
+
+        $this->errorReporterInstances = $errorReporterInstances;
+    }
+
+    /**
+     * @param  string $reporterName
+     * @return ErrorReporterInterface
+     */
+    private function getErrorReporterInstance($reporterName)
+    {
+        $class = $this->config['reporters'][$reporterName]['class'];
+        return new $class($this->config['reporters'][$reporterName]);
+    }
+
     private function registerErrorReporters()
     {
         set_exception_handler(function ($exception) {
@@ -69,26 +90,5 @@ class ErrorReporterService
         }
 
         return new EmptyResponse($errorCode);
-    }
-
-    private function constructErrorReporters()
-    {
-        $errorReporterInstances = [];
-
-        foreach ($this->config['enableReporters'] as $reporterName) {
-            $errorReporterInstances[] = $this->getErrorReporterInstance($reporterName);
-        }
-
-        $this->errorReporterInstances = $errorReporterInstances;
-    }
-
-    /**
-     * @param  string $reporterName
-     * @return ErrorReporterInterface
-     */
-    private function getErrorReporterInstance($reporterName)
-    {
-        $class = $this->config['reporters'][$reporterName]['class'];
-        return new $class($this->config['reporters'][$reporterName]);
     }
 }
