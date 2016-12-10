@@ -3,7 +3,7 @@
 namespace App\Bootstrap;
 
 use Core\Bootstrap\BootstrapInterface;
-use Core\ErrorReporter\ErrorReporterRegister;
+use Core\ErrorReporter\ErrorReporterService;
 
 class ErrorReporterBootstrap implements BootstrapInterface
 {
@@ -11,8 +11,8 @@ class ErrorReporterBootstrap implements BootstrapInterface
     {
         ini_set('display_errors', $env['error']['displayErrors']);
 
-        $register = new ErrorReporterRegister();
-        $register->setConfig($env['error']);
-        $register->register();
+        $errorService = new ErrorReporterService();
+        $errorService->setConfig($env['error']);
+        $errorService->register();
     }
 }

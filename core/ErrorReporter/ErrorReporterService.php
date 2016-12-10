@@ -6,7 +6,7 @@ use \ErrorException;
 use App\ViewResolver\ResponseResolver;
 use Zend\Diactoros\Response\EmptyResponse;
 
-class ErrorReporterRegister
+class ErrorReporterService
 {
     private $config = [];
     private $errorReporterInstances = [];
@@ -33,7 +33,9 @@ class ErrorReporterRegister
 
                 $this->initHttpResponseHeader($exception);
 
-                echo $reportResult;
+                if($this->config['displayErrors'] === true) {
+                    echo $reportResult;
+                }
             }
         });
 
