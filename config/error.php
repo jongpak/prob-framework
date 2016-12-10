@@ -15,6 +15,7 @@ return [
             'file' => 'exception',
             'postfix' => '.twig',
             'displayStackTrace' => true,
+            'displayErrorSourceLines' => true,
             'settings' => []
         ]
     ],

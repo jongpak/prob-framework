@@ -2,8 +2,11 @@
 
 namespace Core\ErrorReporter;
 
+use Error;
 use \ErrorException;
 use App\ViewResolver\ResponseResolver;
+use Exception;
+use Throwable;
 use Zend\Diactoros\Response\EmptyResponse;
 
 class ErrorReporterService
@@ -20,6 +23,15 @@ class ErrorReporterService
     {
         $this->constructErrorReporters();
         $this->registerErrorReporters();
+    }
+
+    /**
+     * @param $exception Exception|Error|Throwable $exception
+     * @return array
+     */
+    public static function getErrorCodeLine($exception)
+    {
+        return FileUtils::getLines($exception->getFile(), $exception->getLine() - 3, 5);
     }
 
     private function constructErrorReporters()

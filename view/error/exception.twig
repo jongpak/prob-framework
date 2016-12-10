@@ -30,6 +30,25 @@
         padding-bottom: 0px;
     }
 
+    table.code {
+        margin: 0 40px;
+        border-collapse: collapse;
+    }
+    table.code tr.active {
+        font-weight: bold;
+        background: yellow;
+    }
+    table.code tr.active th {
+        background: orange;
+    }
+    table.code th {
+        background: rgb(230, 230, 230);
+    }
+    table.code th, table.code td {
+        padding: 3px 0.75em;
+        white-space: pre;
+    }
+
     div.trace {
         margin: 10px 40px 40px 40px;
         font-size: 12pt;
@@ -78,6 +97,17 @@
 <div class="error">
     <p class="message">{{ message }}</p>
 
+    {% if displayErrorSourceLines == true %}
+        <p><strong>Code</strong></p>
+        <table class="code">
+        {% for codeLine, code in errorSourceLines %}
+            <tr class="{{ line == codeLine + 1 ? 'active' : '' }}">
+                <th>{{ codeLine + 1 }}</th>
+                <td>{{ code | escape }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% endif %}
     {% if displayStackTrace == true %}
     <p class="file">File: {{ file }}:{{ line }}</p>
     <p class="errorName">Exception: {{ errorName }}</p>
