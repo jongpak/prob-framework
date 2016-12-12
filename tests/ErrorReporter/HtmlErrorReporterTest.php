@@ -15,7 +15,10 @@ class HtmlErrorReporterTest extends TestCase
             'path' => __DIR__ . '/../mock',
             'file' => 'error',
             'postfix' => '.twig',
+            'displayExceptionInfo' => true,
+            'displayFileInfo' => true,
             'displayStackTrace' => true,
+            'displayErrorSourceLines' => true,
             'settings' => []
         ];
     }
@@ -23,8 +26,8 @@ class HtmlErrorReporterTest extends TestCase
     public function testHtmlReport()
     {
         $reporter = new Html($this->getReporterSetting());
-        $exception = new ErrorException('message', 0, E_ERROR, 'test.php', 56);
+        $exception = new ErrorException('message', 0, E_ERROR, __FILE__, 10);
 
-        $this->assertEquals("message\ntest.php\n56", $reporter->report($exception));
+        $this->assertEquals("message\n" . __FILE__ . "\n10", $reporter->report($exception));
     }
 }
