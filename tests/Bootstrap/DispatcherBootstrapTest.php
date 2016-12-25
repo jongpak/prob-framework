@@ -4,9 +4,6 @@ namespace App\Bootstrap\Test;
 
 use App\Bootstrap\DispatcherBootstrap;
 use PHPUnit\Framework\TestCase;
-use Prob\Router\Map;
-use Zend\Diactoros\ServerRequest;
-use Zend\Diactoros\Uri;
 
 class DispatcherBootstrapTest extends TestCase
 {
