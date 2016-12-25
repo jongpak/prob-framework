@@ -20,6 +20,9 @@ class DispatcherBootstrapTest extends TestCase
                 'namespace' => '',
                 '/' => function()  {
                     echo 'index';
+                },
+                '/test' => function() {
+                    echo 'test';
                 }
             ],
             'viewEngine' => [],
@@ -32,7 +35,7 @@ class DispatcherBootstrapTest extends TestCase
         ];
     }
 
-    public function testDispatch()
+    public function testDispatch1()
     {
         $this->env['dispatcher'] = [
             'request' => new ServerRequest([], [], '/', 'GET')
@@ -41,6 +44,18 @@ class DispatcherBootstrapTest extends TestCase
         $bootstrap = new DispatcherBootstrap();
 
         $this->expectOutputString('index');
+        $bootstrap->boot($this->env);
+    }
+
+    public function testDispatch2()
+    {
+        $this->env['dispatcher'] = [
+            'request' => new ServerRequest([], [], '/test', 'GET')
+        ];
+
+        $bootstrap = new DispatcherBootstrap();
+
+        $this->expectOutputString('test');
         $bootstrap->boot($this->env);
     }
 }
