@@ -62,9 +62,9 @@ class DispatcherBootstrap implements BootstrapInterface
 
         $controllerName = RequestMatcher::getControllerProc()->getName();
 
-        $result = ArrayUtils::find(array_keys($prefix), $controllerName);
+        $matchedViewPrefixKey = ArrayUtils::find(array_keys($prefix), $controllerName);
 
-        return $result ? $prefix[$result] : $defaultPrefix;
+        return $matchedViewPrefixKey ? $prefix[$matchedViewPrefixKey] : $defaultPrefix;
     }
 
     private function getDispatcher()
