@@ -98,7 +98,7 @@ class DispatcherBootstrap implements BootstrapInterface
 
     private function getServerRequest()
     {
-        $request = ServerRequestFactory::fromGlobals();
+        $request = $this->env['dispatcher']['request'];
 
         $stripedUri = new Uri(
             $this->stripAppUrlPrefix($request->getUri()->getPath())

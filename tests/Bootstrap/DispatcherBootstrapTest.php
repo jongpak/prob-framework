@@ -4,6 +4,7 @@ namespace App\Bootstrap\Test;
 
 use App\Bootstrap\DispatcherBootstrap;
 use PHPUnit\Framework\TestCase;
+use Zend\Diactoros\ServerRequest;
 
 class DispatcherBootstrapTest extends TestCase
 {
@@ -18,7 +19,7 @@ class DispatcherBootstrapTest extends TestCase
             'router' => [
                 'namespace' => '',
                 '/' => function()  {
-                    echo 'test!!';
+                    echo 'index';
                 }
             ],
             'viewEngine' => [],
@@ -33,9 +34,13 @@ class DispatcherBootstrapTest extends TestCase
 
     public function testDispatch()
     {
+        $this->env['dispatcher'] = [
+            'request' => new ServerRequest([], [], '/', 'GET')
+        ];
+
         $bootstrap = new DispatcherBootstrap();
 
-        $this->expectOutputString('test!!');
+        $this->expectOutputString('index');
         $bootstrap->boot($this->env);
     }
 }

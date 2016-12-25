@@ -12,4 +12,5 @@ return [
     'error' => require 'error.php',
     'event' => require 'event.php',
     'parameter' => require 'parameter.php',
+    'dispatcher' => require 'dispatcher.php',
 ];
