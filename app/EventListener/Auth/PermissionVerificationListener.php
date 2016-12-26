@@ -7,7 +7,7 @@ use App\Auth\AuthManager;
 use App\Auth\LoginManagerInterface;
 use App\EventListener\Auth\Exception\PermissionDenied;
 
-class ValidatorListener
+class PermissionVerificationListener
 {
     public function validate(ProcInterface $proc, LoginManagerInterface $loginManager)
     {

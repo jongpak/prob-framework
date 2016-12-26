@@ -3,7 +3,7 @@
 return [
     'Controller' => [
         '*.*' => [
-            'before' => 'App\\EventListener\\Auth\\ValidatorListener.validate'
+            'before' => 'App\\EventListener\\Auth\\PermissionVerificationListener.validate'
         ],
         'Test.event' => [
             'before' => function () {

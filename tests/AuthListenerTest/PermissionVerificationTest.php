@@ -7,7 +7,7 @@ use App\Auth\AuthManager;
 use App\EventListener\Auth\Test\Mock\TestAdminProc;
 use App\EventListener\Auth\Exception\PermissionDenied;
 
-class ValidatorTest extends TestCase
+class PermissionVerificationTest extends TestCase
 {
     /**
      * @var AuthManager
@@ -79,7 +79,7 @@ class ValidatorTest extends TestCase
         ]));
 
         $this->expectException(PermissionDenied::class);
-        (new ValidatorListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager());
+        (new PermissionVerificationListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager());
     }
 
     /**
@@ -92,7 +92,7 @@ class ValidatorTest extends TestCase
             'Test.admin' => ['Admin']
         ]));
 
-        $this->assertEquals(true, (new ValidatorListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager()));
+        $this->assertEquals(true, (new PermissionVerificationListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager()));
     }
 
     /**
@@ -106,7 +106,7 @@ class ValidatorTest extends TestCase
         ]));
 
         $this->expectException(PermissionDenied::class);
-        (new ValidatorListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager());
+        (new PermissionVerificationListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager());
     }
 
     /**
@@ -119,7 +119,7 @@ class ValidatorTest extends TestCase
             'Test.admin' => ['Admin', 'Member']
         ]));
 
-        $this->assertEquals(true, (new ValidatorListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager()));
+        $this->assertEquals(true, (new PermissionVerificationListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager()));
     }
 
     /**
@@ -133,7 +133,7 @@ class ValidatorTest extends TestCase
         ]));
 
         $this->expectException(PermissionDenied::class);
-        (new ValidatorListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager());
+        (new PermissionVerificationListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager());
     }
 
     /**
@@ -147,7 +147,7 @@ class ValidatorTest extends TestCase
         ]));
 
         $this->expectException(PermissionDenied::class);
-        $this->assertEquals(true, (new ValidatorListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager()));
+        $this->assertEquals(true, (new PermissionVerificationListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager()));
     }
 
     /**
@@ -158,7 +158,7 @@ class ValidatorTest extends TestCase
         AuthManager::getLoginManager()->login('test', 'test');
         AuthManager::setConfig($this->getAuthConfig(true, []));
 
-        $this->assertEquals(true, (new ValidatorListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager()));
+        $this->assertEquals(true, (new PermissionVerificationListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager()));
     }
 
     /**
@@ -170,6 +170,6 @@ class ValidatorTest extends TestCase
         AuthManager::setConfig($this->getAuthConfig(false, []));
 
         $this->expectException(PermissionDenied::class);
-        (new ValidatorListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager());
+        (new PermissionVerificationListener())->validate(new TestAdminProc(null), AuthManager::getLoginManager());
     }
 }
