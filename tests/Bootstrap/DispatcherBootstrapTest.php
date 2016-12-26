@@ -12,25 +12,37 @@ class DispatcherBootstrapTest extends TestCase
 
     public function __construct()
     {
+        require_once __DIR__ . '/mock/ControllerSample1.php';
+
         $this->env = [
             'site' => [
                 'url' => '/'
             ],
             'router' => [
-                'namespace' => '',
-                '/' => function()  {
-                    echo 'index';
-                },
-                '/test' => function() {
-                    echo 'test';
-                }
+                'namespace' => 'App\Bootstrap\Test\Mock',
+                '/' => 'ControllerSample1.index',
+                '/hello' => 'ControllerSample1.hello',
+                '/viewPrefix' => 'ControllerSample1.viewPrefix',
             ],
-            'viewEngine' => [],
+            'viewEngine' => [
+                'Twig' => [
+                    'path' => __DIR__ . '/../ViewEngineTest/mock/',
+                    'postfix' => '.twig',
+                    'settings' => []
+                ]
+            ],
             'viewResolver' => [
-                'App\ViewResolver\DummyResolver'
+                'App\ViewResolver\DummyResolver',
+                'Twig' => 'App\ViewResolver\TwigResolver'
             ],
             'viewPrefix' => [
-                'applyView' => []
+                'applyView' => [
+                    'App\ViewEngine\TwigView'
+                ],
+                'default' => '',
+                'controller' => [
+                    'ControllerSample1.viewPrefix' => 'prefix/'
+                ]
             ]
         ];
     }
@@ -50,12 +62,24 @@ class DispatcherBootstrapTest extends TestCase
     public function testDispatch2()
     {
         $this->env['dispatcher'] = [
-            'request' => new ServerRequest([], [], '/test', 'GET')
+            'request' => new ServerRequest([], [], '/hello', 'GET')
         ];
 
         $bootstrap = new DispatcherBootstrap();
 
-        $this->expectOutputString('test');
+        $this->expectOutputString('hello!');
+        $bootstrap->boot($this->env);
+    }
+
+    public function testViewPrefix()
+    {
+        $this->env['dispatcher'] = [
+            'request' => new ServerRequest([], [], '/viewPrefix', 'GET')
+        ];
+
+        $bootstrap = new DispatcherBootstrap();
+
+        $this->expectOutputString('test with prefix!');
         $bootstrap->boot($this->env);
     }
 }
