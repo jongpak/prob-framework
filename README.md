@@ -8,11 +8,11 @@
 ## Installation
 ### Copy sample configuration
 ```
-> cp .htaccess.example .htaccess
-> cp config/site.php.example config/site.php
-> cp config/db.php.example config/db.php
-> cp app/Auth/config/config.php.example app/Auth/config/config.php
-> cp app/Auth/config/accounts.php.example app/Auth/config/accounts.php
+$ cp .htaccess.example .htaccess
+$ cp config/site.php.example config/site.php
+$ cp config/db.php.example config/db.php
+$ cp app/Auth/config/config.php.example app/Auth/config/config.php
+$ cp app/Auth/config/accounts.php.example app/Auth/config/accounts.php
 ```
 
 ### Setting configuration for your environment
@@ -63,17 +63,17 @@ return [
 
 ### Making directories
 ```
-> mkdir data
+$ mkdir data
 ```
 
 ### Dependency package update (use [Composer](https://getcomposer.org/))
 ```
-> composer update
+$ composer update
 ```
 
 ### Creating table schema
 ```
-> php ./vendor/doctrine/orm/bin/doctrine.php orm:schema-tool:create
+$ php ./vendor/doctrine/orm/bin/doctrine.php orm:schema-tool:create
 ```
 
 ## Starting a web application (using PHP built-in server)
