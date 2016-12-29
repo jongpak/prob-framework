@@ -75,3 +75,8 @@ return [
 ```
 > php ./vendor/doctrine/orm/bin/doctrine.php orm:schema-tool:create
 ```
+
+## Starting a web application (using PHP built-in server)
+ ```
+ $ php -S 127.0.0.1:8080 -t public/
+ ```
