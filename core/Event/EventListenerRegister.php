@@ -33,7 +33,7 @@ class EventListenerRegister
     private function registerHandler($eventName, $handler)
     {
         $proc = $this->getEventListenerProc($handler);
-        EventManager::getEventManager()->on($eventName, $proc);
+        EventManager::register($eventName, $proc);
     }
 
     private function getEventNames()

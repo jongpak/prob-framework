@@ -39,12 +39,12 @@ class EventListenerRegisterTest extends TestCase
         $param->bindBy(new Named('str2'), 'test2');
 
         $this->expectOutputString('test1/test2/helloworld/construct_test1test2');
-        EventManager::getEventManager()->trigger('event.one', [$param]);
+        EventManager::trigger('event.one', [$param]);
         echo '/';
-        EventManager::getEventManager()->trigger('event.two', [$param]);
+        EventManager::trigger('event.two', [$param]);
         echo '/';
-        EventManager::getEventManager()->trigger('event.array', [$param]);
+        EventManager::trigger('event.array', [$param]);
         echo '/';
-        EventManager::getEventManager()->trigger('event.method', [$param]);
+        EventManager::trigger('event.method', [$param]);
     }
 }

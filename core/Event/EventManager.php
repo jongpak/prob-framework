@@ -13,10 +13,19 @@ class EventManager
         $register->register();
     }
 
+    public static function register($eventName, callable $handler, $priority = null) {
+        self::getEventManager()->on($eventName, $handler, $priority);
+    }
+
+    public static function trigger($eventName, array $arguments = [], callable $callback = null)
+    {
+        return self::getEventManager()->trigger($eventName, $arguments, $callback);
+    }
+
     /**
      * @return ZooEventManager
      */
-    public static function getEventManager()
+    private static function getEventManager()
     {
         static $instance = null;
 

@@ -24,6 +24,6 @@ class EventListenerBootstrapTest extends TestCase
         ]);
 
         $this->expectOutputString('foo');
-        EventManager::getEventManager()->trigger('test', [new ParameterMap()]);
+        EventManager::trigger('test', [new ParameterMap()]);
     }
 }

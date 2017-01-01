@@ -8,7 +8,7 @@ class ControllerEvent
 {
     public static function triggerEvent($controller, $action, array $parameter)
     {
-        EventManager::getEventManager()->trigger(self::getEventName($controller, $action), $parameter);
+        EventManager::trigger(self::getEventName($controller, $action), $parameter);
     }
 
     /**
