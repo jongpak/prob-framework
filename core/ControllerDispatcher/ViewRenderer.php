@@ -37,7 +37,7 @@ class ViewRenderer
         $view = $this->resolveView($controllerResult);
 
         foreach ($this->viewModel->getVariables() as $key => $value) {
-            $view->set($key, $value);
+            $view->set($key, is_object($value) ? clone $value : $value);
         }
 
         return $view->render();
