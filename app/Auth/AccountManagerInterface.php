@@ -2,6 +2,8 @@
 
 namespace App\Auth;
 
+use App\Auth\Model\Account;
+
 interface AccountManagerInterface
 {
     public function __construct(array $settings = []);
@@ -18,6 +20,12 @@ interface AccountManagerInterface
      * @return boolean
      */
     public function isEqualPassword($accountId, $password);
+
+    /**
+     * @param string $accountId
+     * @return Account|null
+     */
+    public function getAccountById($accountId);
 
     /**
      * @param  string  $accountId

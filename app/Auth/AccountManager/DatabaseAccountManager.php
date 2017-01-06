@@ -4,6 +4,7 @@ namespace App\Auth\AccountManager;
 
 use App\Auth\AccountManagerInterface;
 use App\Auth\HashManager;
+use App\Auth\Model\Account;
 use App\Entity\User;
 use Core\Utils\EntityUtils\EntitySelect;
 
@@ -27,6 +28,26 @@ class DatabaseAccountManager implements AccountManagerInterface
         return HashManager::getProvider()->isEqualValueAndHash($password, $this->getUserEntity($accountId)->getPassword());
     }
 
+    /**
+     * @param string $accountId
+     * @return Account|null
+     */
+    public function getAccountById($accountId)
+    {
+        $user = $this->getUserEntity($accountId);
+
+        if($user === null) {
+            return null;
+        }
+
+        $account = new Account();
+        $account->setAccountId($user->getAccountId());
+        $account->setPassword($user->getPassword());
+        $account->setName($user->getAccountId());
+
+        return $account;
+    }
+
     public function getRole($accountId)
     {
         if ($this->isExistAccountId($accountId) === false) {
@@ -47,7 +68,7 @@ class DatabaseAccountManager implements AccountManagerInterface
      * @param  string $accountId
      * @return User
      */
-    public function getUserEntity($accountId)
+    private function getUserEntity($accountId)
     {
         return EntitySelect::select(User::class)
             ->criteria(['accountId' => $accountId])
