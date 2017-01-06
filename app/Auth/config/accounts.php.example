@@ -2,11 +2,13 @@
 
 return [
     'admin' => [
+        'name' => 'Admin',
         'password' => 'admin',
         'role' => [ 'Admin' ]
     ],
 
     'test' => [
+        'name' => 'Tester',
         'password' => 'test',
         'role' => [ 'Member' ]
     ],
