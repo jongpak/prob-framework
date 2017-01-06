@@ -17,16 +17,19 @@ class FileBaseAccountManagerTest extends TestCase
         $this->accountManager = new FileBaseAccountManager([
             'accounts' => [
                 'admin' => [
+                    'name' => 'Admin',
                     'password' => 'admin',
                     'role' => [ 'Admin' ]
                 ],
 
                 'test' => [
+                    'name' => 'Tester1',
                     'password' => 'test',
                     'role' => [ 'Member' ]
                 ],
 
                 'test2' => [
+                    'name' => 'Tester2',
                     'password' => 'test',
                     'role' => [ 'Admin', 'Member' ]
                 ]
@@ -50,6 +53,15 @@ class FileBaseAccountManagerTest extends TestCase
         $this->assertEquals(false, $this->accountManager->isEqualPassword('test', '???'));
 
         $this->assertEquals(false, $this->accountManager->isEqualPassword('noAccount', '???'));
+    }
+
+    public function testGetAccountById()
+    {
+        $this->assertEquals(null, $this->accountManager->getAccountById('nonAccountID'));
+
+        $this->assertEquals('admin', $this->accountManager->getAccountById('admin')->getAccountId());
+        $this->assertEquals('admin', $this->accountManager->getAccountById('admin')->getPassword());
+        $this->assertEquals('Admin', $this->accountManager->getAccountById('admin')->getName());
     }
 
     public function testGetRole()

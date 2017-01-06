@@ -3,6 +3,7 @@
 namespace App\Auth\AccountManager;
 
 use App\Auth\AccountManagerInterface;
+use App\Auth\Model\Account;
 
 class FileBaseAccountManager implements AccountManagerInterface
 {
@@ -25,6 +26,26 @@ class FileBaseAccountManager implements AccountManagerInterface
         }
 
         return $this->accounts[$accountId]['password'] === $password;
+    }
+
+    /**
+     * @param string $accountId
+     * @return Account|null
+     */
+    public function getAccountById($accountId)
+    {
+        if(isset($this->accounts[$accountId]) === false) {
+            return null;
+        }
+
+        $user = $this->accounts[$accountId];
+
+        $account = new Account();
+        $account->setAccountId($accountId);
+        $account->setPassword($user['password']);
+        $account->setName($user['name']);
+
+        return $account;
     }
 
     public function getRole($accountId)
