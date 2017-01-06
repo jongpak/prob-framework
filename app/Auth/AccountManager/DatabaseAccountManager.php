@@ -47,7 +47,7 @@ class DatabaseAccountManager implements AccountManagerInterface
      * @param  string $accountId
      * @return User
      */
-    public function getUserEntity($accountId)
+    private function getUserEntity($accountId)
     {
         return EntitySelect::select(User::class)
             ->criteria(['accountId' => $accountId])
