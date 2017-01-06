@@ -3,6 +3,7 @@
 namespace App\Auth\AccountManager\Test;
 
 use App\Auth\AccountManagerInterface;
+use App\Auth\Model\Account;
 
 class DummyAccountManager implements AccountManagerInterface
 {
@@ -15,6 +16,14 @@ class DummyAccountManager implements AccountManagerInterface
     }
 
     public function isEqualPassword($accountId, $password)
+    {
+    }
+
+    /**
+     * @param string $accountId
+     * @return Account|null
+     */
+    public function getAccountById($accountId)
     {
     }
 
