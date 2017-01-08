@@ -47,7 +47,7 @@
     }
     table.code th, table.code td {
         padding: 3px 0.75em;
-        white-space: pre;
+        white-space: pre-wrap;
     }
 
     div.trace {
@@ -91,6 +91,16 @@
     }
     span.function {
         font-weight: bold;
+    }
+
+    @media (max-width: 1024px) {
+        div.error {
+            margin: 20px;
+        }
+
+        div.error p {
+            overflow: auto;
+        }
     }
 </style>
 <body>
