@@ -2,9 +2,13 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
     <title>Oops!</title>
 </head>
 <style>
+    h1 {
+        display: none;
+    }
     div.error {
         margin: 100px 200px;
         border: 1px solid rgb(220, 220, 220);
@@ -12,11 +16,12 @@
     }
 
     div.error p {
-        margin: 0;
-        padding: 15px;
+        margin: 15px;
     }
 
-    p.message {
+    h2.message {
+        margin: 0;
+        padding: 15px;
         font-size: 18pt;
         font-weight: bold;
         border-radius: 10px;
@@ -30,8 +35,12 @@
         padding-bottom: 0px;
     }
 
-    table.code {
+    div.code-wrap {
         margin: 0 40px;
+        overflow: auto;
+    }
+
+    table.code {
         border-collapse: collapse;
     }
     table.code tr.active {
@@ -46,7 +55,7 @@
     }
     table.code th, table.code td {
         padding: 3px 0.75em;
-        white-space: pre;
+        white-space: pre-wrap;
     }
 
     div.trace {
@@ -91,11 +100,22 @@
     span.function {
         font-weight: bold;
     }
+
+    @media (max-width: 1024px) {
+        div.error {
+            margin: 20px;
+        }
+
+        div.error p {
+            overflow: auto;
+        }
+    }
 </style>
 <body>
 
+<h1>Error raised!</h1>
 <div class="error">
-    <p class="message">{{ message }}</p>
+    <h2 class="message">{{ message }}</h2>
 
     {% if displayExceptionInfo == true %}
         <p class="errorName">Exception: {{ errorName }}</p>
@@ -107,6 +127,7 @@
 
     {% if displayErrorSourceLines == true %}
         <p><strong>Code</strong></p>
+        <div class="code-wrap">
         <table class="code">
         {% for codeLine, code in errorSourceLines %}
             <tr class="{{ line == codeLine + 1 ? 'active' : '' }}">
@@ -115,6 +136,7 @@
             </tr>
         {% endfor %}
         </table>
+        </div>
     {% endif %}
 
     {% if displayStackTrace == true %}
