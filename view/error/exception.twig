@@ -31,8 +31,12 @@
         padding-bottom: 0px;
     }
 
-    table.code {
+    div.code-wrap {
         margin: 0 40px;
+        overflow: auto;
+    }
+
+    table.code {
         border-collapse: collapse;
     }
     table.code tr.active {
@@ -118,6 +122,7 @@
 
     {% if displayErrorSourceLines == true %}
         <p><strong>Code</strong></p>
+        <div class="code-wrap">
         <table class="code">
         {% for codeLine, code in errorSourceLines %}
             <tr class="{{ line == codeLine + 1 ? 'active' : '' }}">
@@ -126,6 +131,7 @@
             </tr>
         {% endfor %}
         </table>
+        </div>
     {% endif %}
 
     {% if displayStackTrace == true %}
