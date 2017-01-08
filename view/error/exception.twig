@@ -6,6 +6,9 @@
     <title>Oops!</title>
 </head>
 <style>
+    h1 {
+        display: none;
+    }
     div.error {
         margin: 100px 200px;
         border: 1px solid rgb(220, 220, 220);
@@ -13,11 +16,12 @@
     }
 
     div.error p {
-        margin: 0;
-        padding: 15px;
+        margin: 15px;
     }
 
-    p.message {
+    h2.message {
+        margin: 0;
+        padding: 15px;
         font-size: 18pt;
         font-weight: bold;
         border-radius: 10px;
@@ -109,8 +113,9 @@
 </style>
 <body>
 
+<h1>Error raised!</h1>
 <div class="error">
-    <p class="message">{{ message }}</p>
+    <h2 class="message">{{ message }}</h2>
 
     {% if displayExceptionInfo == true %}
         <p class="errorName">Exception: {{ errorName }}</p>
