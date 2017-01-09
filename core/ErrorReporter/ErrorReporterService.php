@@ -64,7 +64,9 @@ class ErrorReporterService
             foreach ($this->errorReporterInstances as $reporter) {
                 $reportResult = $reporter->report($exception);
 
-                $this->initHttpResponseHeader($exception);
+                if(php_sapi_name() !== 'cli') {
+                    $this->initHttpResponseHeader($exception);
+                }
 
                 if ($this->config['displayErrors'] === true) {
                     echo $reportResult;
