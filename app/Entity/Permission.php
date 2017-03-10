@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Entity
- * @Table(name="permisions")
+ * @Table(name="permissions")
  */
 class Permission
 {
