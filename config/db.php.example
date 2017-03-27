@@ -21,6 +21,11 @@ return [
             'password'  => 'password',
             'dbname'    => 'dbname',
             'charset'   => 'utf8'
+        ],
+        'sqlite' => [
+            'driver'    => 'pdo_sqlite',
+            'path'      => 'path/db_file.sqlite',
+            'memory'    => false
         ]
     ]
 ];
